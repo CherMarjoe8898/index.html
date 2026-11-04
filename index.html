@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>MCLLNHS TLE/TechPro Lesson Bank 2026 - Teacher Portal</title>
+<title>MCLLNHS Master Teacher Review Workspace 2026</title>
 <style>
   * { box-sizing: border-box; }
   body {
@@ -17,55 +17,55 @@
   .orb { position: fixed; border-radius: 50%; filter: blur(60px); opacity: .5; pointer-events: none; z-index: -1; animation: float 18s ease-in-out infinite; }
   .orb.a { width: 380px; height: 380px; background: #a855f7; top: -80px; left: -80px; }
   .orb.b { width: 300px; height: 300px; background: #7c3aed; bottom: -60px; right: -60px; animation-delay: -6s; }
-  .orb.c { width: 220px; height: 220px; background: #d8b4fe; top: 40%; left: 55%; animation-delay: -12s; }
-  @keyframes float { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(60px,-40px) scale(1.1)} 66%{transform:translate(-40px,50px) scale(.95)} }
-  .spark { position: fixed; width: 4px; height: 4px; border-radius: 50%; background: #e9d5ff; box-shadow: 0 0 8px #e9d5ff; opacity: .7; pointer-events: none; z-index: -1; animation: rise linear infinite; }
-  @keyframes rise { from{transform:translateY(110vh);opacity:0} 10%{opacity:.8} to{transform:translateY(-10vh);opacity:0} }
+  @keyframes float { 0%,100%{transform:translate(0,0)} 50%{transform:translate(60px,-40px)} }
 
   .glass { background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.22); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 10px 40px rgba(0,0,0,.25); border-radius: 16px; }
-  .wrap { width: 100%; max-width: 1200px; margin: 0 auto; padding: 24px; flex: 1; }
+  .wrap { width: 100%; max-width: 1400px; margin: 0 auto; padding: 24px; flex: 1; }
   .topbar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; padding: 18px 22px; }
   .kicker { margin: 0; font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: #ddd6fe; }
-  h1 { margin: 2px 0 0; font-size: 1.35rem; text-shadow: 0 0 18px rgba(216,180,254,.7); }
-  .actions { display: flex; gap: 8px; }
-  .glass-btn { background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.3); color: #fff; padding: 8px 14px; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 14px; text-decoration: none; display: inline-block; }
-  .glass-btn:hover { background: rgba(255,255,255,.25); }
+  h1 { margin: 2px 0 0; font-size: 1.3rem; text-shadow: 0 0 18px rgba(216,180,254,.7); }
+  h2 { margin: 0 0 12px; font-size: 1.05rem; color: #ede9fe; }
+  .card { padding: 22px; margin-top: 22px; }
+  .cols { display: grid; grid-template-columns: 1.2fr 1fr; gap: 22px; margin-top: 22px; }
+  @media (max-width: 960px) { .cols { grid-template-columns: 1fr; } }
 
-  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px; margin-top: 24px; }
-  .card { padding: 24px; }
-  .card h2 { margin: 0 0 14px; font-size: 1.1rem; color: #ede9fe; }
-  .hint { font-size: 13px; color: #ddd6fe; margin: -6px 0 14px; }
-  label, .label { display: block; font-size: 13px; font-weight: 600; color: #ede9fe; margin: 12px 0 4px; }
-  .field { width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px solid #c4b5fd; background: rgba(255,255,255,.93); color: #2e1065; font-size: 14px; outline: none; }
+  .label { display: block; font-size: 13px; font-weight: 600; color: #ede9fe; margin: 10px 0 4px; }
+  .field { width: 100%; padding: 9px 11px; border-radius: 10px; border: 1px solid #c4b5fd; background: rgba(255,255,255,.93); color: #2e1065; font-size: 14px; outline: none; }
   .field:focus { border-color: #8b5cf6; box-shadow: 0 0 0 3px rgba(139,92,246,.45); }
-  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  input[type=file] { color: #ede9fe; font-size: 13px; width: 100%; margin-top: 4px; }
-  .btn { width: 100%; margin-top: 18px; padding: 12px; border: none; border-radius: 12px; font-weight: 700; font-size: 15px; color: #fff; cursor: pointer; background: linear-gradient(90deg, #7c3aed, #a855f7); box-shadow: 0 6px 20px rgba(124,58,237,.5); transition: transform .15s, filter .2s; }
-  .btn:hover { transform: translateY(-2px); filter: brightness(1.08); }
-  .btn:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+  textarea.field { resize: vertical; }
+  .controls { display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 12px; align-items: end; }
+  @media (max-width: 960px) { .controls { grid-template-columns: 1fr; } }
+  .btn { padding: 10px 16px; border: none; border-radius: 10px; font-weight: 700; font-size: 14px; color: #fff; cursor: pointer; background: linear-gradient(90deg, #7c3aed, #a855f7); box-shadow: 0 6px 20px rgba(124,58,237,.5); }
+  .btn:hover { filter: brightness(1.08); }
+  .btn-full { width: 100%; margin-top: 14px; padding: 12px; }
   .btn-dark { background: linear-gradient(90deg, #4c1d95, #6d28d9); }
-  .msg { margin: 10px 0 0; font-size: 14px; min-height: 1em; }
+  .msg { margin: 8px 0 0; font-size: 14px; min-height: 1em; }
   .msg.ok { color: #6ee7b7; font-weight: 600; }
   .msg.err { color: #fbcfe8; font-weight: 600; }
-  .center { text-align: center; margin: 10px 0 0; }
   .hidden { display: none !important; }
 
-  .success { padding: 20px; border-radius: 14px; margin-bottom: 16px; background: linear-gradient(135deg, rgba(167,139,250,.4), rgba(216,180,254,.25)); border: 1px solid rgba(255,255,255,.35); animation: pop .5s ease-out; }
-  @keyframes pop { from{opacity:0;transform:scale(.94) translateY(8px)} to{opacity:1;transform:none} }
-  .success .big { font-size: 1.4rem; font-weight: 700; margin: 0 0 6px; }
-  .success dl, .result dl { display: grid; grid-template-columns: auto 1fr; gap: 6px 12px; font-size: 14px; margin: 12px 0; }
-  .success dt, .result dt { color: #ddd6fe; }
-  .success dd, .result dd { margin: 0; font-weight: 600; word-break: break-word; }
-  .link-btn { background: none; border: none; color: #fff; text-decoration: underline; cursor: pointer; font-size: 14px; padding: 0; margin-top: 6px; }
-
-  .result { margin-top: 18px; padding: 18px; border-radius: 14px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); }
-  .badge { display: inline-block; padding: 5px 12px; border-radius: 999px; font-size: 13px; font-weight: 700; }
+  .table-wrap { overflow-x: auto; border-radius: 12px; border: 1px solid rgba(255,255,255,.2); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; background: rgba(255,255,255,.06); }
+  th, td { padding: 9px 10px; text-align: left; vertical-align: top; border-bottom: 1px solid rgba(255,255,255,.12); }
+  th { background: rgba(255,255,255,.14); color: #ede9fe; font-weight: 700; white-space: nowrap; }
+  tbody tr { cursor: pointer; }
+  tbody tr:hover { background: rgba(255,255,255,.12); }
+  tbody tr.sel { background: rgba(216,180,254,.28); }
+  td.notes { max-width: 260px; word-break: break-word; }
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; white-space: nowrap; }
   .b-pending { background: #fef3c7; color: #92400e; }
   .b-return { background: #fee2e2; color: #991b1b; }
   .b-approved { background: #dcfce7; color: #166534; }
-  .banner { background: #fee2e2; color: #7f1d1d; padding: 12px 14px; border-radius: 10px; font-weight: 600; font-size: 14px; margin-bottom: 12px; }
-  .notes { white-space: pre-wrap; background: rgba(255,255,255,.12); border-radius: 10px; padding: 10px 12px; font-size: 14px; margin-top: 6px; }
-  .result .btn { margin-top: 12px; }
+
+  .preview { width: 100%; height: 620px; border: none; border-radius: 12px; background: #fff; }
+  .placeholder { height: 620px; display: flex; align-items: center; justify-content: center; text-align: center; padding: 24px; color: #ddd6fe; border: 2px dashed rgba(216,180,254,.5); border-radius: 12px; }
+  .doc-links { margin-top: 10px; font-size: 14px; }
+  .doc-links a { color: #fff; }
+  .radios { display: flex; flex-wrap: wrap; gap: 14px; font-size: 14px; margin-top: 4px; }
+  .radios label { display: flex; align-items: center; gap: 6px; font-weight: 500; color: #fff; margin: 0; }
+  .banner { background: #fee2e2; color: #7f1d1d; padding: 10px 12px; border-radius: 10px; font-size: 13px; font-weight: 600; margin-top: 10px; }
+  .current { margin-top: 8px; font-size: 13px; color: #ddd6fe; }
+  .hist-table td, .hist-table th { font-size: 12.5px; }
 
   footer { text-align: center; font-size: 13px; color: #ddd6fe; padding: 18px; }
 </style>
@@ -76,150 +76,139 @@
   const API_URL = 'https://script.google.com/macros/s/AKfycbwlgzqmsCaYxunPRmglCddrAzfRhjsbyeiF7ZKR8m66GlGZkb54yXCq4NKV8vGdpkoc3Q/exec';
 </script>
 
-<div class="orb a"></div><div class="orb b"></div><div class="orb c"></div>
-<div id="sparks"></div>
+<div class="orb a"></div><div class="orb b"></div>
 
 <div class="wrap">
   <header class="glass topbar">
     <div>
-      <p class="kicker">MCLLNHS</p>
-      <h1>TLE/TechPro Digital Lesson Bank &amp; Review System 2026</h1>
+      <p class="kicker">MCLLNHS · Master Teacher</p>
+      <h1>Lesson Plan Review Workspace 2026</h1>
     </div>
-    <div class="actions">
-      <button id="musicBtn" class="glass-btn">🎵 Music: Off</button>
-      <button id="pingBtn" class="glass-btn">Test Connection</button>
-    </div>
+    <button id="musicBtn" class="btn" style="background:rgba(255,255,255,.15)">🎵 Music: Off</button>
   </header>
-  <p id="globalMsg" class="msg center"></p>
 
-  <main class="grid">
-    <!-- A. Submit -->
-    <section class="glass card">
-      <h2>A. Submit Lesson Plan</h2>
-
-      <div id="successCard" class="success hidden">
-        <p class="big">🎉 Congratulations, <span id="successName"></span>!</p>
-        <p>Your lesson plan was submitted and is now <strong>Pending Review</strong>.</p>
-        <dl>
-          <dt>File</dt><dd id="successFile"></dd>
-          <dt>Subject</dt><dd id="successSubject"></dd>
-          <dt>Grade</dt><dd id="successGrade"></dd>
-          <dt>Term</dt><dd id="successTerm"></dd>
-          <dt>Submitted</dt><dd id="successTime"></dd>
-          <dt>Updates to</dt><dd id="successEmail"></dd>
-        </dl>
-        <p id="successNote" class="hint hidden">Note: edit access to your document could not be set automatically. Your Master Teacher will share it with you.</p>
-        <button id="successClose" class="link-btn">Submit another file</button>
+  <section class="glass card">
+    <div class="controls">
+      <div>
+        <label class="label" for="reviewerKey">Reviewer Key</label>
+        <input id="reviewerKey" type="password" class="field" />
       </div>
-
-      <form id="submitForm">
-        <label for="teacherName">Teacher Name</label>
-        <input id="teacherName" class="field" required />
-
-        <label for="teacherEmail">Teacher Email (for review updates and document access)</label>
-        <input id="teacherEmail" type="email" class="field" required placeholder="name@email.com" />
-
-        <div class="row2">
-          <div>
-            <label for="section">Grade</label>
-            <input id="section" class="field" required placeholder="e.g. Grade 9" />
-          </div>
-          <div>
-            <label for="component">Subject</label>
-            <select id="component" class="field" required>
-              <option value="">Select...</option>
-              <option value="TLE">TLE</option>
-              <option value="TechPro">TechPro</option>
-            </select>
-          </div>
-        </div>
-
-        <label for="period">Term</label>
-        <select id="period" class="field" required>
-          <option value="">Select...</option>
-          <option value="Term 1">Term 1</option>
-          <option value="Term 2">Term 2</option>
-          <option value="Term 3">Term 3</option>
+      <div>
+        <label class="label" for="reviewerName">Reviewer Name</label>
+        <input id="reviewerName" class="field" />
+      </div>
+      <div>
+        <label class="label" for="statusFilter">Show</label>
+        <select id="statusFilter" class="field">
+          <option value="">All submissions</option>
+          <option value="Pending Review">Pending Review</option>
+          <option value="Return to Sender">Returned for Corrections</option>
+          <option value="Approved">Approved</option>
         </select>
-
-        <label for="file">Lesson Plan (.docx only, max 10 MB)</label>
-        <input id="file" type="file" accept=".docx" required />
-
-        <label for="teacherKey">Submission Key</label>
-        <input id="teacherKey" type="password" class="field" required />
-
-        <button type="submit" id="submitBtn" class="btn">Submit Lesson Plan</button>
-        <p id="submitMsg" class="msg"></p>
-      </form>
-    </section>
-
-    <!-- B. Status and corrections -->
-    <section class="glass card">
-      <h2>B. Check My Submission Status</h2>
-      <p class="hint">Use the same name, file name, and Submission Key you used to submit.</p>
-
-      <form id="statusForm">
-        <label for="checkName">Teacher Name</label>
-        <input id="checkName" class="field" required />
-
-        <label for="checkFile">File Name (exact, e.g. Lesson1.docx)</label>
-        <input id="checkFile" class="field" required />
-
-        <label for="checkKey">Submission Key</label>
-        <input id="checkKey" type="password" class="field" required />
-
-        <button type="submit" class="btn btn-dark">Check Status</button>
-        <p id="checkMsg" class="msg"></p>
-      </form>
-
-      <div id="checkResult" class="result hidden">
-        <div id="returnBanner" class="banner hidden">
-          ⚠️ Returned for corrections. Open your document, make the changes, then press "I have made the corrections."
-        </div>
-        <span id="checkBadge" class="badge"></span>
-        <dl>
-          <dt>File</dt><dd id="infoFile"></dd>
-          <dt>Submitted</dt><dd id="infoSubmitted"></dd>
-          <dt>Reviewer</dt><dd id="infoReviewer"></dd>
-          <dt>Reviewed</dt><dd id="infoReviewed"></dd>
-        </dl>
-        <div id="feedbackWrap" class="hidden">
-          <p class="label">Master Teacher's notes</p>
-          <div id="checkFeedback" class="notes"></div>
-        </div>
-        <a id="checkEdit" class="glass-btn" style="margin-top:12px" target="_blank" rel="noopener" href="#">Open my document</a>
-        <button id="correctedBtn" class="btn hidden">I have made the corrections</button>
       </div>
-    </section>
-  </main>
+      <button id="loadBtn" class="btn">Load Submissions</button>
+    </div>
+    <p id="loadMsg" class="msg"></p>
+  </section>
 
-  <footer>Developed by Marjorie R. Cabana (Cher Marjoe) · MCLLNHS TLE/TechPro · 2026</footer>
+  <section class="glass card">
+    <h2>All Submissions <span id="countLabel" style="font-weight:400;color:#ddd6fe"></span></h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Teacher</th><th>Subject</th><th>Grade</th><th>Term</th><th>File</th>
+            <th>Status</th><th>Reviewer</th><th>Submitted</th><th>Reviewed</th><th>Latest Notes</th>
+          </tr>
+        </thead>
+        <tbody id="rows">
+          <tr><td colspan="10" style="text-align:center;color:#ddd6fe;padding:20px">Enter the Reviewer Key and click Load Submissions.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="cols">
+    <section class="glass card" style="margin-top:0">
+      <h2>Live Document</h2>
+      <div id="placeholder" class="placeholder">Select a submission in the table to open its lesson plan here.</div>
+      <iframe id="docFrame" class="preview hidden" title="Lesson plan"></iframe>
+      <div class="doc-links"><a id="openLink" href="#" target="_blank" rel="noopener" class="hidden">Open in new tab ↗</a></div>
+    </section>
+
+    <section class="glass card" style="margin-top:0">
+      <h2>Review Decision</h2>
+      <p id="selInfo" class="current">No submission selected.</p>
+      <label class="label">Decision</label>
+      <div class="radios">
+        <label><input type="radio" name="status" value="Pending Review" /> Pending Review</label>
+        <label><input type="radio" name="status" value="Return to Sender" /> Return to Sender</label>
+        <label><input type="radio" name="status" value="Approved" /> Approved</label>
+      </div>
+      <div id="returnNote" class="banner hidden">The teacher will be asked to make corrections in the same document and resubmit.</div>
+      <label class="label" for="feedback">Notes &amp; Major Corrections</label>
+      <textarea id="feedback" rows="5" class="field"></textarea>
+      <button id="saveBtn" class="btn btn-full">Save Review &amp; Notify Teacher</button>
+      <p id="reviewMsg" class="msg"></p>
+    </section>
+  </div>
+
+  <section class="glass card">
+    <h2>Review History <span id="histLabel" style="font-weight:400;color:#ddd6fe"></span></h2>
+    <div class="table-wrap">
+      <table class="hist-table">
+        <thead>
+          <tr><th>Date &amp; Time</th><th>Action</th><th>By</th><th>Teacher / File</th><th>Status</th><th>Notes</th></tr>
+        </thead>
+        <tbody id="histRows">
+          <tr><td colspan="6" style="text-align:center;color:#ddd6fe;padding:16px">No history loaded yet.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
 </div>
+
+<footer>Developed by Marjorie R. Cabana (Cher Marjoe) · MCLLNHS TLE/TechPro · 2026</footer>
 
 <script>
 const $ = (id) => document.getElementById(id);
-let checkCreds = null;
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+let items = [], history = [], selectedId = null;
 
-/* ---------- Background sparkles ---------- */
-(function () {
-  const wrap = $('sparks');
-  for (let i = 0; i < 30; i++) {
-    const s = document.createElement('span');
-    s.className = 'spark';
-    s.style.left = Math.random() * 100 + 'vw';
-    s.style.animationDuration = (8 + Math.random() * 12) + 's';
-    s.style.animationDelay = (-Math.random() * 15) + 's';
-    wrap.appendChild(s);
-  }
-})();
+function fmt(iso) {
+  if (!iso) return '—';
+  const d = new Date(iso);
+  return isNaN(d) ? '—' : d.toLocaleString('en-PH', { dateStyle: 'medium', timeStyle: 'short' });
+}
+function setMsg(el, text, ok) {
+  el.textContent = text;
+  el.classList.toggle('ok', !!text && !!ok);
+  el.classList.toggle('err', !!text && !ok);
+}
+function badge(status) {
+  const map = { 'Pending Review': ['b-pending', 'Pending Review'], 'Return to Sender': ['b-return', 'Returned'], 'Approved': ['b-approved', 'Approved'] };
+  const [cls, label] = map[status] || ['b-pending', status || 'Pending Review'];
+  return `<span class="badge ${cls}">${esc(label)}</span>`;
+}
+function short(s, n = 90) {
+  s = String(s || '');
+  return s.length > n ? s.slice(0, n) + '…' : s;
+}
+async function post(payload) {
+  const res = await fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) });
+  return res.json();
+}
+async function get(params) {
+  const res = await fetch(API_URL + '?' + new URLSearchParams(params).toString());
+  return res.json();
+}
 
-/* ---------- Ambient music (starts only on click) ---------- */
+/* ---------- Music toggle ---------- */
 let audioCtx = null, musicNodes = [];
 $('musicBtn').addEventListener('click', () => {
   if (audioCtx) {
     musicNodes.forEach((n) => { try { n.stop(); } catch (_) {} });
-    audioCtx.close();
-    audioCtx = null; musicNodes = [];
+    audioCtx.close(); audioCtx = null; musicNodes = [];
     $('musicBtn').textContent = '🎵 Music: Off';
     return;
   }
@@ -245,173 +234,123 @@ $('musicBtn').addEventListener('click', () => {
   $('musicBtn').textContent = '🎵 Music: On';
 });
 
-/* ---------- Helpers ---------- */
-function fmt(iso) {
-  if (!iso) return '—';
-  const d = new Date(iso);
-  return isNaN(d) ? '—' : d.toLocaleString('en-PH', { dateStyle: 'medium', timeStyle: 'short' });
+/* ---------- Load ---------- */
+async function loadAll() {
+  const key = $('reviewerKey').value.trim();
+  if (!key) return setMsg($('loadMsg'), 'Enter the Reviewer Key first.', false);
+  setMsg($('loadMsg'), 'Loading...', true);
+  try {
+    const [a, b] = await Promise.all([get({ action: 'list', key }), get({ action: 'history', key })]);
+    if (!a.ok) throw new Error(a.error);
+    if (!b.ok) throw new Error(b.error);
+    items = a.items.sort((x, y) => String(y.submittedAt).localeCompare(String(x.submittedAt)));
+    history = b.items;
+    renderTable();
+    renderHistory();
+    setMsg($('loadMsg'), `Loaded ${items.length} submission(s).`, true);
+    if (selectedId) selectItem(selectedId);
+  } catch (err) {
+    setMsg($('loadMsg'), err.message, false);
+  }
 }
-function setMsg(el, text, ok) {
-  el.textContent = text;
-  el.classList.toggle('ok', !!text && !!ok);
-  el.classList.toggle('err', !!text && !ok);
-}
-function toBase64(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result.split(',')[1]);
-    reader.onerror = () => reject(new Error('Could not read the file.'));
-    reader.readAsDataURL(file);
+$('loadBtn').addEventListener('click', loadAll);
+$('statusFilter').addEventListener('change', renderTable);
+
+/* ---------- Table ---------- */
+function renderTable() {
+  const filter = $('statusFilter').value;
+  const list = items.filter((it) => !filter || (it.status || 'Pending Review') === filter);
+  $('countLabel').textContent = `(${list.length} shown)`;
+  if (!list.length) {
+    $('rows').innerHTML = '<tr><td colspan="10" style="text-align:center;color:#ddd6fe;padding:20px">No submissions match this filter.</td></tr>';
+    return;
+  }
+  $('rows').innerHTML = list.map((it) => `
+    <tr data-id="${esc(it.id)}" class="${it.id === selectedId ? 'sel' : ''}">
+      <td>${esc(it.teacherName)}</td>
+      <td>${esc(it.component)}</td>
+      <td>${esc(it.section)}</td>
+      <td>${esc(it.period)}</td>
+      <td>${esc(it.filename)}</td>
+      <td>${badge(it.status)}</td>
+      <td>${esc(it.reviewer || '—')}</td>
+      <td>${esc(fmt(it.submittedAt))}</td>
+      <td>${esc(it.actionedAt ? fmt(it.actionedAt) : '—')}</td>
+      <td class="notes" title="${esc(it.feedback || '')}">${esc(short(it.feedback) || '—')}</td>
+    </tr>`).join('');
+  document.querySelectorAll('#rows tr[data-id]').forEach((tr) => {
+    tr.addEventListener('click', () => selectItem(tr.dataset.id));
   });
 }
-// text/plain avoids the CORS preflight that Apps Script can't answer.
-async function post(payload) {
-  const res = await fetch(API_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-    body: JSON.stringify(payload)
-  });
-  return res.json();
-}
-async function get(params) {
-  const res = await fetch(API_URL + '?' + new URLSearchParams(params).toString());
-  return res.json();
+
+/* ---------- Select and review ---------- */
+function selectItem(id) {
+  const it = items.find((x) => x.id === id);
+  if (!it) return;
+  selectedId = id;
+  $('placeholder').classList.add('hidden');
+  $('docFrame').classList.remove('hidden');
+  $('docFrame').src = `https://docs.google.com/document/d/${it.id}/edit?rm=minimal`;
+  $('openLink').href = it.editUrl;
+  $('openLink').classList.remove('hidden');
+
+  $('selInfo').innerHTML = `<strong>${esc(it.teacherName)}</strong> · ${esc(it.component)} · ${esc(it.section)} · ${esc(it.period)}<br>${esc(it.filename)}<br>Current status: ${badge(it.status)}`;
+  document.querySelectorAll('input[name="status"]').forEach((r) => { r.checked = r.value === (it.status || 'Pending Review'); });
+  $('feedback').value = '';
+  $('reviewerName').value = $('reviewerName').value || it.reviewer || '';
+  toggleReturnNote();
+  renderTable();
+  renderHistory();
 }
 
-/* ---------- Test connection ---------- */
-$('pingBtn').addEventListener('click', async () => {
-  setMsg($('globalMsg'), 'Testing connection...', true);
+document.querySelectorAll('input[name="status"]').forEach((r) => r.addEventListener('change', toggleReturnNote));
+function toggleReturnNote() {
+  const checked = document.querySelector('input[name="status"]:checked');
+  $('returnNote').classList.toggle('hidden', !checked || checked.value !== 'Return to Sender');
+}
+
+$('saveBtn').addEventListener('click', async () => {
+  const status = document.querySelector('input[name="status"]:checked')?.value;
+  const reviewer = $('reviewerName').value.trim();
+  const feedback = $('feedback').value.trim();
+  if (!selectedId) return setMsg($('reviewMsg'), 'Select a submission in the table first.', false);
+  if (!status) return setMsg($('reviewMsg'), 'Choose a decision.', false);
+  if (!reviewer) return setMsg($('reviewMsg'), 'Enter your name as reviewer.', false);
+  if (status === 'Return to Sender' && !feedback) return setMsg($('reviewMsg'), 'Notes are required when returning for corrections.', false);
+
+  setMsg($('reviewMsg'), 'Saving...', true);
   try {
-    const r = await get({ action: 'ping' });
-    setMsg($('globalMsg'), r.ok ? 'Connected to the backend.' : 'Backend error: ' + r.error, r.ok);
-  } catch (err) {
-    setMsg($('globalMsg'), 'Could not reach the backend. Check API_URL and the deployment access setting.', false);
-  }
-});
-
-/* ---------- Submit ---------- */
-function showSuccess(d) {
-  $('successName').textContent = d.teacherName;
-  $('successFile').textContent = d.filename;
-  $('successSubject').textContent = d.component;
-  $('successGrade').textContent = d.section;
-  $('successTerm').textContent = d.period;
-  $('successTime').textContent = fmt(d.submittedAt);
-  $('successEmail').textContent = d.teacherEmail;
-  $('successNote').classList.toggle('hidden', d.editShared !== false);
-  $('successCard').classList.remove('hidden');
-  $('submitForm').classList.add('hidden');
-  celebrate();
-}
-$('successClose').addEventListener('click', () => {
-  $('successCard').classList.add('hidden');
-  $('submitForm').classList.remove('hidden');
-  $('submitForm').reset();
-});
-
-function celebrate() {
-  const colors = ['#c084fc', '#a855f7', '#e9d5ff', '#f0abfc', '#fbbf24', '#ffffff'];
-  for (let i = 0; i < 60; i++) {
-    const c = document.createElement('span');
-    c.style.cssText = `position:fixed;top:-20px;left:${Math.random() * 100}vw;width:10px;height:14px;border-radius:2px;z-index:50;pointer-events:none;background:${colors[i % colors.length]};animation:fall ${2 + Math.random() * 2}s linear forwards;animation-delay:${Math.random() * 0.5}s`;
-    document.body.appendChild(c);
-    setTimeout(() => c.remove(), 4500);
-  }
-}
-if (!document.getElementById('fallKf')) {
-  const st = document.createElement('style'); st.id = 'fallKf';
-  st.textContent = '@keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:0}}';
-  document.head.appendChild(st);
-}
-
-$('submitForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const file = $('file').files[0];
-  if (!file) return setMsg($('submitMsg'), 'Please choose a .docx file.', false);
-  if (!/\.docx$/i.test(file.name)) return setMsg($('submitMsg'), 'Only .docx files are allowed.', false);
-  if (file.size > 10 * 1024 * 1024) return setMsg($('submitMsg'), 'File exceeds 10 MB.', false);
-
-  const btn = $('submitBtn');
-  btn.disabled = true; btn.textContent = 'Uploading...';
-  setMsg($('submitMsg'), 'Uploading and converting to Google Doc...', true);
-
-  const details = {
-    teacherName: $('teacherName').value.trim(),
-    teacherEmail: $('teacherEmail').value.trim(),
-    component: $('component').value,
-    section: $('section').value.trim(),
-    period: $('period').value,
-    filename: file.name
-  };
-  try {
-    const bytes = await toBase64(file);
-    const r = await post({ action: 'submit', key: $('teacherKey').value, ...details, bytes });
-    if (!r.ok) throw new Error(r.error || 'Submission failed.');
-    setMsg($('submitMsg'), '', true);
-    showSuccess({ ...details, submittedAt: new Date().toISOString(), editShared: r.editShared });
-    e.target.reset();
-  } catch (err) {
-    setMsg($('submitMsg'), err.message, false);
-  } finally {
-    btn.disabled = false; btn.textContent = 'Submit Lesson Plan';
-  }
-});
-
-/* ---------- Status and corrections ---------- */
-function renderStatus(item) {
-  const map = {
-    'Pending Review': ['b-pending', 'Pending Review'],
-    'Return to Sender': ['b-return', 'Returned for Corrections'],
-    'Approved': ['b-approved', 'Approved']
-  };
-  const [cls, label] = map[item.status] || ['b-pending', item.status];
-  $('checkBadge').className = 'badge ' + cls;
-  $('checkBadge').textContent = label;
-  $('infoFile').textContent = item.filename;
-  $('infoSubmitted').textContent = fmt(item.submittedAt);
-  $('infoReviewer').textContent = item.reviewer || 'Not yet reviewed';
-  $('infoReviewed').textContent = item.actionedAt ? fmt(item.actionedAt) : 'Not yet';
-  $('feedbackWrap').classList.toggle('hidden', !item.feedback);
-  $('checkFeedback').textContent = item.feedback || '';
-  const returned = item.status === 'Return to Sender';
-  $('returnBanner').classList.toggle('hidden', !returned);
-  $('correctedBtn').classList.toggle('hidden', !returned);
-  $('checkEdit').href = item.editUrl || '#';
-  $('checkResult').classList.remove('hidden');
-}
-
-async function runStatus() {
-  setMsg($('checkMsg'), 'Checking...', true);
-  const r = await post({ action: 'status', ...checkCreds });
-  if (!r.ok) throw new Error(r.error);
-  if (!r.found) {
-    $('checkResult').classList.add('hidden');
-    return setMsg($('checkMsg'), 'No matching submission. Check your name, file name, and key.', false);
-  }
-  renderStatus(r.item);
-  setMsg($('checkMsg'), 'Submission found.', true);
-}
-
-$('statusForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  checkCreds = { teacherName: $('checkName').value.trim(), filename: $('checkFile').value.trim(), key: $('checkKey').value };
-  try { await runStatus(); } catch (err) { setMsg($('checkMsg'), err.message, false); }
-});
-
-$('correctedBtn').addEventListener('click', async () => {
-  if (!checkCreds) return;
-  $('correctedBtn').disabled = true;
-  try {
-    const r = await post({ action: 'corrected', ...checkCreds });
+    const r = await post({ action: 'review', key: $('reviewerKey').value.trim(), id: selectedId, status, reviewer, feedback });
     if (!r.ok) throw new Error(r.error);
-    await runStatus();
-    setMsg($('checkMsg'), 'Thank you. Your corrections were sent back to the Master Teacher for review.', true);
+    const note = r.emailed ? 'Review saved. Teacher notified by email.' : 'Review saved. Email not sent' + (r.emailNote ? ': ' + r.emailNote : '.');
+    setMsg($('reviewMsg'), note, true);
+    await loadAll();
+    selectItem(selectedId);
   } catch (err) {
-    setMsg($('checkMsg'), err.message, false);
-  } finally {
-    $('correctedBtn').disabled = false;
+    setMsg($('reviewMsg'), err.message, false);
   }
 });
+
+/* ---------- History ---------- */
+function renderHistory() {
+  const rows = history
+    .filter((h) => !selectedId || h.submissionId === selectedId)
+    .sort((a, b) => String(b.at).localeCompare(String(a.at)));
+  $('histLabel').textContent = selectedId ? '(for selected submission)' : '(all submissions)';
+  if (!rows.length) {
+    $('histRows').innerHTML = '<tr><td colspan="6" style="text-align:center;color:#ddd6fe;padding:16px">No history yet.</td></tr>';
+    return;
+  }
+  $('histRows').innerHTML = rows.map((h) => `
+    <tr>
+      <td>${esc(fmt(h.at))}</td>
+      <td>${esc(h.action)}</td>
+      <td>${esc(h.by)}</td>
+      <td>${esc(h.teacherName)}<br><span style="opacity:.8">${esc(h.filename)}</span></td>
+      <td>${badge(h.status)}</td>
+      <td class="notes">${esc(h.feedback || '—')}</td>
+    </tr>`).join('');
+}
 </script>
 </body>
 </html>
