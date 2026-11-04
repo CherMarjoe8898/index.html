@@ -3,108 +3,218 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>TLE/TechPro Digital Lesson Bank & Review System</title>
+<title>MCLLNHS TLE/TechPro Digital Lesson Bank & Review System 2026</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
-  body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  :root { --violet-900:#2e1065; --violet-700:#6d28d9; --violet-500:#8b5cf6; --violet-300:#c4b5fd; }
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    min-height: 100vh;
+    color: #f5f3ff;
+    background: linear-gradient(-45deg, #2e1065, #5b21b6, #7c3aed, #4c1d95, #a78bfa);
+    background-size: 400% 400%;
+    animation: gradientShift 16s ease infinite;
+  }
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  /* Floating glowing orbs */
+  .orb {
+    position: fixed; border-radius: 50%; filter: blur(60px); opacity: .55;
+    pointer-events: none; z-index: -1; animation: float 18s ease-in-out infinite;
+  }
+  .orb.a { width: 380px; height: 380px; background: #a855f7; top: -80px; left: -80px; }
+  .orb.b { width: 300px; height: 300px; background: #7c3aed; bottom: -60px; right: -60px; animation-delay: -6s; }
+  .orb.c { width: 220px; height: 220px; background: #d8b4fe; top: 40%; left: 55%; animation-delay: -12s; }
+  @keyframes float {
+    0%,100% { transform: translate(0,0) scale(1); }
+    33% { transform: translate(60px,-40px) scale(1.1); }
+    66% { transform: translate(-40px,50px) scale(.95); }
+  }
+  /* Drifting sparkles */
+  .spark {
+    position: fixed; width: 4px; height: 4px; border-radius: 50%; background: #e9d5ff;
+    box-shadow: 0 0 8px #e9d5ff; opacity: .7; pointer-events: none; z-index: -1;
+    animation: rise linear infinite;
+  }
+  @keyframes rise {
+    from { transform: translateY(110vh); opacity: 0; }
+    10% { opacity: .8; }
+    to { transform: translateY(-10vh); opacity: 0; }
+  }
+  .glass {
+    background: rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.22);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 10px 40px rgba(0,0,0,.25);
+    border-radius: 1rem;
+  }
+  .field {
+    width: 100%; background: rgba(255,255,255,.92); color: #2e1065;
+    border: 1px solid #c4b5fd; border-radius: .6rem; padding: .55rem .75rem;
+    outline: none; transition: box-shadow .2s, border-color .2s;
+  }
+  .field:focus { border-color: #8b5cf6; box-shadow: 0 0 0 3px rgba(139,92,246,.45); }
+  .label { display:block; font-size:.85rem; font-weight:600; color:#ede9fe; margin-bottom:.3rem; }
+  .btn {
+    width: 100%; padding: .7rem; border-radius: .7rem; font-weight: 700; color: #fff;
+    background: linear-gradient(90deg, #7c3aed, #a855f7);
+    box-shadow: 0 6px 20px rgba(124,58,237,.5);
+    transition: transform .15s, box-shadow .2s, filter .2s;
+  }
+  .btn:hover { transform: translateY(-2px); filter: brightness(1.08); box-shadow: 0 10px 28px rgba(168,85,247,.6); }
+  .btn:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+  .btn-dark { background: linear-gradient(90deg, #4c1d95, #6d28d9); }
+  .title-glow { text-shadow: 0 0 18px rgba(216,180,254,.7); }
   .badge-pending { background:#fef3c7; color:#92400e; }
   .badge-return  { background:#fee2e2; color:#991b1b; }
   .badge-approved{ background:#dcfce7; color:#166534; }
+  select.field option { color:#2e1065; }
+
+  /* Congratulations card */
+  .success-card {
+    background: linear-gradient(135deg, rgba(167,139,250,.35), rgba(216,180,254,.25));
+    border: 1px solid rgba(255,255,255,.35);
+    animation: popIn .5s ease-out;
+  }
+  @keyframes popIn {
+    from { opacity: 0; transform: scale(.94) translateY(8px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  .confetti {
+    position: fixed; top: -20px; width: 10px; height: 14px; border-radius: 2px;
+    pointer-events: none; z-index: 50; animation: fall linear forwards;
+  }
+  @keyframes fall {
+    to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+  }
 </style>
 </head>
-<body class="bg-slate-100 text-slate-800 min-h-screen">
+<body>
 
 <script>
   const API_URL = 'https://script.google.com/macros/s/AKfycbwlgzqmsCaYxunPRmglCddrAzfRhjsbyeiF7ZKR8m66GlGZkb54yXCq4NKV8vGdpkoc3Q/exec';
 </script>
 
-<header class="bg-teal-800 text-white px-6 py-4 shadow">
-  <h1 class="text-xl font-semibold">TLE/TechPro Digital Lesson Bank &amp; Review System</h1>
+<!-- Animated background decorations -->
+<div class="orb a"></div>
+<div class="orb b"></div>
+<div class="orb c"></div>
+<div id="sparks"></div>
+
+<header class="max-w-[1600px] mx-auto px-6 pt-6">
+  <div class="glass px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-3">
+    <div>
+      <p class="text-xs tracking-widest text-violet-200 uppercase">MCLLNHS</p>
+      <h1 class="title-glow text-xl md:text-2xl font-bold">TLE/TechPro Digital Lesson Bank &amp; Review System 2026</h1>
+    </div>
+    <div class="flex gap-2">
+      <button id="musicBtn" class="glass px-4 py-2 text-sm font-semibold hover:bg-white/20">🎵 Music: Off</button>
+      <button id="pingBtn" class="glass px-4 py-2 text-sm font-semibold hover:bg-white/20">Test Connection</button>
+    </div>
+  </div>
+  <p id="globalMsg" class="text-sm text-center py-2"></p>
 </header>
 
-<main class="flex flex-col lg:flex-row gap-4 p-4 max-w-[1600px] mx-auto">
+<main class="flex flex-col lg:flex-row gap-5 p-6 max-w-[1600px] mx-auto">
 
   <!-- LEFT PANEL -->
-  <section class="w-full lg:w-[40%] space-y-4">
+  <section class="w-full lg:w-[40%] space-y-5">
 
-    <!-- Teacher submission -->
-    <div class="bg-white rounded-xl shadow p-5">
-      <h2 class="text-lg font-semibold text-teal-800 mb-3">A. Teacher Submission</h2>
-      <form id="submitForm" class="space-y-3">
-        <div>
-          <label class="block text-sm font-medium">Teacher Name</label>
-          <input id="teacherName" required class="w-full border rounded px-3 py-2" />
+    <!-- A. Teacher submission -->
+    <div class="glass p-6">
+      <h2 class="text-lg font-bold text-violet-100 mb-4">A. Teacher Submission</h2>
+
+      <!-- Congratulations card (shown after a successful upload) -->
+      <div id="successCard" class="success-card rounded-xl p-5 mb-5 hidden">
+        <p class="text-2xl font-bold">🎉 Congratulations, <span id="successName"></span>!</p>
+        <p class="mt-2 text-violet-50">Your lesson plan was submitted successfully and is now <strong>Pending Review</strong>.</p>
+        <div class="mt-3 text-sm space-y-1 text-violet-100">
+          <div><span class="opacity-75">File:</span> <span id="successFile"></span></div>
+          <div><span class="opacity-75">Subject:</span> <span id="successSubject"></span></div>
+          <div><span class="opacity-75">Grade:</span> <span id="successGrade"></span></div>
+          <div><span class="opacity-75">Term:</span> <span id="successTerm"></span></div>
+          <div><span class="opacity-75">Submitted:</span> <span id="successTime"></span></div>
         </div>
+        <button id="successClose" class="mt-4 text-sm underline text-violet-100 hover:text-white">Submit another file</button>
+      </div>
+
+      <form id="submitForm" class="space-y-4">
         <div>
-          <label class="block text-sm font-medium">TLE Component</label>
-          <select id="component" required class="w-full border rounded px-3 py-2">
-            <option value="">Select...</option>
-            <option>Home Economics</option>
-            <option>Agri-Fishery Arts</option>
-            <option>Industrial Arts</option>
-            <option>ICT</option>
-            <option>TechPro</option>
-          </select>
+          <label class="label" for="teacherName">Teacher Name</label>
+          <input id="teacherName" required class="field" />
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block text-sm font-medium">Grade / Section</label>
-            <input id="section" required class="w-full border rounded px-3 py-2" />
+            <label class="label" for="section">Grade</label>
+            <input id="section" required placeholder="e.g. Grade 9" class="field" />
           </div>
           <div>
-            <label class="block text-sm font-medium">Quarter / Week</label>
-            <input id="period" required placeholder="e.g. Q2 W3" class="w-full border rounded px-3 py-2" />
+            <label class="label" for="component">Subject</label>
+            <select id="component" required class="field">
+              <option value="">Select...</option>
+              <option value="TLE">TLE</option>
+              <option value="TechPro">TechPro</option>
+            </select>
           </div>
         </div>
         <div>
-          <label class="block text-sm font-medium">Lesson Plan (.docx only, max 10 MB)</label>
-          <input id="file" type="file" accept=".docx" required
-                 class="w-full text-sm file:mr-3 file:py-2 file:px-3 file:rounded file:border-0 file:bg-teal-700 file:text-white hover:file:bg-teal-800" />
+          <label class="label" for="period">Term</label>
+          <select id="period" required class="field">
+            <option value="">Select...</option>
+            <option value="Term 1">Term 1</option>
+            <option value="Term 2">Term 2</option>
+            <option value="Term 3">Term 3</option>
+          </select>
         </div>
         <div>
-          <label class="block text-sm font-medium">Submission Key</label>
-          <input id="teacherKey" type="password" required class="w-full border rounded px-3 py-2" />
+          <label class="label" for="file">Lesson Plan (.docx only, max 10 MB)</label>
+          <input id="file" type="file" accept=".docx" required
+                 class="w-full text-sm text-violet-100 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:bg-violet-600 file:text-white hover:file:bg-violet-500" />
         </div>
-        <button type="submit" id="submitBtn"
-                class="w-full bg-teal-700 hover:bg-teal-800 text-white font-medium py-2 rounded">
-          Submit to Drive Bank
-        </button>
+        <div>
+          <label class="label" for="teacherKey">Submission Key</label>
+          <input id="teacherKey" type="password" required class="field" />
+        </div>
+        <button type="submit" id="submitBtn" class="btn">Submit to Drive Bank</button>
         <p id="submitMsg" class="text-sm"></p>
       </form>
     </div>
 
-    <!-- Master Teacher panel -->
-    <div class="bg-white rounded-xl shadow p-5">
-      <h2 class="text-lg font-semibold text-teal-800 mb-3">B. Master Teacher Panel</h2>
+    <!-- B. Master Teacher panel -->
+    <div class="glass p-6">
+      <h2 class="text-lg font-bold text-violet-100 mb-4">B. Master Teacher Panel</h2>
 
       <div class="grid grid-cols-2 gap-3 mb-3">
         <div>
-          <label class="block text-sm font-medium">Reviewer Key</label>
-          <input id="reviewerKey" type="password" class="w-full border rounded px-3 py-2" />
+          <label class="label" for="reviewerKey">Reviewer Key</label>
+          <input id="reviewerKey" type="password" class="field" />
         </div>
         <div>
-          <label class="block text-sm font-medium">Reviewer Name</label>
-          <input id="reviewerName" class="w-full border rounded px-3 py-2" />
+          <label class="label" for="reviewerName">Reviewer Name</label>
+          <input id="reviewerName" class="field" />
         </div>
       </div>
 
-      <button id="loadBtn" class="w-full bg-slate-700 hover:bg-slate-800 text-white py-2 rounded mb-3">
-        Load Submissions
-      </button>
+      <button id="loadBtn" class="btn btn-dark mb-2">Load Submissions</button>
+      <p id="loadMsg" class="text-sm mb-3"></p>
 
-      <div class="mb-3">
-        <label class="block text-sm font-medium mb-1">Submission</label>
-        <select id="submissionSelect" class="w-full border rounded px-3 py-2">
+      <div class="mb-4">
+        <label class="label" for="submissionSelect">Submission</label>
+        <select id="submissionSelect" class="field">
           <option value="">— load submissions first —</option>
         </select>
       </div>
 
       <div id="statusBadgeWrap" class="mb-3 hidden">
-        <span id="statusBadge" class="px-3 py-1 rounded-full text-sm font-medium"></span>
+        <span id="statusBadge" class="px-3 py-1 rounded-full text-sm font-semibold"></span>
       </div>
 
-      <fieldset class="mb-3">
-        <legend class="text-sm font-medium mb-1">Review Status</legend>
+      <fieldset class="mb-4">
+        <legend class="label mb-2">Review Status</legend>
         <div class="flex flex-wrap gap-4 text-sm">
           <label class="flex items-center gap-1"><input type="radio" name="status" value="Pending Review" /> Pending Review</label>
           <label class="flex items-center gap-1"><input type="radio" name="status" value="Return to Sender" /> Return to Sender</label>
@@ -112,29 +222,305 @@
         </div>
       </fieldset>
 
-      <div class="mb-3">
-        <label class="block text-sm font-medium">Feedback &amp; Major Corrections</label>
-        <textarea id="feedback" rows="4" class="w-full border rounded px-3 py-2"></textarea>
+      <div class="mb-4">
+        <label class="label" for="feedback">Feedback &amp; Major Corrections</label>
+        <textarea id="feedback" rows="4" class="field"></textarea>
       </div>
 
-      <div class="text-xs text-slate-500 mb-3 space-y-1">
+      <div class="text-xs text-violet-200 mb-4 space-y-1">
         <div>Date/Time Submitted: <span id="tsSubmitted">—</span></div>
         <div>Date/Time Actioned: <span id="tsActioned">—</span></div>
       </div>
 
-      <button id="saveBtn" class="w-full bg-teal-700 hover:bg-teal-800 text-white py-2 rounded">
-        Save Review &amp; Log Status
-      </button>
+      <button id="saveBtn" class="btn">Save Review &amp; Log Status</button>
       <p id="reviewMsg" class="text-sm mt-2"></p>
     </div>
   </section>
 
   <!-- RIGHT PANEL -->
   <section class="w-full lg:w-[60%]">
-    <div class="bg-white rounded-xl shadow p-5 h-full flex flex-col">
-      <h2 class="text-lg font-semibold text-teal-800 mb-3">Live Document Preview &amp; In-Browser Editing</h2>
-      <div id="workbench" class="flex-1 min-h-[70vh] rounded-lg border-2 border-dashed border-slate-300 flex items-center justify-center bg-slate-50">
-        <p id="placeholder" class="text-slate-500 text-center px-6">
-          Select or upload a lesson plan to view and edit directly without downloading.
+    <div class="glass p-6 h-full flex flex-col">
+      <h2 class="text-lg font-bold text-violet-100 mb-4">Live Document Preview &amp; In-Browser Editing</h2>
+      <div id="workbench" class="flex-1 min-h-[70vh] rounded-xl border-2 border-dashed border-violet-300/60 flex items-center justify-center bg-white/5 overflow-hidden">
+        <p id="placeholder" class="text-violet-200 text-center px-6">
+          Select a submission to view and edit it without downloading.
         </p>
-        <iframe id="docFrame" class="w-full h-full
+        <iframe id="docFrame" class="w-full h-full min-h-[70vh] rounded-xl bg-white hidden" title="Lesson plan"></iframe>
+      </div>
+      <div class="mt-3 flex justify-between items-center text-sm">
+        <a id="openLink" href="#" target="_blank" rel="noopener" class="text-violet-200 underline hidden">Open in new tab</a>
+        <span id="returnNote" class="text-pink-200 font-semibold hidden">
+          Returned for corrections. Teacher edits the same document and resubmits.
+        </span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="text-center text-xs text-violet-200 pb-6">MCLLNHS · TLE/TechPro · 2026</footer>
+
+<script>
+const $ = (id) => document.getElementById(id);
+let submissions = [];
+
+/* ---------- Sparkles ---------- */
+(function makeSparks() {
+  const wrap = $('sparks');
+  for (let i = 0; i < 40; i++) {
+    const s = document.createElement('span');
+    s.className = 'spark';
+    s.style.left = Math.random() * 100 + 'vw';
+    s.style.animationDuration = (8 + Math.random() * 12) + 's';
+    s.style.animationDelay = (-Math.random() * 15) + 's';
+    s.style.transform = `scale(${0.5 + Math.random()})`;
+    wrap.appendChild(s);
+  }
+})();
+
+/* ---------- Ambient music (generated in-browser, starts only on click) ---------- */
+let audioCtx = null, musicNodes = [];
+$('musicBtn').addEventListener('click', () => {
+  if (audioCtx) {
+    musicNodes.forEach((n) => { try { n.stop ? n.stop() : n.disconnect(); } catch (_) {} });
+    audioCtx.close();
+    audioCtx = null; musicNodes = [];
+    $('musicBtn').textContent = '🎵 Music: Off';
+    return;
+  }
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  const master = audioCtx.createGain();
+  master.gain.value = 0.06;
+  master.connect(audioCtx.destination);
+
+  // Soft chord with slow volume swell
+  [220, 277.18, 329.63, 440].forEach((freq, i) => {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    const lfo = audioCtx.createOscillator();
+    const lfoGain = audioCtx.createGain();
+    osc.type = i % 2 ? 'sine' : 'triangle';
+    osc.frequency.value = freq;
+    lfo.frequency.value = 0.05 + i * 0.02;
+    lfoGain.gain.value = 0.5;
+    lfo.connect(lfoGain).connect(gain.gain);
+    gain.gain.value = 0.5;
+    osc.connect(gain).connect(master);
+    osc.start(); lfo.start();
+    musicNodes.push(osc, lfo);
+  });
+  $('musicBtn').textContent = '🎵 Music: On';
+});
+
+/* ---------- Helpers ---------- */
+function fmt(iso) {
+  if (!iso) return '—';
+  const d = new Date(iso);
+  return isNaN(d) ? '—' : d.toLocaleString('en-PH', { dateStyle: 'medium', timeStyle: 'short' });
+}
+
+function setMsg(el, text, ok) {
+  el.textContent = text;
+  el.className = (el.id === 'globalMsg' ? 'text-sm text-center py-2 ' : 'text-sm mt-2 ') +
+                 (ok ? 'text-emerald-300 font-semibold' : 'text-pink-200 font-semibold');
+}
+
+function toBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result.split(',')[1]);
+    reader.onerror = () => reject(new Error('Could not read the file.'));
+    reader.readAsDataURL(file);
+  });
+}
+
+// text/plain avoids the CORS preflight that Apps Script can't answer.
+async function post(payload) {
+  const res = await fetch(API_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify(payload)
+  });
+  return res.json();
+}
+
+async function get(params) {
+  const res = await fetch(API_URL + '?' + new URLSearchParams(params).toString());
+  return res.json();
+}
+
+function showBadge(status) {
+  const map = {
+    'Pending Review': ['badge-pending', 'Pending Review'],
+    'Return to Sender': ['badge-return', 'Return to Sender for Corrections'],
+    'Approved': ['badge-approved', 'Approved']
+  };
+  const [cls, label] = map[status] || ['', status || ''];
+  $('statusBadge').className = 'px-3 py-1 rounded-full text-sm font-semibold ' + cls;
+  $('statusBadge').textContent = label;
+  $('statusBadgeWrap').classList.remove('hidden');
+}
+
+/* ---------- Congratulations ---------- */
+function celebrate() {
+  const colors = ['#c084fc', '#a855f7', '#e9d5ff', '#f0abfc', '#fbbf24', '#ffffff'];
+  for (let i = 0; i < 60; i++) {
+    const c = document.createElement('span');
+    c.className = 'confetti';
+    c.style.left = Math.random() * 100 + 'vw';
+    c.style.background = colors[i % colors.length];
+    c.style.animationDuration = (2 + Math.random() * 2) + 's';
+    c.style.animationDelay = (Math.random() * 0.5) + 's';
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 4500);
+  }
+}
+
+function showSuccess(data) {
+  $('successName').textContent = data.teacherName;
+  $('successFile').textContent = data.filename;
+  $('successSubject').textContent = data.component;
+  $('successGrade').textContent = data.section;
+  $('successTerm').textContent = data.period;
+  $('successTime').textContent = fmt(data.submittedAt);
+  $('successCard').classList.remove('hidden');
+  $('submitForm').classList.add('hidden');
+  celebrate();
+}
+
+$('successClose').addEventListener('click', () => {
+  $('successCard').classList.add('hidden');
+  $('submitForm').classList.remove('hidden');
+  $('submitForm').reset();
+  setMsg($('submitMsg'), '', true);
+});
+
+/* ---------- Test connection ---------- */
+$('pingBtn').addEventListener('click', async () => {
+  setMsg($('globalMsg'), 'Testing connection...', true);
+  try {
+    const r = await get({ action: 'ping' });
+    setMsg($('globalMsg'), r.ok ? 'Connected to the backend.' : 'Backend error: ' + r.error, r.ok);
+  } catch (err) {
+    setMsg($('globalMsg'), 'Could not reach the backend. Check API_URL and the deployment access setting.', false);
+  }
+});
+
+/* ---------- Teacher submission ---------- */
+$('submitForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const file = $('file').files[0];
+  if (!file) return setMsg($('submitMsg'), 'Please choose a .docx file.', false);
+  if (!/\.docx$/i.test(file.name)) return setMsg($('submitMsg'), 'Only .docx files are allowed.', false);
+  if (file.size > 10 * 1024 * 1024) return setMsg($('submitMsg'), 'File exceeds 10 MB.', false);
+
+  const btn = $('submitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Uploading...';
+  setMsg($('submitMsg'), 'Uploading and converting to Google Doc...', true);
+
+  const details = {
+    teacherName: $('teacherName').value.trim(),
+    component: $('component').value,
+    section: $('section').value.trim(),
+    period: $('period').value,
+    filename: file.name
+  };
+
+  try {
+    const bytes = await toBase64(file);
+    const result = await post({ action: 'submit', key: $('teacherKey').value, ...details, bytes });
+    if (!result.ok) throw new Error(result.error || 'Submission failed.');
+    setMsg($('submitMsg'), '', true);
+    showSuccess({ ...details, submittedAt: new Date().toISOString() });
+    e.target.reset();
+  } catch (err) {
+    setMsg($('submitMsg'), err.message, false);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Submit to Drive Bank';
+  }
+});
+
+/* ---------- Master Teacher: load list ---------- */
+$('loadBtn').addEventListener('click', async () => {
+  const key = $('reviewerKey').value;
+  if (!key) return setMsg($('loadMsg'), 'Enter the Reviewer Key first.', false);
+  setMsg($('loadMsg'), 'Loading...', true);
+  try {
+    const result = await get({ action: 'list', key });
+    if (!result.ok) throw new Error(result.error);
+    submissions = result.items;
+    const sel = $('submissionSelect');
+    sel.innerHTML = '<option value="">— select a submission —</option>';
+    submissions.forEach((s) => {
+      const opt = document.createElement('option');
+      opt.value = s.id;
+      opt.textContent = `${s.teacherName} · ${s.component} · ${s.section} · ${s.period}`;
+      sel.appendChild(opt);
+    });
+    setMsg($('loadMsg'), `Loaded ${submissions.length} submission(s).`, true);
+  } catch (err) {
+    setMsg($('loadMsg'), err.message, false);
+  }
+});
+
+/* ---------- Select a submission ---------- */
+$('submissionSelect').addEventListener('change', (e) => {
+  const item = submissions.find((s) => s.id === e.target.value);
+  if (!item) return;
+
+  const frame = $('docFrame');
+  frame.src = `https://docs.google.com/document/d/${item.id}/edit?rm=minimal`;
+  frame.classList.remove('hidden');
+  $('placeholder').classList.add('hidden');
+  $('openLink').href = item.editUrl;
+  $('openLink').classList.remove('hidden');
+
+  document.querySelectorAll('input[name="status"]').forEach((r) => {
+    r.checked = r.value === item.status;
+  });
+  $('feedback').value = item.feedback || '';
+  $('tsSubmitted').textContent = fmt(item.submittedAt);
+  $('tsActioned').textContent = fmt(item.actionedAt);
+  $('reviewerName').value = item.reviewer || $('reviewerName').value;
+  showBadge(item.status);
+  $('returnNote').classList.toggle('hidden', item.status !== 'Return to Sender');
+});
+
+document.querySelectorAll('input[name="status"]').forEach((r) => {
+  r.addEventListener('change', (e) => {
+    showBadge(e.target.value);
+    $('returnNote').classList.toggle('hidden', e.target.value !== 'Return to Sender');
+  });
+});
+
+/* ---------- Save review ---------- */
+$('saveBtn').addEventListener('click', async () => {
+  const id = $('submissionSelect').value;
+  const status = document.querySelector('input[name="status"]:checked')?.value;
+  const reviewer = $('reviewerName').value.trim();
+  const feedback = $('feedback').value.trim();
+
+  if (!id) return setMsg($('reviewMsg'), 'Select a submission first.', false);
+  if (!status) return setMsg($('reviewMsg'), 'Choose a status.', false);
+  if (!reviewer) return setMsg($('reviewMsg'), 'Enter your name as reviewer.', false);
+  if (status === 'Return to Sender' && !feedback) {
+    return setMsg($('reviewMsg'), 'Feedback is required when returning for corrections.', false);
+  }
+
+  try {
+    const result = await post({
+      action: 'review',
+      key: $('reviewerKey').value,
+      id, status, reviewer, feedback
+    });
+    if (!result.ok) throw new Error(result.error);
+    setMsg($('reviewMsg'), 'Review saved and logged.', true);
+    $('tsActioned').textContent = fmt(new Date().toISOString());
+  } catch (err) {
+    setMsg($('reviewMsg'), err.message, false);
+  }
+});
+</script>
+</body>
+</html>
