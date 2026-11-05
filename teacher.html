@@ -228,6 +228,30 @@ input:focus,select:focus{border-color:var(--purple-2);box-shadow:0 0 0 3px rgba(
 .correction-token-panel p{font-size:11px;color:#6c5948;line-height:1.5;margin:6px 0 10px}
 .correction-token-value{width:100%;min-height:58px;border:1px solid #e6c9ad;border-radius:8px;padding:9px;font:12px ui-monospace,Consolas,monospace;color:#603b17;overflow-wrap:anywhere;resize:vertical}
 @media(max-width:760px){.correction-access-grid,.correction-summary{grid-template-columns:1fr}.correction-preview{height:380px}}
+
+/* ADMIN WORKSPACE */
+.admin-workspace{display:none;margin-top:18px}
+.admin-filter-grid{display:grid;grid-template-columns:minmax(220px,1.5fr) repeat(2,minmax(170px,1fr));gap:12px;align-items:end}
+.admin-filter-grid .form-group{margin:0}
+.admin-detail-grid{display:grid;grid-template-columns:minmax(280px,.85fr) minmax(0,1.15fr);gap:16px;align-items:start;margin-top:16px}
+.admin-detail-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}
+.admin-detail-list .detail-item{padding:10px;border:1px solid #eee8f5;border-radius:9px;background:#fbfaff;min-width:0}
+.admin-detail-list .detail-item strong{overflow-wrap:anywhere}
+.admin-action-box{border-top:1px solid #eee9f2;margin-top:15px;padding-top:14px}
+.admin-action-box h3{font-size:13px;color:var(--navy);margin:0 0 8px}
+.admin-action-box .form-group{margin-bottom:11px}
+.admin-action-note{font-size:10px;color:var(--muted);line-height:1.5;margin:6px 0 10px}
+.admin-preview{height:570px;width:100%;border:1px solid var(--border);border-radius:10px;background:#fff}
+.admin-table{min-width:1040px}
+.admin-history-table{min-width:900px}
+.admin-activity-table{min-width:850px}
+.admin-row{cursor:pointer}
+.admin-row.selected{background:#f4edff}
+.admin-small{font-size:10px;color:var(--muted)}
+.admin-status-line{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+@media(max-width:1050px){.admin-detail-grid{grid-template-columns:1fr}.admin-preview{height:520px}}
+@media(max-width:760px){.admin-filter-grid,.admin-detail-list{grid-template-columns:1fr}.admin-preview{height:420px}}
+
 /* footer */
 .footer{margin-top:27px;padding:15px 2px;border-top:1px solid var(--border);font-size:10px;color:#8a8491;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .toast{position:fixed;right:22px;bottom:22px;background:var(--navy);color:#fff;padding:12px 16px;border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.18);font-size:12px;z-index:100;display:none;max-width:340px}
@@ -324,6 +348,11 @@ input:focus,select:focus{border-color:var(--purple-2);box-shadow:0 0 0 3px rgba(
     <nav class="nav-section" aria-label="Master Teacher workspace">
       <div class="nav-label">MASTER TEACHER WORKSPACE</div>
       <button class="nav-link" data-page="reviewer" onclick="showPage('reviewer',this)"><span class="nav-icon">✓</span>Master Teacher Access</button>
+    </nav>
+
+    <nav class="nav-section" aria-label="Admin workspace">
+      <div class="nav-label">ADMIN WORKSPACE</div>
+      <button class="nav-link" data-page="admin" onclick="showPage('admin',this)"><span class="nav-icon">⚙</span>Admin Access</button>
     </nav>
 
     <nav class="nav-section" aria-label="Resources">
@@ -709,6 +738,100 @@ input:focus,select:focus{border-color:var(--purple-2);box-shadow:0 0 0 3px rgba(
         </div>
       </section>
 
+      <!-- ADMIN WORKSPACE -->
+      <section class="page" id="page-admin">
+        <div class="page-heading">
+          <div>
+            <div class="eyebrow">ADMINISTRATOR WORKSPACE</div>
+            <h1>System Administration</h1>
+            <p>Monitor every lesson-plan submission, review decision, correction round, and recorded workflow action across all three Master Teachers.</p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-heading"><h2>Administrator Access</h2><span>Server-verified access key</span></div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="admin-key">Admin Access Key <span class="req">*</span></label>
+              <input type="password" id="admin-key" autocomplete="current-password" placeholder="Enter your private Admin Access Key">
+              <div class="helper">The key is checked by Apps Script and is kept only in this page's temporary memory while you are signed in. It is not saved in browser storage.</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:9px;flex-wrap:wrap;margin-top:12px">
+            <button class="btn btn-primary" id="admin-login-button" onclick="adminLogin()">Open Admin Dashboard</button>
+            <button class="btn btn-light" id="admin-refresh-button" onclick="adminLoadDashboard(true)" disabled>Refresh Data</button>
+            <button class="btn btn-muted" id="admin-logout-button" onclick="adminLogout()" disabled>Log Out</button>
+          </div>
+          <div class="mt-review-message" id="admin-login-message" aria-live="polite"></div>
+        </div>
+
+        <div class="admin-workspace" id="admin-workspace">
+          <div class="stats-grid" style="margin-top:17px">
+            <div class="stat-card"><div class="stat-top"><span class="stat-label">TOTAL SUBMISSIONS</span><span class="stat-icon">▤</span></div><div class="stat-number" id="admin-total-count">0</div><div class="stat-caption">All official submission records</div></div>
+            <div class="stat-card"><div class="stat-top"><span class="stat-label">PENDING REVIEW</span><span class="stat-icon">◷</span></div><div class="stat-number" id="admin-pending-count">0</div><div class="stat-caption">Awaiting Master Teacher action</div></div>
+            <div class="stat-card"><div class="stat-top"><span class="stat-label">RETURNED</span><span class="stat-icon">↻</span></div><div class="stat-number" id="admin-returned-count">0</div><div class="stat-caption">Awaiting teacher corrections</div></div>
+            <div class="stat-card"><div class="stat-top"><span class="stat-label">APPROVED</span><span class="stat-icon">✓</span></div><div class="stat-number" id="admin-approved-count">0</div><div class="stat-caption">Approved by Master Teachers</div></div>
+          </div>
+
+          <div class="panel" style="margin-top:17px">
+            <div class="admin-status-line"><div class="panel-heading" style="margin-bottom:12px"><h2>All Submissions</h2><span id="admin-submission-count">0 records</span></div><span class="admin-small" id="admin-last-loaded">Not yet refreshed</span></div>
+            <div class="admin-filter-grid">
+              <div class="form-group"><label for="admin-search">Search</label><input type="search" id="admin-search" placeholder="Submission ID, teacher, lesson title, email" oninput="adminRenderSubmissions()"></div>
+              <div class="form-group"><label for="admin-status-filter">Status</label><select id="admin-status-filter" onchange="adminRenderSubmissions()"><option value="">All statuses</option><option value="PENDING REVIEW">Pending Review</option><option value="RETURN TO SENDER">Return to Sender</option><option value="APPROVED">Approved</option></select></div>
+              <div class="form-group"><label for="admin-reviewer-filter">Assigned Master Teacher</label><select id="admin-reviewer-filter" onchange="adminRenderSubmissions()"><option value="">All Master Teachers</option><option value="VENUS V. AMONCIO">VENUS V. AMONCIO</option><option value="IMELDA A. BRUTAS">IMELDA A. BRUTAS</option><option value="RUTCHIL E. VISTAL">RUTCHIL E. VISTAL</option></select></div>
+            </div>
+            <div class="table-wrap" style="margin-top:14px">
+              <table class="admin-table">
+                <thead><tr><th>DATE SUBMITTED</th><th>SUBMISSION ID</th><th>TEACHER</th><th>GRADE / SUBJECT</th><th>ASSIGNED MASTER TEACHER</th><th>STATUS</th><th>ROUND</th><th>RESUBMISSIONS</th></tr></thead>
+                <tbody id="admin-submission-rows"><tr><td colspan="8"><div class="empty-state"><strong>Loading submissions…</strong></div></td></tr></tbody>
+              </table>
+            </div>
+            <div class="admin-small" style="margin-top:10px">Select a row to inspect the record, open its file, or perform an authorized administrative action.</div>
+          </div>
+
+          <div class="admin-detail-grid">
+            <div class="panel">
+              <div class="panel-heading"><h2>Submission Details</h2><span id="admin-selected-title">No selection</span></div>
+              <div id="admin-detail-empty" class="mt-doc-placeholder" style="min-height:190px;height:auto">Select a submission from the table above.</div>
+              <div id="admin-detail-content" style="display:none">
+                <div class="admin-detail-list" id="admin-detail-list"></div>
+                <div class="admin-action-box">
+                  <h3>Administrative Controls</h3>
+                  <div class="form-group">
+                    <label for="admin-reassign-reviewer">Reassign Master Teacher</label>
+                    <select id="admin-reassign-reviewer"><option value="">Choose a Master Teacher</option><option value="VENUS V. AMONCIO">VENUS V. AMONCIO</option><option value="IMELDA A. BRUTAS">IMELDA A. BRUTAS</option><option value="RUTCHIL E. VISTAL">RUTCHIL E. VISTAL</option></select>
+                  </div>
+                  <div class="form-group"><label for="admin-action-reason">Reason / Audit Note</label><textarea class="mt-review-textarea" id="admin-action-reason" rows="3" placeholder="Required for reassignment or reopening an approved submission."></textarea></div>
+                  <div style="display:flex;gap:8px;flex-wrap:wrap">
+                    <button class="btn btn-primary" id="admin-reassign-button" onclick="adminReassignSelected()" disabled>Save Reassignment</button>
+                    <button class="btn btn-gold" id="admin-reopen-button" onclick="adminReopenSelected()" disabled>Reopen Approved</button>
+                    <button class="btn btn-light" id="admin-token-button" onclick="adminReissueTokenSelected()" disabled>Reissue Correction Token</button>
+                  </div>
+                  <div class="admin-action-note">Every administrative change requires authorization and is written to Review History and Activity Log. Approved records must be reopened before they can be reassigned. Correction-token reissue is available only for records currently marked Return to Sender.</div>
+                  <div class="mt-review-message" id="admin-action-message" aria-live="polite"></div>
+                </div>
+              </div>
+            </div>
+            <div class="panel">
+              <div class="panel-heading"><h2>Submitted File Preview</h2><span id="admin-preview-name">No file selected</span></div>
+              <div id="admin-preview-placeholder" class="mt-doc-placeholder">Select a submission to preview its current Google Doc or PDF.</div>
+              <iframe id="admin-preview-frame" class="admin-preview" title="Admin submitted lesson plan preview" style="display:none" referrerpolicy="no-referrer"></iframe>
+              <div style="display:flex;justify-content:flex-end;margin-top:10px"><a class="btn btn-light" id="admin-open-file" href="#" target="_blank" rel="noopener" style="display:none;text-decoration:none">Open Submitted File</a></div>
+            </div>
+          </div>
+
+          <div class="panel" style="margin-top:17px">
+            <div class="panel-heading"><h2>Global Review History</h2><span id="admin-history-count">All reviewers and teacher resubmissions</span></div>
+            <div class="table-wrap"><table class="admin-history-table"><thead><tr><th>DATE &amp; TIME</th><th>SUBMISSION ID</th><th>TEACHER</th><th>ACTION</th><th>REVIEWER</th><th>STATUS</th><th>FEEDBACK / NOTES</th></tr></thead><tbody id="admin-history-rows"><tr><td colspan="7"><div class="empty-state"><strong>No history loaded</strong></div></td></tr></tbody></table></div>
+          </div>
+
+          <div class="panel" style="margin-top:17px">
+            <div class="panel-heading"><h2>System Activity Log</h2><span id="admin-activity-count">Recorded workflow actions</span></div>
+            <div class="table-wrap"><table class="admin-activity-table"><thead><tr><th>DATE &amp; TIME</th><th>USER</th><th>ROLE</th><th>ACTION</th><th>SUBMISSION ID</th><th>DETAILS</th></tr></thead><tbody id="admin-activity-rows"><tr><td colspan="6"><div class="empty-state"><strong>No activity records found</strong></div></td></tr></tbody></table></div>
+          </div>
+        </div>
+      </section>
+
       <!-- GUIDELINES -->
       <section class="page" id="page-guidelines">
         <div class="page-heading"><div><div class="eyebrow">RESOURCES</div><h1>Guidelines &amp; Help</h1><p>Quick reminders for submitting and tracking lesson plans.</p></div></div>
@@ -750,6 +873,17 @@ function showPage(pageName, button){
   if(pageName === "history") renderHistory();
   if(pageName === "reviewer" && mtAuthenticatedReviewer) {
     document.getElementById("mt-workspace").style.display = "block";
+  }
+  if(pageName === "admin") {
+    const subtitle = document.querySelector(".topbar-sub");
+    if(subtitle) subtitle.textContent = "TLE & TechPro · Administrator Workspace";
+    const profile = document.querySelector(".profile-meta strong");
+    if(profile) profile.textContent = "Administrator Access";
+    const profileSub = document.querySelector(".profile-meta span");
+    if(profileSub) profileSub.textContent = "Admin Workspace";
+    const connection = document.querySelector(".connection-pill");
+    if(connection) connection.innerHTML = '<span class="connection-dot"></span>Admin Portal';
+    if(adminAccessKey) adminLoadDashboard(true);
   }
   window.scrollTo({top:0,behavior:"smooth"});
 }
@@ -1672,6 +1806,264 @@ function mtLogout(){
   mtRenderCounts();
 }
 
+
+/* =========================================================
+   ADMIN WORKSPACE — all-record access is server-authorized
+========================================================= */
+let adminAccessKey = "";
+let adminItems = [];
+let adminHistory = [];
+let adminActivity = [];
+let adminSelectedSubmissionId = "";
+
+function adminLogin(){
+  const key = document.getElementById("admin-key").value.trim();
+  if(!key){
+    mtSetMessage("admin-login-message","Enter your private Admin Access Key.","error");
+    document.getElementById("admin-key").focus();
+    return;
+  }
+  adminAccessKey = key;
+  adminLoadDashboard(false);
+}
+
+async function adminLoadDashboard(keepSelection){
+  if(!adminAccessKey){
+    adminLogin();
+    return;
+  }
+  const previousSelection = keepSelection ? adminSelectedSubmissionId : "";
+  const button = document.getElementById("admin-login-button");
+  button.disabled = true;
+  button.textContent = "Verifying Admin Access…";
+  mtSetMessage("admin-login-message","Verifying the Admin Access Key and loading all system records…","success");
+  try{
+    const result = await mtApiPost({action:"adminLoadDashboard",adminKey:adminAccessKey});
+    if(!result || !result.success) throw new Error((result && (result.error || result.message)) || "Admin access could not be verified.");
+    adminItems = Array.isArray(result.items) ? result.items : [];
+    adminHistory = Array.isArray(result.history) ? result.history : [];
+    adminActivity = Array.isArray(result.activity) ? result.activity : [];
+    adminSelectedSubmissionId = adminItems.some(x => x.submissionId === previousSelection) ? previousSelection : "";
+    document.getElementById("admin-workspace").style.display = "block";
+    document.getElementById("admin-refresh-button").disabled = false;
+    document.getElementById("admin-logout-button").disabled = false;
+    const counts = result.counts || {};
+    document.getElementById("admin-total-count").textContent = Number(counts.total || 0);
+    document.getElementById("admin-pending-count").textContent = Number(counts.pending || 0);
+    document.getElementById("admin-returned-count").textContent = Number(counts.returned || 0);
+    document.getElementById("admin-approved-count").textContent = Number(counts.approved || 0);
+    document.getElementById("admin-last-loaded").textContent = "Updated " + mtIsoDisplay(result.loadedAt);
+    adminRenderSubmissions();
+    adminRenderHistory();
+    adminRenderActivity();
+    mtSetMessage("admin-login-message","Admin access verified. Loaded " + adminItems.length + " submission(s), " + adminHistory.length + " history record(s), and " + adminActivity.length + " activity record(s).","success");
+    if(adminSelectedSubmissionId) adminSelectSubmission(adminSelectedSubmissionId);
+    else adminResetSelection();
+  }catch(error){
+    if(/Admin access denied|not configured|too short/i.test(error.message)){
+      adminAccessKey = "";
+      document.getElementById("admin-workspace").style.display = "none";
+      document.getElementById("admin-refresh-button").disabled = true;
+      document.getElementById("admin-logout-button").disabled = true;
+    }
+    mtSetMessage("admin-login-message",error.message,"error");
+  }finally{
+    button.disabled = false;
+    button.textContent = "Open Admin Dashboard";
+  }
+}
+
+function adminRenderSubmissions(){
+  const search = document.getElementById("admin-search").value.trim().toLowerCase();
+  const status = document.getElementById("admin-status-filter").value.toUpperCase();
+  const reviewer = document.getElementById("admin-reviewer-filter").value.toUpperCase();
+  const rows = adminItems.filter(item => {
+    const itemStatus = String(item.status || "PENDING REVIEW").toUpperCase();
+    const itemReviewer = String(item.assignedMasterTeacher || "").toUpperCase();
+    const text = [item.submissionId,item.teacherName,item.teacherEmail,item.lessonTitle,item.subject,item.gradeLevel,item.term,item.assignedMasterTeacher,item.fileName].join(" ").toLowerCase();
+    return (!status || itemStatus === status) && (!reviewer || itemReviewer === reviewer) && (!search || text.includes(search));
+  });
+  document.getElementById("admin-submission-count").textContent = rows.length + " shown / " + adminItems.length + " total";
+  const body = document.getElementById("admin-submission-rows");
+  if(!rows.length){
+    body.innerHTML = '<tr><td colspan="8"><div class="empty-state"><strong>No matching submissions</strong><p>Change the search text or filters.</p></div></td></tr>';
+    return;
+  }
+  body.innerHTML = rows.map(item => {
+    const selected = item.submissionId === adminSelectedSubmissionId ? "selected" : "";
+    const gradeSubject = [item.gradeLevel,item.subject].filter(Boolean).join(" · ") || "—";
+    return '<tr class="admin-row '+selected+'" data-admin-id="'+escapeAttr(item.submissionId)+'">'+
+      '<td>'+escapeHtml(mtIsoDisplay(item.submittedAt))+'</td>'+
+      '<td><strong>'+escapeHtml(item.submissionId)+'</strong></td>'+
+      '<td>'+escapeHtml(item.teacherName || "—")+'<br><span class="admin-small">'+escapeHtml(item.teacherEmail || "")+'</span></td>'+
+      '<td>'+escapeHtml(gradeSubject)+'</td>'+
+      '<td>'+escapeHtml(item.assignedMasterTeacher || "Unassigned")+'</td>'+
+      '<td>'+mtStatusBadge(item.status)+'</td>'+
+      '<td>'+escapeHtml(String(Number(item.correctionRound || 0)))+'</td>'+
+      '<td>'+escapeHtml(String(Number(item.resubmissionCount || 0)))+'</td></tr>';
+  }).join("");
+  body.querySelectorAll("tr[data-admin-id]").forEach(row => row.addEventListener("click",() => adminSelectSubmission(row.getAttribute("data-admin-id"))));
+}
+
+function adminRenderHistory(){
+  const body = document.getElementById("admin-history-rows");
+  document.getElementById("admin-history-count").textContent = adminHistory.length + " records · all reviewers and teacher resubmissions";
+  if(!adminHistory.length){
+    body.innerHTML = '<tr><td colspan="7"><div class="empty-state"><strong>No review history found</strong></div></td></tr>';
+    return;
+  }
+  body.innerHTML = adminHistory.map(item => '<tr>'+
+    '<td>'+escapeHtml(mtIsoDisplay(item.at))+'</td>'+
+    '<td>'+escapeHtml(item.submissionId || "—")+'</td>'+
+    '<td>'+escapeHtml(item.teacherName || "—")+'</td>'+
+    '<td>'+escapeHtml(item.action || "—")+'</td>'+
+    '<td>'+escapeHtml(item.reviewer || "SYSTEM")+'</td>'+
+    '<td>'+mtStatusBadge(item.status)+'</td>'+
+    '<td class="mt-notes">'+escapeHtml(item.feedback || "—")+'</td></tr>').join("");
+}
+
+function adminRenderActivity(){
+  const body = document.getElementById("admin-activity-rows");
+  document.getElementById("admin-activity-count").textContent = adminActivity.length + " recorded workflow actions";
+  if(!adminActivity.length){
+    body.innerHTML = '<tr><td colspan="6"><div class="empty-state"><strong>No activity records found</strong><p>New administrative actions will be recorded here. Existing actions appear if they were already logged in ACTIVITY_LOG.</p></div></td></tr>';
+    return;
+  }
+  body.innerHTML = adminActivity.map(item => '<tr>'+
+    '<td>'+escapeHtml(mtIsoDisplay(item.at))+'</td>'+
+    '<td>'+escapeHtml(item.user || "—")+'</td>'+
+    '<td>'+escapeHtml(item.role || "—")+'</td>'+
+    '<td>'+escapeHtml(item.action || "—")+'</td>'+
+    '<td>'+escapeHtml(item.submissionId || "—")+'</td>'+
+    '<td class="mt-notes">'+escapeHtml(item.details || "—")+'</td></tr>').join("");
+}
+
+function adminResetSelection(){
+  adminSelectedSubmissionId = "";
+  document.getElementById("admin-selected-title").textContent = "No selection";
+  document.getElementById("admin-detail-empty").style.display = "flex";
+  document.getElementById("admin-detail-content").style.display = "none";
+  document.getElementById("admin-preview-name").textContent = "No file selected";
+  document.getElementById("admin-preview-placeholder").style.display = "flex";
+  document.getElementById("admin-preview-frame").style.display = "none";
+  document.getElementById("admin-preview-frame").src = "about:blank";
+  document.getElementById("admin-open-file").style.display = "none";
+  document.getElementById("admin-action-reason").value = "";
+  document.getElementById("admin-action-message").textContent = "";
+  document.getElementById("admin-reassign-button").disabled = true;
+  document.getElementById("admin-reopen-button").disabled = true;
+  document.getElementById("admin-token-button").disabled = true;
+  adminRenderSubmissions();
+}
+
+function adminSelectSubmission(id){
+  const item = adminItems.find(x => x.submissionId === id);
+  if(!item) return;
+  adminSelectedSubmissionId = item.submissionId;
+  document.getElementById("admin-selected-title").textContent = item.submissionId;
+  document.getElementById("admin-detail-empty").style.display = "none";
+  document.getElementById("admin-detail-content").style.display = "block";
+  const details = [
+    ["Teacher",item.teacherName], ["Teacher Email",item.teacherEmail], ["Department",item.department],
+    ["Grade Level",item.gradeLevel], ["Subject",item.subject], ["Term",item.term],
+    ["Lesson Title",item.lessonTitle], ["Assigned Master Teacher",item.assignedMasterTeacher],
+    ["Current Status",item.status], ["Correction Round",item.correctionRound],
+    ["Resubmission Count",item.resubmissionCount], ["Document Type",item.documentType],
+    ["File Name",item.fileName], ["Date Submitted",mtIsoDisplay(item.submittedAt)],
+    ["Last Updated",mtIsoDisplay(item.lastUpdated)], ["Last Updated By",item.lastUpdatedBy]
+  ];
+  document.getElementById("admin-detail-list").innerHTML = details.map(([label,value]) =>
+    '<div class="detail-item"><small>'+escapeHtml(label)+'</small><strong>'+escapeHtml(value === null || value === undefined || value === "" ? "—" : String(value))+'</strong></div>'
+  ).join("");
+  document.getElementById("admin-reassign-reviewer").value = "";
+  document.getElementById("admin-action-reason").value = "";
+  document.getElementById("admin-action-message").textContent = "";
+  const currentStatus = String(item.status || "").toUpperCase();
+  document.getElementById("admin-reassign-button").disabled = currentStatus === "APPROVED";
+  document.getElementById("admin-reopen-button").disabled = currentStatus !== "APPROVED";
+  document.getElementById("admin-token-button").disabled = currentStatus !== "RETURN TO SENDER";
+
+  const frame = document.getElementById("admin-preview-frame");
+  const placeholder = document.getElementById("admin-preview-placeholder");
+  document.getElementById("admin-preview-name").textContent = item.fileName || item.documentType || "Submitted file";
+  if(item.previewUrl){
+    frame.src = item.previewUrl;
+    frame.style.display = "block";
+    placeholder.style.display = "none";
+  }else{
+    frame.src = "about:blank";
+    frame.style.display = "none";
+    placeholder.style.display = "flex";
+    placeholder.textContent = "No preview URL is recorded for this submission. Use Open Submitted File if a file link is available.";
+  }
+  const openLink = document.getElementById("admin-open-file");
+  if(item.documentUrl){ openLink.href = item.documentUrl; openLink.style.display = "inline-flex"; }
+  else { openLink.href = "#"; openLink.style.display = "none"; }
+  adminRenderSubmissions();
+}
+
+async function adminReassignSelected(){
+  const item = adminItems.find(x => x.submissionId === adminSelectedSubmissionId);
+  const newReviewer = document.getElementById("admin-reassign-reviewer").value;
+  const reason = document.getElementById("admin-action-reason").value.trim();
+  if(!item){ mtSetMessage("admin-action-message","Select a submission first.","error"); return; }
+  if(!newReviewer){ mtSetMessage("admin-action-message","Choose the new Master Teacher.","error"); return; }
+  if(!reason){ mtSetMessage("admin-action-message","Enter a reason for the reassignment.","error"); return; }
+  if(!confirm("Reassign " + item.submissionId + " from " + (item.assignedMasterTeacher || "Unassigned") + " to " + newReviewer + "? This change will be recorded in the audit history.")) return;
+  try{
+    const result = await mtApiPost({action:"adminReassignSubmission",adminKey:adminAccessKey,submissionId:item.submissionId,newReviewer:newReviewer,reason:reason});
+    if(!result || !result.success) throw new Error((result && (result.error || result.message)) || "Reassignment failed.");
+    mtSetMessage("admin-action-message",result.message,"success");
+    await adminLoadDashboard(true);
+  }catch(error){ mtSetMessage("admin-action-message",error.message,"error"); }
+}
+
+async function adminReopenSelected(){
+  const item = adminItems.find(x => x.submissionId === adminSelectedSubmissionId);
+  const reason = document.getElementById("admin-action-reason").value.trim();
+  if(!item){ mtSetMessage("admin-action-message","Select a submission first.","error"); return; }
+  if(String(item.status || "").toUpperCase() !== "APPROVED"){ mtSetMessage("admin-action-message","Only an approved submission can be reopened.","error"); return; }
+  if(!reason){ mtSetMessage("admin-action-message","Enter a reason for reopening this approved submission.","error"); return; }
+  if(!confirm("Reopen " + item.submissionId + "? Its status will change from APPROVED to PENDING REVIEW and the action will be audited.")) return;
+  try{
+    const result = await mtApiPost({action:"adminReopenSubmission",adminKey:adminAccessKey,submissionId:item.submissionId,reason:reason});
+    if(!result || !result.success) throw new Error((result && (result.error || result.message)) || "The submission could not be reopened.");
+    mtSetMessage("admin-action-message",result.message + (result.reviewerNotified ? " The assigned reviewer was notified by email." : ""),"success");
+    await adminLoadDashboard(true);
+  }catch(error){ mtSetMessage("admin-action-message",error.message,"error"); }
+}
+
+async function adminReissueTokenSelected(){
+  const item = adminItems.find(x => x.submissionId === adminSelectedSubmissionId);
+  if(!item){ mtSetMessage("admin-action-message","Select a submission first.","error"); return; }
+  if(String(item.status || "").toUpperCase() !== "RETURN TO SENDER"){ mtSetMessage("admin-action-message","A correction token can only be reissued for a submission marked RETURN TO SENDER.","error"); return; }
+  if(!confirm("Send a replacement one-time correction token to " + item.teacherEmail + "? The previous token will become invalid.")) return;
+  try{
+    const result = await mtApiPost({action:"adminReissueCorrectionToken",adminKey:adminAccessKey,submissionId:item.submissionId});
+    if(!result || !result.success) throw new Error((result && (result.error || result.message)) || "Token reissue failed.");
+    mtSetMessage("admin-action-message",result.message,"success");
+    await adminLoadDashboard(true);
+  }catch(error){ mtSetMessage("admin-action-message",error.message,"error"); }
+}
+
+function adminLogout(){
+  adminAccessKey = "";
+  adminItems = [];
+  adminHistory = [];
+  adminActivity = [];
+  adminSelectedSubmissionId = "";
+  document.getElementById("admin-key").value = "";
+  document.getElementById("admin-workspace").style.display = "none";
+  document.getElementById("admin-refresh-button").disabled = true;
+  document.getElementById("admin-logout-button").disabled = true;
+  document.getElementById("admin-submission-rows").innerHTML = '<tr><td colspan="8"><div class="empty-state"><strong>Sign in to load all submissions</strong></div></td></tr>';
+  document.getElementById("admin-history-rows").innerHTML = '<tr><td colspan="7"><div class="empty-state"><strong>No history loaded</strong></div></td></tr>';
+  document.getElementById("admin-activity-rows").innerHTML = '<tr><td colspan="6"><div class="empty-state"><strong>No activity loaded</strong></div></td></tr>';
+  adminResetSelection();
+  mtSetMessage("admin-login-message","You have logged out of the Admin workspace.","success");
+}
+
+
 // Open the requested workspace when arriving from the landing page.
 const requestedWorkspace = new URLSearchParams(window.location.search).get("workspace");
 if (requestedWorkspace === "reviewer") {
@@ -1690,6 +2082,16 @@ if (requestedWorkspace === "reviewer") {
   if (profile) profile.textContent = "Teacher Access";
   const profileSub = document.querySelector(".profile-meta span");
   if (profileSub) profileSub.textContent = "Correction Desk";
+} else if (requestedWorkspace === "admin") {
+  showPage("admin");
+  const subtitle = document.querySelector(".topbar-sub");
+  if (subtitle) subtitle.textContent = "TLE & TechPro · Administrator Workspace";
+  const profile = document.querySelector(".profile-meta strong");
+  if (profile) profile.textContent = "Administrator Access";
+  const profileSub = document.querySelector(".profile-meta span");
+  if (profileSub) profileSub.textContent = "Admin Workspace";
+  const connection = document.querySelector(".connection-pill");
+  if (connection) connection.innerHTML = '<span class="connection-dot"></span>Admin Portal';
 } else {
   showPage("dashboard");
 }
