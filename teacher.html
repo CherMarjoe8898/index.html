@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MCLLNHS TLE &amp; TechPro | Teacher Workspace</title>
+<title>MCLLNHS TLE/TechPro CHECK | Digital Workspace</title>
 <style>
 :root{
   --navy:#0b2942;
@@ -323,16 +323,37 @@ input:focus,select:focus{border-color:var(--purple-2);box-shadow:0 0 0 3px rgba(
   .track-search .btn{width:100%}
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+/* CHECK brand opening animation */
+.check-splash{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;padding:24px;background:radial-gradient(circle at 50% 35%,#1f5ca6 0%,#102f69 48%,#071a3d 100%);opacity:1;visibility:visible;transition:opacity .55s ease,visibility 0s linear .55s}
+.check-splash.is-hidden{opacity:0;visibility:hidden;pointer-events:none}
+.check-splash-card{width:min(940px,94vw);text-align:center;animation:checkLogoEnter .95s cubic-bezier(.2,.75,.2,1) both}
+.check-splash-logo{display:block;width:min(100%,860px);max-height:58vh;height:auto;object-fit:contain;margin:0 auto;border-radius:15px;box-shadow:0 22px 65px rgba(0,0,0,.34)}
+.check-splash-caption{color:#fff;font-size:13px;font-weight:800;letter-spacing:1.25px;margin:17px 0 13px;text-shadow:0 2px 8px rgba(0,0,0,.35)}
+.check-splash-enter{border:1px solid rgba(255,255,255,.55);background:#f8d34f;color:#092d68;border-radius:24px;padding:10px 23px;font-size:11px;font-weight:950;letter-spacing:1px;cursor:pointer;box-shadow:0 7px 20px rgba(0,0,0,.2)}
+.check-splash-enter:hover{filter:brightness(1.06);transform:translateY(-1px)}
+@keyframes checkLogoEnter{0%{opacity:0;transform:translateY(20px) scale(.96)}100%{opacity:1;transform:translateY(0) scale(1)}}
+@media(prefers-reduced-motion:reduce){.check-splash-card{animation:none}.check-splash{transition:none}.check-splash-enter:hover{transform:none}}
+
 </style>
 </head>
 <body>
+
+<div class="check-splash" id="check-splash" role="dialog" aria-label="CHECK opening screen" aria-modal="true">
+  <div class="check-splash-card">
+    <img class="check-splash-logo" src="check-logo.png" alt="MCLLNHS TLE/TechPro CHECK logo">
+    <div class="check-splash-caption">A PAPERLESS LESSON PLAN SUBMISSION, REVIEW, TRACKING, AND REPOSITORY SYSTEM</div>
+    <button class="check-splash-enter" id="check-splash-enter" type="button">ENTER CHECK</button>
+  </div>
+</div>
+
 <div class="app-shell">
   <aside class="sidebar" id="sidebar">
     <div class="brand">
       <div class="brand-seal"><img src="mcllnhs-seal.png" alt="MCLLNHS official school seal"></div>
       <div>
-        <div class="brand-name">MCLLNHS<br>TLE &amp; TECHPRO</div>
-        <div class="brand-sub">DIGITAL LESSON PLAN BANK</div>
+        <div class="brand-name">MCLLNHS<br>TLE/TECHPRO CHECK</div>
+        <div class="brand-sub">PAPERLESS LESSON PLAN SYSTEM</div>
       </div>
     </div>
 
@@ -372,15 +393,15 @@ input:focus,select:focus{border-color:var(--purple-2);box-shadow:0 0 0 3px rgba(
       <div class="topbar-left">
         <button class="mobile-toggle" onclick="toggleSidebar()" aria-label="Open navigation">☰</button>
         <div>
-          <div class="topbar-title">Digital Lesson Plan Bank</div>
-          <div class="topbar-sub">TLE &amp; TechPro · Teacher Workspace</div>
+          <div class="topbar-title">CHECK — Paperless Lesson Plan System</div>
+          <div class="topbar-sub">CHECK · Teacher Workspace</div>
         </div>
       </div>
       <div class="topbar-right">
-        <span class="connection-pill"><span class="connection-dot"></span>Teacher Portal</span>
+        <span class="connection-pill"><span class="connection-dot"></span>CHECK Workspace</span>
         <div class="profile-chip">
           <div class="profile-avatar">T</div>
-          <div class="profile-meta"><strong>Teacher Access</strong><span>MCLLNHS TLE &amp; TechPro</span></div>
+          <div class="profile-meta"><strong>Teacher Access</strong><span>MCLLNHS TLE/TechPro CHECK</span></div>
         </div>
       </div>
     </header>
@@ -413,7 +434,7 @@ input:focus,select:focus{border-color:var(--purple-2);box-shadow:0 0 0 3px rgba(
               <button class="quick-card" onclick="showPage('history')"><span class="q-icon">📋</span><strong>My Submissions</strong><small>See submissions saved from this browser and open their tracking details.</small></button>
               <button class="quick-card" onclick="showPage('guidelines')"><span class="q-icon">📘</span><strong>Guidelines &amp; Help</strong><small>Review the submission requirements and workflow.</small></button>
             </div>
-            <div class="panel-footnote">The summary above is a local convenience view of submissions made or tracked on this browser. The official records remain in the Lesson Plan Bank spreadsheet.</div>
+            <div class="panel-footnote">The summary above is a local convenience view of submissions made or tracked on this browser. The official records remain in the CHECK connected records spreadsheet.</div>
           </div>
 
           <div class="panel">
@@ -536,7 +557,7 @@ input:focus,select:focus{border-color:var(--purple-2);box-shadow:0 0 0 3px rgba(
 
       <!-- LIVE MY SUBMISSIONS -->
       <section class="page" id="page-history">
-        <div class="page-heading"><div><div class="eyebrow">OFFICIAL TEACHER RECORDS</div><h1>My Submissions</h1><p>Retrieve your lesson-plan records directly from the official Lesson Plan Bank spreadsheet.</p></div><button class="btn btn-light" onclick="showPage('track')">Track by ID →</button></div>
+        <div class="page-heading"><div><div class="eyebrow">OFFICIAL TEACHER RECORDS</div><h1>My Submissions</h1><p>Retrieve your lesson-plan records directly from the CHECK records spreadsheet.</p></div><button class="btn btn-light" onclick="showPage('track')">Track by ID →</button></div>
         <div class="history-note"><strong>How this works:</strong> Enter the same teacher email address used when submitting your lesson plans. The system filters the official submission records by that email. Email-only lookup is not identity verification, so do not treat this page as a private account sign-in.</div>
         <div class="panel" style="margin-bottom:16px">
           <div class="form-grid">
@@ -845,7 +866,7 @@ input:focus,select:focus{border-color:var(--purple-2);box-shadow:0 0 0 3px rgba(
         </div>
       </section>
 
-      <div class="footer"><span>MCLLNHS TLE &amp; TechPro · Digital Lesson Plan Bank</span><span>Developed by Marjorie R. Cabana (Cher Marjoe)</span></div>
+      <div class="footer"><span>MCLLNHS TLE/TechPro CHECK · Paperless Lesson Plan System</span><span>Developed by Marjorie R. Cabana (Cher Marjoe)</span></div>
     </div>
   </main>
 </div>
@@ -876,7 +897,7 @@ function showPage(pageName, button){
   }
   if(pageName === "admin") {
     const subtitle = document.querySelector(".topbar-sub");
-    if(subtitle) subtitle.textContent = "TLE & TechPro · Administrator Workspace";
+    if(subtitle) subtitle.textContent = "CHECK · Administrator Workspace";
     const profile = document.querySelector(".profile-meta strong");
     if(profile) profile.textContent = "Administrator Access";
     const profileSub = document.querySelector(".profile-meta span");
@@ -1219,7 +1240,7 @@ async function trackSubmission(){
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ resultBox.innerHTML = '<div class="empty-state"><strong>Check your email address</strong><p>Please enter a valid email address.</p></div>'; document.getElementById("track-email").focus(); return; }
   button.disabled = true;
   button.textContent = "Checking…";
-  resultBox.innerHTML = '<div class="empty-state"><strong>Checking the Lesson Plan Bank…</strong><p>Retrieving the latest submission information.</p></div>';
+  resultBox.innerHTML = '<div class="empty-state"><strong>Checking CHECK records…</strong><p>Retrieving the latest submission information.</p></div>';
   try{
     const response = await fetch(API_URL,{method:"POST",body:JSON.stringify({action:"trackSubmission",submissionId:id,teacherEmail:email})});
     if(!response.ok) throw new Error("The server returned HTTP " + response.status + ".");
@@ -2069,7 +2090,7 @@ const requestedWorkspace = new URLSearchParams(window.location.search).get("work
 if (requestedWorkspace === "reviewer") {
   showPage("reviewer");
   const subtitle = document.querySelector(".topbar-sub");
-  if (subtitle) subtitle.textContent = "TLE & TechPro · Master Teacher Workspace";
+  if (subtitle) subtitle.textContent = "CHECK · Master Teacher Workspace";
   const profile = document.querySelector(".profile-meta strong");
   if (profile) profile.textContent = "Master Teacher Access";
   const profileSub = document.querySelector(".profile-meta span");
@@ -2077,7 +2098,7 @@ if (requestedWorkspace === "reviewer") {
 } else if (requestedWorkspace === "corrections") {
   showPage("corrections");
   const subtitle = document.querySelector(".topbar-sub");
-  if (subtitle) subtitle.textContent = "TLE & TechPro · Teacher Correction Desk";
+  if (subtitle) subtitle.textContent = "CHECK · Teacher Correction Desk";
   const profile = document.querySelector(".profile-meta strong");
   if (profile) profile.textContent = "Teacher Access";
   const profileSub = document.querySelector(".profile-meta span");
@@ -2085,7 +2106,7 @@ if (requestedWorkspace === "reviewer") {
 } else if (requestedWorkspace === "admin") {
   showPage("admin");
   const subtitle = document.querySelector(".topbar-sub");
-  if (subtitle) subtitle.textContent = "TLE & TechPro · Administrator Workspace";
+  if (subtitle) subtitle.textContent = "CHECK · Administrator Workspace";
   const profile = document.querySelector(".profile-meta strong");
   if (profile) profile.textContent = "Administrator Access";
   const profileSub = document.querySelector(".profile-meta span");
@@ -2095,6 +2116,24 @@ if (requestedWorkspace === "reviewer") {
 } else {
   showPage("dashboard");
 }
+</script>
+
+<script>
+(function(){
+  const splash=document.getElementById("check-splash");
+  const enter=document.getElementById("check-splash-enter");
+  if(!splash) return;
+  let closed=false;
+  function closeSplash(){
+    if(closed) return;
+    closed=true;
+    splash.classList.add("is-hidden");
+    window.setTimeout(function(){ if(splash.parentNode) splash.parentNode.removeChild(splash); },600);
+  }
+  if(enter) enter.addEventListener("click",closeSplash);
+  const reduced=window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  window.setTimeout(closeSplash,reduced?500:2600);
+})();
 </script>
 </body>
 </html>
