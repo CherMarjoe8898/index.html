@@ -1,356 +1,735 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>MCLLNHS Master Teacher Review Workspace 2026</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MCLLNHS Digital Lesson Plan Bank</title>
+
 <style>
-  * { box-sizing: border-box; }
-  body {
-    margin: 0; min-height: 100vh; color: #f5f3ff;
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    background: linear-gradient(-45deg, #2e1065, #5b21b6, #7c3aed, #4c1d95, #a78bfa);
-    background-size: 400% 400%; animation: shift 16s ease infinite;
-    display: flex; flex-direction: column;
-  }
-  @keyframes shift { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
-  .orb { position: fixed; border-radius: 50%; filter: blur(60px); opacity: .5; pointer-events: none; z-index: -1; animation: float 18s ease-in-out infinite; }
-  .orb.a { width: 380px; height: 380px; background: #a855f7; top: -80px; left: -80px; }
-  .orb.b { width: 300px; height: 300px; background: #7c3aed; bottom: -60px; right: -60px; animation-delay: -6s; }
-  @keyframes float { 0%,100%{transform:translate(0,0)} 50%{transform:translate(60px,-40px)} }
 
-  .glass { background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.22); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 10px 40px rgba(0,0,0,.25); border-radius: 16px; }
-  .wrap { width: 100%; max-width: 1400px; margin: 0 auto; padding: 24px; flex: 1; }
-  .topbar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; padding: 18px 22px; }
-  .kicker { margin: 0; font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: #ddd6fe; }
-  h1 { margin: 2px 0 0; font-size: 1.3rem; text-shadow: 0 0 18px rgba(216,180,254,.7); }
-  h2 { margin: 0 0 12px; font-size: 1.05rem; color: #ede9fe; }
-  .card { padding: 22px; margin-top: 22px; }
-  .cols { display: grid; grid-template-columns: 1.2fr 1fr; gap: 22px; margin-top: 22px; }
-  @media (max-width: 960px) { .cols { grid-template-columns: 1fr; } }
+/* =========================================
+   MCLLNHS DIGITAL LESSON PLAN BANK
+   MAIN SYSTEM DASHBOARD
+========================================= */
 
-  .label { display: block; font-size: 13px; font-weight: 600; color: #ede9fe; margin: 10px 0 4px; }
-  .field { width: 100%; padding: 9px 11px; border-radius: 10px; border: 1px solid #c4b5fd; background: rgba(255,255,255,.93); color: #2e1065; font-size: 14px; outline: none; }
-  .field:focus { border-color: #8b5cf6; box-shadow: 0 0 0 3px rgba(139,92,246,.45); }
-  textarea.field { resize: vertical; }
-  .controls { display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 12px; align-items: end; }
-  @media (max-width: 960px) { .controls { grid-template-columns: 1fr; } }
-  .btn { padding: 10px 16px; border: none; border-radius: 10px; font-weight: 700; font-size: 14px; color: #fff; cursor: pointer; background: linear-gradient(90deg, #7c3aed, #a855f7); box-shadow: 0 6px 20px rgba(124,58,237,.5); }
-  .btn:hover { filter: brightness(1.08); }
-  .btn-full { width: 100%; margin-top: 14px; padding: 12px; }
-  .btn-dark { background: linear-gradient(90deg, #4c1d95, #6d28d9); }
-  .msg { margin: 8px 0 0; font-size: 14px; min-height: 1em; }
-  .msg.ok { color: #6ee7b7; font-weight: 600; }
-  .msg.err { color: #fbcfe8; font-weight: 600; }
-  .hidden { display: none !important; }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-  .table-wrap { overflow-x: auto; border-radius: 12px; border: 1px solid rgba(255,255,255,.2); }
-  table { width: 100%; border-collapse: collapse; font-size: 13px; background: rgba(255,255,255,.06); }
-  th, td { padding: 9px 10px; text-align: left; vertical-align: top; border-bottom: 1px solid rgba(255,255,255,.12); }
-  th { background: rgba(255,255,255,.14); color: #ede9fe; font-weight: 700; white-space: nowrap; }
-  tbody tr { cursor: pointer; }
-  tbody tr:hover { background: rgba(255,255,255,.12); }
-  tbody tr.sel { background: rgba(216,180,254,.28); }
-  td.notes { max-width: 260px; word-break: break-word; }
-  .badge { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; white-space: nowrap; }
-  .b-pending { background: #fef3c7; color: #92400e; }
-  .b-return { background: #fee2e2; color: #991b1b; }
-  .b-approved { background: #dcfce7; color: #166534; }
+:root {
+    --navy: #12344D;
+    --blue: #1F5F8B;
+    --blue-light: #EAF3F8;
+    --gold: #D6A84D;
+    --green: #2E7D5B;
+    --red: #C94C4C;
+    --purple: #6A4C93;
+    --bg: #F4F7FA;
+    --card: #FFFFFF;
+    --text: #243746;
+    --muted: #6B7B88;
+    --border: #DCE3E8;
+}
 
-  .preview { width: 100%; height: 620px; border: none; border-radius: 12px; background: #fff; }
-  .placeholder { height: 620px; display: flex; align-items: center; justify-content: center; text-align: center; padding: 24px; color: #ddd6fe; border: 2px dashed rgba(216,180,254,.5); border-radius: 12px; }
-  .doc-links { margin-top: 10px; font-size: 14px; }
-  .doc-links a { color: #fff; }
-  .radios { display: flex; flex-wrap: wrap; gap: 14px; font-size: 14px; margin-top: 4px; }
-  .radios label { display: flex; align-items: center; gap: 6px; font-weight: 500; color: #fff; margin: 0; }
-  .banner { background: #fee2e2; color: #7f1d1d; padding: 10px 12px; border-radius: 10px; font-size: 13px; font-weight: 600; margin-top: 10px; }
-  .current { margin-top: 8px; font-size: 13px; color: #ddd6fe; }
-  .hist-table td, .hist-table th { font-size: 12.5px; }
+/* =========================================
+   BODY
+========================================= */
 
-  footer { text-align: center; font-size: 13px; color: #ddd6fe; padding: 18px; }
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.top-header {
+    background: var(--navy);
+    color: white;
+    padding: 18px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 4px solid var(--gold);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.school-icon {
+    width: 52px;
+    height: 52px;
+    background: white;
+    color: var(--navy);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+}
+
+.brand h1 {
+    font-size: 20px;
+    letter-spacing: .3px;
+}
+
+.brand p {
+    font-size: 12px;
+    opacity: .8;
+    margin-top: 4px;
+}
+
+.system-badge {
+    background: rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.25);
+    padding: 9px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+}
+
+/* =========================================
+   MAIN
+========================================= */
+
+.main-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 45px 25px;
+}
+
+/* =========================================
+   WELCOME
+========================================= */
+
+.welcome-section {
+    text-align: center;
+    margin-bottom: 42px;
+}
+
+.welcome-section h2 {
+    font-size: 34px;
+    color: var(--navy);
+    margin-bottom: 12px;
+}
+
+.welcome-section p {
+    color: var(--muted);
+    font-size: 16px;
+    max-width: 700px;
+    margin: auto;
+    line-height: 1.6;
+}
+
+/* =========================================
+   WORKFLOW
+========================================= */
+
+.workflow {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 22px;
+    margin-bottom: 32px;
+}
+
+.workflow-title {
+    text-align: center;
+    font-weight: bold;
+    color: var(--navy);
+    margin-bottom: 18px;
+}
+
+.workflow-steps {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.step {
+    background: var(--blue-light);
+    color: var(--blue);
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.arrow {
+    color: var(--gold);
+    font-size: 20px;
+}
+
+/* =========================================
+   PORTAL CARDS
+========================================= */
+
+.portal-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.portal-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 30px;
+    transition: .25s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.portal-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,.08);
+}
+
+.portal-icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.teacher-icon {
+    background: #E8F2FB;
+}
+
+.mt-icon {
+    background: #F2EAF8;
+}
+
+.admin-icon {
+    background: #FFF4DD;
+}
+
+.portal-card h3 {
+    color: var(--navy);
+    font-size: 21px;
+    margin-bottom: 8px;
+}
+
+.portal-card .subtitle {
+    font-size: 13px;
+    font-weight: bold;
+    color: var(--blue);
+    margin-bottom: 15px;
+}
+
+.portal-card p {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.6;
+    flex-grow: 1;
+}
+
+.feature-list {
+    list-style: none;
+    margin: 20px 0;
+}
+
+.feature-list li {
+    font-size: 13px;
+    margin-bottom: 9px;
+    color: var(--text);
+}
+
+.feature-list li::before {
+    content: "✓";
+    color: var(--green);
+    font-weight: bold;
+    margin-right: 8px;
+}
+
+/* =========================================
+   BUTTONS
+========================================= */
+
+.portal-button {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    padding: 14px;
+    border-radius: 9px;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    transition: .2s;
+}
+
+.teacher-button {
+    background: var(--blue);
+}
+
+.mt-button {
+    background: var(--purple);
+}
+
+.admin-button {
+    background: var(--navy);
+}
+
+.portal-button:hover {
+    opacity: .9;
+    transform: scale(1.01);
+}
+
+/* =========================================
+   SYSTEM INFORMATION
+========================================= */
+
+.info-panel {
+    margin-top: 35px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 25px;
+}
+
+.info-panel h3 {
+    color: var(--navy);
+    margin-bottom: 15px;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.info-item {
+    background: var(--bg);
+    padding: 16px;
+    border-radius: 10px;
+}
+
+.info-item strong {
+    display: block;
+    color: var(--navy);
+    margin-bottom: 5px;
+    font-size: 13px;
+}
+
+.info-item span {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+/* =========================================
+   FOOTER
+========================================= */
+
+footer {
+    margin-top: 45px;
+    background: var(--navy);
+    color: rgba(255,255,255,.85);
+    text-align: center;
+    padding: 24px;
+    font-size: 12px;
+}
+
+footer strong {
+    color: white;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 900px) {
+
+    .portal-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .top-header {
+        padding: 16px;
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    .brand {
+        flex-direction: column;
+    }
+
+    .welcome-section h2 {
+        font-size: 27px;
+    }
+
+    .main-container {
+        padding: 30px 16px;
+    }
+
+}
+
 </style>
 </head>
+
+
 <body>
 
-<script>
-  const API_URL = 'https://script.google.com/macros/s/AKfycbwlgzqmsCaYxunPRmglCddrAzfRhjsbyeiF7ZKR8m66GlGZkb54yXCq4NKV8vGdpkoc3Q/exec';
-</script>
 
-<div class="orb a"></div><div class="orb b"></div>
+<!-- =====================================
+     HEADER
+===================================== -->
 
-<div class="wrap">
-  <header class="glass topbar">
-    <div>
-      <p class="kicker">MCLLNHS · Master Teacher</p>
-      <h1>Lesson Plan Review Workspace 2026</h1>
+<header class="top-header">
+
+    <div class="brand">
+
+        <div class="school-icon">
+            🏫
+        </div>
+
+        <div>
+            <h1>MCLLNHS TLE & TECHPRO</h1>
+
+            <p>
+                Digital Lesson Plan Bank
+            </p>
+        </div>
+
     </div>
-    <button id="musicBtn" class="btn" style="background:rgba(255,255,255,.15)">🎵 Music: Off</button>
-  </header>
 
-  <section class="glass card">
-    <div class="controls">
-      <div>
-        <label class="label" for="reviewerKey">Reviewer Key</label>
-        <input id="reviewerKey" type="password" class="field" />
-      </div>
-      <div>
-        <label class="label" for="reviewerName">Reviewer Name</label>
-        <input id="reviewerName" class="field" />
-      </div>
-      <div>
-        <label class="label" for="statusFilter">Show</label>
-        <select id="statusFilter" class="field">
-          <option value="">All submissions</option>
-          <option value="Pending Review">Pending Review</option>
-          <option value="Return to Sender">Returned for Corrections</option>
-          <option value="Approved">Approved</option>
-        </select>
-      </div>
-      <button id="loadBtn" class="btn">Load Submissions</button>
+
+    <div class="system-badge">
+        DIGITAL SUBMISSION & REVIEW SYSTEM
     </div>
-    <p id="loadMsg" class="msg"></p>
-  </section>
 
-  <section class="glass card">
-    <h2>All Submissions <span id="countLabel" style="font-weight:400;color:#ddd6fe"></span></h2>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Teacher</th><th>Subject</th><th>Grade</th><th>Term</th><th>File</th>
-            <th>Status</th><th>Reviewer</th><th>Submitted</th><th>Reviewed</th><th>Latest Notes</th>
-          </tr>
-        </thead>
-        <tbody id="rows">
-          <tr><td colspan="10" style="text-align:center;color:#ddd6fe;padding:20px">Enter the Reviewer Key and click Load Submissions.</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
+</header>
 
-  <div class="cols">
-    <section class="glass card" style="margin-top:0">
-      <h2>Live Document</h2>
-      <div id="placeholder" class="placeholder">Select a submission in the table to open its lesson plan here.</div>
-      <iframe id="docFrame" class="preview hidden" title="Lesson plan"></iframe>
-      <div class="doc-links"><a id="openLink" href="#" target="_blank" rel="noopener" class="hidden">Open in new tab ↗</a></div>
+
+
+<!-- =====================================
+     MAIN CONTENT
+===================================== -->
+
+<main class="main-container">
+
+
+    <!-- WELCOME -->
+
+    <section class="welcome-section">
+
+        <h2>
+            Welcome to the Digital Lesson Plan Bank
+        </h2>
+
+        <p>
+            A centralized system for submitting, reviewing,
+            improving, and recording lesson plans for the
+            MCLLNHS TLE and TechPro Department.
+        </p>
+
     </section>
 
-    <section class="glass card" style="margin-top:0">
-      <h2>Review Decision</h2>
-      <p id="selInfo" class="current">No submission selected.</p>
-      <label class="label">Decision</label>
-      <div class="radios">
-        <label><input type="radio" name="status" value="Pending Review" /> Pending Review</label>
-        <label><input type="radio" name="status" value="Return to Sender" /> Return to Sender</label>
-        <label><input type="radio" name="status" value="Approved" /> Approved</label>
-      </div>
-      <div id="returnNote" class="banner hidden">The teacher will be asked to make corrections in the same document and resubmit.</div>
-      <label class="label" for="feedback">Notes &amp; Major Corrections</label>
-      <textarea id="feedback" rows="5" class="field"></textarea>
-      <button id="saveBtn" class="btn btn-full">Save Review &amp; Notify Teacher</button>
-      <p id="reviewMsg" class="msg"></p>
+
+
+    <!-- WORKFLOW -->
+
+    <section class="workflow">
+
+        <div class="workflow-title">
+            SIMPLE WORKFLOW
+        </div>
+
+
+        <div class="workflow-steps">
+
+            <div class="step">
+                📝 SUBMIT
+            </div>
+
+            <div class="arrow">→</div>
+
+            <div class="step">
+                🔍 REVIEW
+            </div>
+
+            <div class="arrow">→</div>
+
+            <div class="step">
+                💬 FEEDBACK
+            </div>
+
+            <div class="arrow">→</div>
+
+            <div class="step">
+                ✏️ CORRECT
+            </div>
+
+            <div class="arrow">→</div>
+
+            <div class="step">
+                ✓ APPROVED
+            </div>
+
+        </div>
+
     </section>
-  </div>
 
-  <section class="glass card">
-    <h2>Review History <span id="histLabel" style="font-weight:400;color:#ddd6fe"></span></h2>
-    <div class="table-wrap">
-      <table class="hist-table">
-        <thead>
-          <tr><th>Date &amp; Time</th><th>Action</th><th>By</th><th>Teacher / File</th><th>Status</th><th>Notes</th></tr>
-        </thead>
-        <tbody id="histRows">
-          <tr><td colspan="6" style="text-align:center;color:#ddd6fe;padding:16px">No history loaded yet.</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-</div>
 
-<footer>Developed by Marjorie R. Cabana (Cher Marjoe) · MCLLNHS TLE/TechPro · 2026</footer>
 
-<script>
-const $ = (id) => document.getElementById(id);
-const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-let items = [], history = [], selectedId = null;
+    <!-- PORTALS -->
 
-function fmt(iso) {
-  if (!iso) return '—';
-  const d = new Date(iso);
-  return isNaN(d) ? '—' : d.toLocaleString('en-PH', { dateStyle: 'medium', timeStyle: 'short' });
-}
-function setMsg(el, text, ok) {
-  el.textContent = text;
-  el.classList.toggle('ok', !!text && !!ok);
-  el.classList.toggle('err', !!text && !ok);
-}
-function badge(status) {
-  const map = { 'Pending Review': ['b-pending', 'Pending Review'], 'Return to Sender': ['b-return', 'Returned'], 'Approved': ['b-approved', 'Approved'] };
-  const [cls, label] = map[status] || ['b-pending', status || 'Pending Review'];
-  return `<span class="badge ${cls}">${esc(label)}</span>`;
-}
-function short(s, n = 90) {
-  s = String(s || '');
-  return s.length > n ? s.slice(0, n) + '…' : s;
-}
-async function post(payload) {
-  const res = await fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) });
-  return res.json();
-}
-async function get(params) {
-  const res = await fetch(API_URL + '?' + new URLSearchParams(params).toString());
-  return res.json();
-}
+    <section class="portal-grid">
 
-/* ---------- Music toggle ---------- */
-let audioCtx = null, musicNodes = [];
-$('musicBtn').addEventListener('click', () => {
-  if (audioCtx) {
-    musicNodes.forEach((n) => { try { n.stop(); } catch (_) {} });
-    audioCtx.close(); audioCtx = null; musicNodes = [];
-    $('musicBtn').textContent = '🎵 Music: Off';
-    return;
-  }
-  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  const master = audioCtx.createGain();
-  master.gain.value = 0.06;
-  master.connect(audioCtx.destination);
-  [220, 277.18, 329.63, 440].forEach((freq, i) => {
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    const lfo = audioCtx.createOscillator();
-    const lfoGain = audioCtx.createGain();
-    osc.type = i % 2 ? 'sine' : 'triangle';
-    osc.frequency.value = freq;
-    lfo.frequency.value = 0.05 + i * 0.02;
-    lfoGain.gain.value = 0.5;
-    lfo.connect(lfoGain).connect(gain.gain);
-    gain.gain.value = 0.5;
-    osc.connect(gain).connect(master);
-    osc.start(); lfo.start();
-    musicNodes.push(osc, lfo);
-  });
-  $('musicBtn').textContent = '🎵 Music: On';
-});
 
-/* ---------- Load ---------- */
-async function loadAll() {
-  const key = $('reviewerKey').value.trim();
-  if (!key) return setMsg($('loadMsg'), 'Enter the Reviewer Key first.', false);
-  setMsg($('loadMsg'), 'Loading...', true);
-  try {
-    const [a, b] = await Promise.all([get({ action: 'list', key }), get({ action: 'history', key })]);
-    if (!a.ok) throw new Error(a.error);
-    if (!b.ok) throw new Error(b.error);
-    items = a.items.sort((x, y) => String(y.submittedAt).localeCompare(String(x.submittedAt)));
-    history = b.items;
-    renderTable();
-    renderHistory();
-    setMsg($('loadMsg'), `Loaded ${items.length} submission(s).`, true);
-    if (selectedId) selectItem(selectedId);
-  } catch (err) {
-    setMsg($('loadMsg'), err.message, false);
-  }
-}
-$('loadBtn').addEventListener('click', loadAll);
-$('statusFilter').addEventListener('change', renderTable);
+        <!-- TEACHER PORTAL -->
 
-/* ---------- Table ---------- */
-function renderTable() {
-  const filter = $('statusFilter').value;
-  const list = items.filter((it) => !filter || (it.status || 'Pending Review') === filter);
-  $('countLabel').textContent = `(${list.length} shown)`;
-  if (!list.length) {
-    $('rows').innerHTML = '<tr><td colspan="10" style="text-align:center;color:#ddd6fe;padding:20px">No submissions match this filter.</td></tr>';
-    return;
-  }
-  $('rows').innerHTML = list.map((it) => `
-    <tr data-id="${esc(it.id)}" class="${it.id === selectedId ? 'sel' : ''}">
-      <td>${esc(it.teacherName)}</td>
-      <td>${esc(it.component)}</td>
-      <td>${esc(it.section)}</td>
-      <td>${esc(it.period)}</td>
-      <td>${esc(it.filename)}</td>
-      <td>${badge(it.status)}</td>
-      <td>${esc(it.reviewer || '—')}</td>
-      <td>${esc(fmt(it.submittedAt))}</td>
-      <td>${esc(it.actionedAt ? fmt(it.actionedAt) : '—')}</td>
-      <td class="notes" title="${esc(it.feedback || '')}">${esc(short(it.feedback) || '—')}</td>
-    </tr>`).join('');
-  document.querySelectorAll('#rows tr[data-id]').forEach((tr) => {
-    tr.addEventListener('click', () => selectItem(tr.dataset.id));
-  });
-}
+        <div class="portal-card">
 
-/* ---------- Select and review ---------- */
-function selectItem(id) {
-  const it = items.find((x) => x.id === id);
-  if (!it) return;
-  selectedId = id;
-  $('placeholder').classList.add('hidden');
-  $('docFrame').classList.remove('hidden');
-  $('docFrame').src = `https://docs.google.com/document/d/${it.id}/edit?rm=minimal`;
-  $('openLink').href = it.editUrl;
-  $('openLink').classList.remove('hidden');
+            <div class="portal-icon teacher-icon">
+                📝
+            </div>
 
-  $('selInfo').innerHTML = `<strong>${esc(it.teacherName)}</strong> · ${esc(it.component)} · ${esc(it.section)} · ${esc(it.period)}<br>${esc(it.filename)}<br>Current status: ${badge(it.status)}`;
-  document.querySelectorAll('input[name="status"]').forEach((r) => { r.checked = r.value === (it.status || 'Pending Review'); });
-  $('feedback').value = '';
-  $('reviewerName').value = $('reviewerName').value || it.reviewer || '';
-  toggleReturnNote();
-  renderTable();
-  renderHistory();
-}
+            <h3>
+                Teacher Portal
+            </h3>
 
-document.querySelectorAll('input[name="status"]').forEach((r) => r.addEventListener('change', toggleReturnNote));
-function toggleReturnNote() {
-  const checked = document.querySelector('input[name="status"]:checked');
-  $('returnNote').classList.toggle('hidden', !checked || checked.value !== 'Return to Sender');
-}
+            <div class="subtitle">
+                SUBMIT • TRACK • CORRECT
+            </div>
 
-$('saveBtn').addEventListener('click', async () => {
-  const status = document.querySelector('input[name="status"]:checked')?.value;
-  const reviewer = $('reviewerName').value.trim();
-  const feedback = $('feedback').value.trim();
-  if (!selectedId) return setMsg($('reviewMsg'), 'Select a submission in the table first.', false);
-  if (!status) return setMsg($('reviewMsg'), 'Choose a decision.', false);
-  if (!reviewer) return setMsg($('reviewMsg'), 'Enter your name as reviewer.', false);
-  if (status === 'Return to Sender' && !feedback) return setMsg($('reviewMsg'), 'Notes are required when returning for corrections.', false);
+            <p>
+                Submit your lesson plan online, track its
+                review status, receive feedback, and make
+                corrections without starting the process again.
+            </p>
 
-  setMsg($('reviewMsg'), 'Saving...', true);
-  try {
-    const r = await post({ action: 'review', key: $('reviewerKey').value.trim(), id: selectedId, status, reviewer, feedback });
-    if (!r.ok) throw new Error(r.error);
-    const note = r.emailed ? 'Review saved. Teacher notified by email.' : 'Review saved. Email not sent' + (r.emailNote ? ': ' + r.emailNote : '.');
-    setMsg($('reviewMsg'), note, true);
-    await loadAll();
-    selectItem(selectedId);
-  } catch (err) {
-    setMsg($('reviewMsg'), err.message, false);
-  }
-});
 
-/* ---------- History ---------- */
-function renderHistory() {
-  const rows = history
-    .filter((h) => !selectedId || h.submissionId === selectedId)
-    .sort((a, b) => String(b.at).localeCompare(String(a.at)));
-  $('histLabel').textContent = selectedId ? '(for selected submission)' : '(all submissions)';
-  if (!rows.length) {
-    $('histRows').innerHTML = '<tr><td colspan="6" style="text-align:center;color:#ddd6fe;padding:16px">No history yet.</td></tr>';
-    return;
-  }
-  $('histRows').innerHTML = rows.map((h) => `
-    <tr>
-      <td>${esc(fmt(h.at))}</td>
-      <td>${esc(h.action)}</td>
-      <td>${esc(h.by)}</td>
-      <td>${esc(h.teacherName)}<br><span style="opacity:.8">${esc(h.filename)}</span></td>
-      <td>${badge(h.status)}</td>
-      <td class="notes">${esc(h.feedback || '—')}</td>
-    </tr>`).join('');
-}
-</script>
+            <ul class="feature-list">
+
+                <li>Submit Word lesson plans</li>
+
+                <li>Select your Master Teacher</li>
+
+                <li>Track submission status</li>
+
+                <li>Receive review feedback</li>
+
+                <li>Submit corrections</li>
+
+            </ul>
+
+
+            <a
+                href="teacher.html"
+                class="portal-button teacher-button"
+            >
+                ENTER TEACHER PORTAL
+            </a>
+
+        </div>
+
+
+
+        <!-- MASTER TEACHER -->
+
+        <div class="portal-card">
+
+            <div class="portal-icon mt-icon">
+                👩‍💼
+            </div>
+
+            <h3>
+                Master Teacher Workspace
+            </h3>
+
+            <div class="subtitle">
+                REVIEW • FEEDBACK • APPROVE
+            </div>
+
+            <p>
+                Review lesson plans assigned specifically
+                to you and provide feedback through a
+                structured and recorded workflow.
+            </p>
+
+
+            <ul class="feature-list">
+
+                <li>View assigned submissions only</li>
+
+                <li>Open lesson plans online</li>
+
+                <li>Return plans with feedback</li>
+
+                <li>Approve completed plans</li>
+
+                <li>View review history</li>
+
+            </ul>
+
+
+            <a
+                href="review.html"
+                class="portal-button mt-button"
+            >
+                REVIEWER LOGIN
+            </a>
+
+        </div>
+
+
+
+        <!-- ADMIN -->
+
+        <div class="portal-card">
+
+            <div class="portal-icon admin-icon">
+                ⚙️
+            </div>
+
+            <h3>
+                Admin Dashboard
+            </h3>
+
+            <div class="subtitle">
+                MONITOR • MANAGE • REPORT
+            </div>
+
+            <p>
+                Monitor the complete Digital Lesson Plan
+                Bank and access submission records,
+                review history, and system activity.
+            </p>
+
+
+            <ul class="feature-list">
+
+                <li>View all submissions</li>
+
+                <li>Monitor Master Teacher workload</li>
+
+                <li>View submission reports</li>
+
+                <li>Access review history</li>
+
+                <li>Monitor activity logs</li>
+
+            </ul>
+
+
+            <a
+                href="admin.html"
+                class="portal-button admin-button"
+            >
+                ADMIN LOGIN
+            </a>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- SYSTEM INFORMATION -->
+
+    <section class="info-panel">
+
+        <h3>
+            System Information
+        </h3>
+
+
+        <div class="info-grid">
+
+            <div class="info-item">
+
+                <strong>
+                    DEPARTMENT
+                </strong>
+
+                <span>
+                    TLE & TechPro Department
+                </span>
+
+            </div>
+
+
+            <div class="info-item">
+
+                <strong>
+                    LESSON PLAN BANK
+                </strong>
+
+                <span>
+                    Centralized Google Drive storage
+                </span>
+
+            </div>
+
+
+            <div class="info-item">
+
+                <strong>
+                    SYSTEM RECORDS
+                </strong>
+
+                <span>
+                    Submission, Review & Activity Logs
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+
+<!-- =====================================
+     FOOTER
+===================================== -->
+
+<footer>
+
+    <strong>
+        MCLLNHS TLE & TECHPRO DIGITAL LESSON PLAN BANK
+    </strong>
+
+    <br><br>
+
+    Developed by
+    <strong>
+        Marjorie R. Cabana (Cher Marjoe)
+    </strong>
+
+    <br>
+
+    Maria Clara L. Lobregat National High School
+
+</footer>
+
+
 </body>
 </html>
