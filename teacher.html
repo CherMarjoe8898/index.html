@@ -4,31 +4,33 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Teacher Portal | MCLLNHS Digital Lesson Plan Bank</title>
+<title>MCLLNHS | Digital Lesson Plan Bank</title>
 
 <style>
-:root{
-    --purple-900:#32105f;
-    --purple-800:#4b187f;
-    --purple-700:#6422a8;
-    --purple-600:#7b35c9;
-    --purple-100:#f0e8fb;
-    --purple-50:#faf7ff;
 
-    --gold:#d7a928;
-    --gold-light:#f7df91;
-    --gold-soft:#fff7dc;
+/* ============================================
+   MCLLNHS DIGITAL LESSON PLAN BANK
+   FUTURISTIC TEACHER PORTAL
+============================================ */
+
+:root{
+    --purple-dark:#250545;
+    --purple:#4c137d;
+    --purple-light:#7c36ba;
+    --purple-soft:#efe4fa;
+
+    --gold:#d6a62a;
+    --gold-light:#f5df94;
 
     --white:#ffffff;
-    --bg:#f6f3fa;
-    --text:#281f32;
-    --muted:#746c7d;
-    --border:#e6dfea;
+    --text:#251d2c;
+    --muted:#746d7c;
 
-    --green:#25805a;
-    --red:#c44747;
+    --green:#23815a;
+    --red:#c44141;
 
-    --shadow:0 12px 35px rgba(55,20,92,.10);
+    --border:rgba(255,255,255,.65);
+    --shadow:0 20px 60px rgba(41,8,73,.18);
 }
 
 *{
@@ -37,1076 +39,2195 @@
     padding:0;
 }
 
-body{
-    font-family:"Segoe UI",Arial,sans-serif;
-    background:
-        radial-gradient(circle at top right,#eee3ff 0,transparent 28%),
-        var(--bg);
-    color:var(--text);
-    min-height:100vh;
+html{
+    scroll-behavior:smooth;
 }
 
-/* HEADER */
+body{
+    font-family:"Segoe UI",Arial,sans-serif;
+    color:var(--text);
+    min-height:100vh;
+    overflow-x:hidden;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f7f1ff,
+            #ffffff,
+            #f5e9ff
+        );
+
+    position:relative;
+}
+
+/* ============================================
+   ANIMATED FUTURISTIC BACKGROUND
+============================================ */
+
+body::before,
+body::after{
+    content:"";
+    position:fixed;
+    width:450px;
+    height:450px;
+    border-radius:50%;
+    filter:blur(90px);
+    opacity:.35;
+    z-index:-1;
+    animation:floatOrb 16s ease-in-out infinite;
+}
+
+body::before{
+    background:#8b4de0;
+    top:-150px;
+    left:-100px;
+}
+
+body::after{
+    background:#e5bd45;
+    bottom:-180px;
+    right:-100px;
+    animation-delay:-8s;
+}
+
+@keyframes floatOrb{
+
+    0%{
+        transform:translate(0,0) scale(1);
+    }
+
+    50%{
+        transform:translate(150px,100px) scale(1.25);
+    }
+
+    100%{
+        transform:translate(0,0) scale(1);
+    }
+
+}
+
+/* Moving grid */
+
+.tech-grid{
+    position:fixed;
+    inset:0;
+
+    background-image:
+        linear-gradient(
+            rgba(123,53,201,.04) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(123,53,201,.04) 1px,
+            transparent 1px
+        );
+
+    background-size:50px 50px;
+
+    z-index:-2;
+
+    animation:gridMove 18s linear infinite;
+}
+
+@keyframes gridMove{
+
+    from{
+        background-position:0 0;
+    }
+
+    to{
+        background-position:50px 50px;
+    }
+
+}
+
+
+/* ============================================
+   HEADER
+============================================ */
 
 header{
-    background:linear-gradient(135deg,var(--purple-900),var(--purple-700));
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--purple-dark),
+            var(--purple),
+            var(--purple-light)
+        );
+
     border-bottom:4px solid var(--gold);
+
     color:white;
+
+    box-shadow:0 8px 30px rgba(37,5,69,.25);
+
 }
 
 .header-inner{
-    max-width:1180px;
+
+    max-width:1200px;
     margin:auto;
-    padding:16px 25px;
+
+    padding:15px 28px;
+
     display:flex;
     align-items:center;
     justify-content:space-between;
+
     gap:20px;
+
 }
 
 .brand{
+
     display:flex;
     align-items:center;
-    gap:14px;
+    gap:18px;
+
 }
 
+/* BIGGER SEAL */
+
 .seal-box{
-    width:64px;
-    height:64px;
+
+    width:92px;
+    height:92px;
+
     background:white;
+
     border-radius:50%;
-    padding:4px;
+
+    padding:5px;
+
     display:flex;
     align-items:center;
     justify-content:center;
-    box-shadow:0 6px 18px rgba(0,0,0,.18);
+
+    box-shadow:
+        0 0 0 3px var(--gold),
+        0 10px 25px rgba(0,0,0,.25);
+
 }
 
 .seal-box img{
+
     width:100%;
     height:100%;
+
     object-fit:contain;
+
 }
 
 .brand h1{
-    font-size:20px;
-    font-weight:800;
+
+    font-size:22px;
+    font-weight:900;
+
 }
 
 .brand p{
-    margin-top:4px;
+
+    margin-top:5px;
+
     font-size:12px;
+
     opacity:.8;
+
 }
 
-.back-button{
+.header-buttons{
+
+    display:flex;
+    gap:10px;
+
+}
+
+.header-button{
+
+    padding:10px 15px;
+
+    border-radius:10px;
+
+    border:1px solid rgba(255,255,255,.3);
+
+    background:rgba(255,255,255,.10);
+
     color:white;
+
+    cursor:pointer;
+
     text-decoration:none;
-    padding:10px 16px;
-    border-radius:9px;
-    border:1px solid rgba(255,255,255,.28);
-    background:rgba(255,255,255,.08);
+
     font-size:12px;
-    font-weight:700;
+
+    font-weight:800;
+
 }
 
-/* MAIN */
+
+/* ============================================
+   MAIN
+============================================ */
 
 .container{
-    max-width:1080px;
+
+    max-width:1000px;
+
     margin:auto;
-    padding:35px 20px 60px;
+
+    padding:40px 20px 70px;
+
 }
 
-/* HERO */
 
-.page-hero{
-    background:linear-gradient(135deg,var(--purple-900),var(--purple-700));
-    color:white;
-    border-radius:24px;
-    padding:35px;
-    position:relative;
-    overflow:hidden;
-    box-shadow:var(--shadow);
-    margin-bottom:25px;
+/* ============================================
+   HERO
+============================================ */
+
+.hero{
+
+    text-align:center;
+
+    padding:25px 20px 35px;
+
 }
 
 .hero-label{
+
     display:inline-block;
-    color:var(--gold-light);
+
+    background:rgba(123,53,201,.10);
+
+    color:var(--purple);
+
+    padding:8px 15px;
+
+    border-radius:30px;
+
     font-size:11px;
-    font-weight:800;
-    letter-spacing:.8px;
+
+    font-weight:900;
+
+    letter-spacing:1px;
+
+    margin-bottom:14px;
+
+}
+
+.hero h2{
+
+    font-size:35px;
+
+    color:var(--purple-dark);
+
     margin-bottom:10px;
+
 }
 
-.page-hero h2{
-    font-size:32px;
-    margin-bottom:10px;
-}
+.hero p{
 
-.page-hero p{
-    max-width:650px;
-    color:rgba(255,255,255,.82);
-    line-height:1.6;
-    font-size:14px;
-}
-
-/* NOTICE */
-
-.notice{
-    background:var(--gold-soft);
-    border:1px solid #f0dc93;
-    border-left:5px solid var(--gold);
-    padding:16px 18px;
-    border-radius:12px;
-    margin-bottom:22px;
-    font-size:13px;
-    line-height:1.6;
-}
-
-/* TABS */
-
-.tab-buttons{
-    display:flex;
-    gap:10px;
-    margin-bottom:20px;
-}
-
-.tab-button{
-    border:1px solid var(--border);
-    background:white;
     color:var(--muted);
-    padding:13px 20px;
-    border-radius:10px;
-    cursor:pointer;
-    font-weight:800;
-    font-size:13px;
+
+    max-width:650px;
+
+    margin:auto;
+
+    line-height:1.6;
+
+    font-size:14px;
+
 }
 
-.tab-button.active{
-    background:linear-gradient(135deg,var(--purple-900),var(--purple-700));
-    color:white;
-    border-color:var(--purple-700);
+
+/* ============================================
+   MAIN NAVIGATION
+============================================ */
+
+.portal-navigation{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:12px;
+
+    margin-bottom:25px;
+
 }
 
-/* TAB CONTENT */
+.nav-button{
 
-.tab-content{
-    display:none;
-}
+    border:none;
 
-.tab-content.active{
-    display:block;
-}
-
-/* CARD */
-
-.card{
     background:white;
-    border:1px solid var(--border);
-    border-radius:20px;
-    padding:30px;
+
+    border:1px solid #e5ddef;
+
+    padding:13px 22px;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    font-weight:800;
+
+    color:var(--muted);
+
+    box-shadow:0 6px 20px rgba(40,10,70,.06);
+
+}
+
+.nav-button.active{
+
+    color:white;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--purple-dark),
+            var(--purple-light)
+        );
+
+}
+
+
+/* ============================================
+   CONTENT
+============================================ */
+
+.portal-page{
+
+    display:none;
+
+}
+
+.portal-page.active{
+
+    display:block;
+
+}
+
+
+/* ============================================
+   WIZARD CARD
+============================================ */
+
+.wizard-card{
+
+    background:
+        rgba(255,255,255,.86);
+
+    backdrop-filter:blur(20px);
+
+    border:
+        1px solid rgba(255,255,255,.8);
+
+    border-radius:28px;
+
+    padding:35px;
+
     box-shadow:var(--shadow);
-    margin-bottom:22px;
+
 }
 
-.card-header{
-    display:flex;
-    align-items:flex-start;
-    gap:14px;
-    margin-bottom:28px;
+
+/* ============================================
+   PROGRESS
+============================================ */
+
+.progress-container{
+
+    margin-bottom:35px;
+
 }
 
-.header-icon{
-    width:48px;
-    height:48px;
-    border-radius:14px;
-    background:var(--purple-100);
+.progress-steps{
+
     display:flex;
+
+    justify-content:space-between;
+
+    position:relative;
+
+}
+
+.progress-line{
+
+    position:absolute;
+
+    top:21px;
+
+    left:8%;
+
+    width:84%;
+
+    height:4px;
+
+    background:#e7dff0;
+
+    z-index:0;
+
+}
+
+.progress-fill{
+
+    height:100%;
+
+    width:0%;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--purple),
+            var(--gold)
+        );
+
+    transition:.4s;
+
+}
+
+.step{
+
+    position:relative;
+
+    z-index:1;
+
+    text-align:center;
+
+    width:25%;
+
+}
+
+.step-circle{
+
+    width:42px;
+    height:42px;
+
+    border-radius:50%;
+
+    margin:auto;
+
+    display:flex;
+
     align-items:center;
     justify-content:center;
-    font-size:23px;
-}
 
-.card h3{
-    color:var(--purple-900);
-    font-size:21px;
-}
+    background:#eee7f5;
 
-.card-description{
     color:var(--muted);
+
     font-size:13px;
-    margin-top:5px;
+
+    font-weight:900;
+
+    transition:.3s;
+
 }
 
-/* FORM */
+.step.active .step-circle{
 
-.form-section{
-    padding-bottom:27px;
-    margin-bottom:27px;
-    border-bottom:1px solid var(--border);
+    background:
+        linear-gradient(
+            135deg,
+            var(--purple),
+            var(--purple-light)
+        );
+
+    color:white;
+
+    box-shadow:
+        0 0 0 5px rgba(123,53,201,.12);
+
 }
 
-.form-section:last-of-type{
-    border-bottom:none;
+.step.completed .step-circle{
+
+    background:var(--gold);
+
+    color:white;
+
 }
 
-.section-title{
-    color:var(--purple-800);
-    font-size:14px;
+.step-label{
+
+    margin-top:8px;
+
+    font-size:10px;
+
     font-weight:800;
-    margin-bottom:18px;
+
+    color:var(--muted);
+
 }
+
+
+/* ============================================
+   FORM STEPS
+============================================ */
+
+.form-step{
+
+    display:none;
+
+    animation:fadeSlide .4s ease;
+
+}
+
+.form-step.active{
+
+    display:block;
+
+}
+
+@keyframes fadeSlide{
+
+    from{
+
+        opacity:0;
+
+        transform:translateX(25px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateX(0);
+
+    }
+
+}
+
+.step-header{
+
+    text-align:center;
+
+    margin-bottom:30px;
+
+}
+
+.step-header .icon{
+
+    font-size:40px;
+
+    margin-bottom:10px;
+
+}
+
+.step-header h3{
+
+    font-size:23px;
+
+    color:var(--purple-dark);
+
+}
+
+.step-header p{
+
+    margin-top:7px;
+
+    color:var(--muted);
+
+    font-size:13px;
+
+}
+
+
+/* ============================================
+   FORM
+============================================ */
 
 .form-grid{
+
     display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:18px;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:20px;
+
 }
 
 .full-width{
+
     grid-column:1/-1;
+
 }
 
 .form-group{
+
     display:flex;
+
     flex-direction:column;
+
 }
 
 label{
+
     font-size:12px;
+
     font-weight:800;
-    margin-bottom:7px;
+
+    margin-bottom:8px;
+
+    color:var(--purple-dark);
+
 }
 
 input,
 select{
-    width:100%;
-    padding:13px 14px;
-    border:1px solid var(--border);
-    border-radius:9px;
-    font-size:14px;
-    color:var(--text);
+
+    padding:14px 15px;
+
+    border-radius:11px;
+
+    border:1px solid #ddd4e7;
+
     background:white;
+
     outline:none;
+
+    font-size:14px;
+
+    transition:.2s;
+
 }
 
 input:focus,
 select:focus{
-    border-color:var(--purple-600);
-    box-shadow:0 0 0 3px rgba(123,53,201,.10);
+
+    border-color:var(--purple-light);
+
+    box-shadow:
+        0 0 0 4px
+        rgba(123,53,201,.10);
+
 }
 
-/* FILE */
 
-.file-box{
-    border:2px dashed #cdb8e5;
-    border-radius:16px;
-    padding:25px;
+/* ============================================
+   FILE UPLOAD
+============================================ */
+
+.upload-box{
+
+    border:
+        2px dashed #c7addf;
+
+    border-radius:18px;
+
+    padding:35px 20px;
+
     text-align:center;
-    background:var(--purple-50);
+
+    background:
+        linear-gradient(
+            135deg,
+            #faf6ff,
+            #f3eafa
+        );
+
 }
 
-.file-icon{
-    font-size:35px;
-    margin-bottom:8px;
+.upload-icon{
+
+    font-size:48px;
+
+    margin-bottom:10px;
+
 }
 
-.file-box strong{
-    display:block;
-    color:var(--purple-900);
-    margin-bottom:5px;
+.upload-box h4{
+
+    color:var(--purple-dark);
+
+    margin-bottom:7px;
+
 }
 
-.file-box p{
-    color:var(--muted);
+.upload-box p{
+
     font-size:12px;
+
+    color:var(--muted);
+
     margin-bottom:15px;
+
 }
 
 .file-name{
-    margin-top:14px;
+
+    margin-top:15px;
+
+    color:var(--green);
+
     font-size:12px;
-    font-weight:700;
-    color:var(--green);
-}
 
-/* SECURITY */
-
-.security-box{
-    background:var(--purple-50);
-    border:1px solid var(--border);
-    border-radius:13px;
-    padding:18px;
-}
-
-/* BUTTON */
-
-.submit-button{
-    width:100%;
-    border:none;
-    border-radius:11px;
-    padding:16px;
-    cursor:pointer;
-    font-size:14px;
-    font-weight:900;
-    color:var(--purple-900);
-    background:linear-gradient(135deg,#e5bf45,var(--gold));
-    box-shadow:0 8px 20px rgba(215,169,40,.22);
-}
-
-.submit-button:disabled{
-    background:#b7b1bc;
-    color:white;
-    cursor:not-allowed;
-}
-
-/* LOADING */
-
-.loading{
-    display:none;
-    background:white;
-    border:1px solid var(--border);
-    border-radius:20px;
-    padding:45px;
-    text-align:center;
-    box-shadow:var(--shadow);
-}
-
-.loader{
-    width:45px;
-    height:45px;
-    border:4px solid var(--purple-100);
-    border-top-color:var(--purple-700);
-    border-radius:50%;
-    margin:0 auto 18px;
-    animation:spin 1s linear infinite;
-}
-
-@keyframes spin{
-    to{
-        transform:rotate(360deg);
-    }
-}
-
-/* SUCCESS */
-
-.success-card{
-    display:none;
-    text-align:center;
-    padding:45px 25px;
-}
-
-.success-icon{
-    width:85px;
-    height:85px;
-    border-radius:50%;
-    background:#e5f6ec;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:42px;
-    margin:auto auto 18px;
-}
-
-.success-card h2{
-    color:var(--green);
-    margin-bottom:10px;
-}
-
-.submission-id-box{
-    max-width:520px;
-    margin:25px auto;
-    padding:20px;
-    border-radius:14px;
-    background:var(--purple-50);
-    border:1px dashed var(--purple-600);
-}
-
-.submission-id{
-    margin-top:7px;
-    color:var(--purple-900);
-    font-weight:900;
-    font-size:20px;
-    word-break:break-word;
-}
-
-.new-submission{
-    border:none;
-    background:linear-gradient(135deg,var(--purple-900),var(--purple-700));
-    color:white;
-    padding:13px 20px;
-    border-radius:10px;
-    cursor:pointer;
     font-weight:800;
+
 }
 
-/* TRACKING */
 
-.tracker-box{
-    max-width:700px;
+/* ============================================
+   BUTTONS
+============================================ */
+
+.wizard-buttons{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    gap:15px;
+
+    margin-top:35px;
+
+}
+
+.button{
+
+    border:none;
+
+    padding:14px 22px;
+
+    border-radius:12px;
+
+    font-weight:900;
+
+    cursor:pointer;
+
+    font-size:13px;
+
+}
+
+.button-next{
+
+    margin-left:auto;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--purple-dark),
+            var(--purple-light)
+        );
+
+    color:white;
+
+    box-shadow:
+        0 8px 20px
+        rgba(76,19,125,.25);
+
+}
+
+.button-back{
+
+    background:#eee8f3;
+
+    color:var(--purple-dark);
+
+}
+
+.button-submit{
+
+    margin-left:auto;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--gold-light),
+            var(--gold)
+        );
+
+    color:var(--purple-dark);
+
+}
+
+
+/* ============================================
+   TRACKING
+============================================ */
+
+.track-card{
+
+    background:
+        rgba(255,255,255,.88);
+
+    backdrop-filter:blur(20px);
+
+    border-radius:28px;
+
+    padding:35px;
+
+    box-shadow:var(--shadow);
+
+}
+
+.track-card h3{
+
+    color:var(--purple-dark);
+
+    font-size:24px;
+
+}
+
+.track-card p{
+
+    color:var(--muted);
+
+    margin-top:7px;
+
+    font-size:13px;
+
+}
+
+.track-button{
+
+    width:100%;
+
+    margin-top:20px;
+
+    border:none;
+
+    padding:15px;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    color:white;
+
+    font-weight:900;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--purple-dark),
+            var(--purple-light)
+        );
+
 }
 
 .status-result{
+
     display:none;
-    margin-top:20px;
+
+    margin-top:25px;
+
     padding:22px;
-    border-radius:14px;
-    background:var(--purple-50);
-    border:1px solid var(--border);
-    line-height:1.7;
-    font-size:13px;
+
+    background:#faf7ff;
+
+    border-radius:18px;
+
+    border:1px solid #e7dff0;
+
 }
 
-/* FOOTER */
+
+/* ============================================
+   SUCCESS
+============================================ */
+
+.success-card{
+
+    display:none;
+
+    text-align:center;
+
+    padding:50px 25px;
+
+}
+
+.success-icon{
+
+    width:90px;
+    height:90px;
+
+    border-radius:50%;
+
+    background:#e2f5e9;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    margin:auto auto 20px;
+
+    font-size:45px;
+
+}
+
+.success-card h2{
+
+    color:var(--green);
+
+}
+
+.submission-id-box{
+
+    margin:25px auto;
+
+    max-width:550px;
+
+    padding:22px;
+
+    border-radius:15px;
+
+    background:#faf7ff;
+
+    border:1px dashed var(--purple);
+
+}
+
+.submission-id{
+
+    font-size:20px;
+
+    font-weight:900;
+
+    color:var(--purple-dark);
+
+    margin-top:8px;
+
+}
+
+
+/* ============================================
+   LOADING
+============================================ */
+
+.loading{
+
+    display:none;
+
+    text-align:center;
+
+    padding:60px 20px;
+
+}
+
+.loader{
+
+    width:55px;
+    height:55px;
+
+    border-radius:50%;
+
+    border:5px solid #eee5f5;
+
+    border-top-color:var(--purple);
+
+    margin:auto auto 20px;
+
+    animation:spin 1s linear infinite;
+
+}
+
+@keyframes spin{
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+
+/* ============================================
+   FOOTER
+============================================ */
 
 footer{
-    background:var(--purple-900);
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--purple-dark),
+            var(--purple)
+        );
+
     border-top:4px solid var(--gold);
+
     color:rgba(255,255,255,.75);
+
     text-align:center;
-    padding:25px;
+
+    padding:28px;
+
     font-size:11px;
-    line-height:1.7;
+
+    line-height:1.8;
+
 }
 
 footer strong{
+
     color:white;
+
 }
 
 footer span{
+
     color:var(--gold-light);
+
 }
 
-/* MOBILE */
+
+/* ============================================
+   MOBILE
+============================================ */
 
 @media(max-width:700px){
 
-    .header-inner,
-    .brand{
+    .header-inner{
+
         flex-direction:column;
+
         text-align:center;
+
+    }
+
+    .brand{
+
+        flex-direction:column;
+
     }
 
     .form-grid{
+
         grid-template-columns:1fr;
+
     }
 
     .full-width{
+
         grid-column:auto;
+
     }
 
-    .tab-buttons{
-        flex-direction:column;
-    }
+    .wizard-card,
+    .track-card{
 
-    .tab-button{
-        width:100%;
-    }
-
-    .card{
         padding:22px 17px;
+
     }
+
+    .hero h2{
+
+        font-size:27px;
+
+    }
+
+    .step-label{
+
+        display:none;
+
+    }
+
+    .seal-box{
+
+        width:82px;
+        height:82px;
+
+    }
+
 }
+
 </style>
 </head>
 
 <body>
 
+<div class="tech-grid"></div>
+
+
+<!-- ============================================
+     HEADER
+============================================ -->
+
 <header>
 
-    <div class="header-inner">
+<div class="header-inner">
 
-        <div class="brand">
+    <div class="brand">
 
-            <div class="seal-box">
-                <img src="mcllnhs-seal.png"
-                     alt="MCLLNHS Official School Seal">
-            </div>
+        <div class="seal-box">
 
-            <div>
-                <h1>MCLLNHS TLE & TECHPRO</h1>
-                <p>Digital Lesson Plan Bank • Teacher Portal</p>
-            </div>
+            <!-- CHANGE FILE NAME IF NEEDED -->
+
+            <img src="mcllnhs-seal.png"
+                 alt="MCLLNHS Official Seal">
 
         </div>
 
-        <a href="index.html" class="back-button">
-            ← BACK TO HOME
+        <div>
+
+            <h1>MCLLNHS TLE & TECHPRO</h1>
+
+            <p>
+                Digital Lesson Plan Bank
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="header-buttons">
+
+        <button class="header-button"
+                onclick="toggleSound()">
+
+            🔊 SOUND
+
+        </button>
+
+        <a href="index.html"
+           class="header-button">
+
+            ← HOME
+
         </a>
 
     </div>
+
+</div>
 
 </header>
 
 
 <main class="container">
 
-    <section class="page-hero">
 
-        <div class="hero-label">
-            DIGITAL LESSON PLAN MANAGEMENT
+<!-- HERO -->
+
+<section class="hero">
+
+    <div class="hero-label">
+
+        ✦ DIGITAL LESSON PLAN MANAGEMENT SYSTEM
+
+    </div>
+
+    <h2>
+        Teacher Portal
+    </h2>
+
+    <p>
+        Submit your lesson plan through a simple guided process.
+        Track your submission and receive feedback from your
+        assigned Master Teacher.
+    </p>
+
+</section>
+
+
+<!-- PORTAL NAVIGATION -->
+
+<div class="portal-navigation">
+
+    <button class="nav-button active"
+            onclick="showPortal('submission',this)">
+
+        📝 NEW SUBMISSION
+
+    </button>
+
+    <button class="nav-button"
+            onclick="showPortal('tracking',this)">
+
+        🔎 TRACK SUBMISSION
+
+    </button>
+
+</div>
+
+
+<!-- ============================================
+     SUBMISSION PAGE
+============================================ -->
+
+<section id="submission"
+         class="portal-page active">
+
+
+<div class="wizard-card"
+     id="wizardCard">
+
+
+<!-- PROGRESS -->
+
+<div class="progress-container">
+
+    <div class="progress-steps">
+
+        <div class="progress-line">
+
+            <div class="progress-fill"
+                 id="progressFill"></div>
+
         </div>
 
-        <h2>Teacher Portal</h2>
+
+        <div class="step active"
+             id="indicator1">
+
+            <div class="step-circle">1</div>
+
+            <div class="step-label">
+                TEACHER
+            </div>
+
+        </div>
+
+
+        <div class="step"
+             id="indicator2">
+
+            <div class="step-circle">2</div>
+
+            <div class="step-label">
+                LESSON
+            </div>
+
+        </div>
+
+
+        <div class="step"
+             id="indicator3">
+
+            <div class="step-circle">3</div>
+
+            <div class="step-label">
+                MASTER TEACHER
+            </div>
+
+        </div>
+
+
+        <div class="step"
+             id="indicator4">
+
+            <div class="step-circle">4</div>
+
+            <div class="step-label">
+                SUBMIT
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<form id="lessonPlanForm">
+
+
+<!-- ============================================
+     STEP 1
+============================================ -->
+
+<div class="form-step active"
+     id="step1">
+
+    <div class="step-header">
+
+        <div class="icon">👩‍🏫</div>
+
+        <h3>Teacher Information</h3>
 
         <p>
-            Submit your lesson plan, monitor its review status,
-            receive feedback, and complete corrections through one
-            organized digital workflow.
+            Let's start with your basic information.
         </p>
 
-    </section>
+    </div>
 
 
-    <div class="notice">
+    <div class="form-grid">
 
-        <strong>📌 Before submitting:</strong>
+        <div class="form-group full-width">
 
-        Complete all required information, upload a valid
-        <strong>.DOCX</strong> lesson plan, and select the correct
-        assigned Master Teacher.
+            <label>
+                Full Name *
+            </label>
+
+            <input type="text"
+                   id="teacherName"
+                   placeholder="Enter your full name"
+                   required>
+
+        </div>
+
+
+        <div class="form-group full-width">
+
+            <label>
+                Email Address *
+            </label>
+
+            <input type="email"
+                   id="teacherEmail"
+                   placeholder="example@email.com"
+                   required>
+
+        </div>
 
     </div>
 
 
-    <div class="tab-buttons">
+    <div class="wizard-buttons">
 
-        <button class="tab-button active"
-                onclick="openTab('submit', this)">
-            📝 Submit Lesson Plan
+        <button type="button"
+                class="button button-next"
+                onclick="nextStep(1)">
+
+            NEXT →
         </button>
 
-        <button class="tab-button"
-                onclick="openTab('track', this)">
-            🔎 Track Submission
+    </div>
+
+</div>
+
+
+<!-- ============================================
+     STEP 2
+============================================ -->
+
+<div class="form-step"
+     id="step2">
+
+    <div class="step-header">
+
+        <div class="icon">📚</div>
+
+        <h3>Lesson Information</h3>
+
+        <p>
+            Select the details of your lesson plan.
+        </p>
+
+    </div>
+
+
+    <div class="form-grid">
+
+
+        <div class="form-group">
+
+            <label>
+                Department *
+            </label>
+
+            <select id="department"
+                    required>
+
+                <option value="">
+                    Select Department
+                </option>
+
+                <option value="TLE">
+                    TLE
+                </option>
+
+                <option value="TechPro">
+                    TechPro
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                Grade Level *
+            </label>
+
+            <select id="gradeLevel"
+                    required>
+
+                <option value="">
+                    Select Grade Level
+                </option>
+
+                <option value="Grade 7">
+                    Grade 7
+                </option>
+
+                <option value="Grade 8">
+                    Grade 8
+                </option>
+
+                <option value="Grade 9">
+                    Grade 9
+                </option>
+
+                <option value="Grade 10">
+                    Grade 10
+                </option>
+
+                <option value="Grade 11">
+                    Grade 11
+                </option>
+
+                <option value="Grade 12">
+                    Grade 12
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                Subject *
+            </label>
+
+            <input type="text"
+                   id="subject"
+                   placeholder="Enter subject"
+                   required>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                Term *
+            </label>
+
+            <select id="term"
+                    required>
+
+                <option value="">
+                    Select Term
+                </option>
+
+                <option value="Term 1">
+                    Term 1
+                </option>
+
+                <option value="Term 2">
+                    Term 2
+                </option>
+
+                <option value="Term 3">
+                    Term 3
+                </option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+
+    <div class="wizard-buttons">
+
+        <button type="button"
+                class="button button-back"
+                onclick="previousStep(2)">
+
+            ← BACK
+
+        </button>
+
+
+        <button type="button"
+                class="button button-next"
+                onclick="nextStep(2)">
+
+            NEXT →
+
         </button>
 
     </div>
 
+</div>
 
-    <!-- SUBMIT TAB -->
 
-    <div id="submit" class="tab-content active">
+<!-- ============================================
+     STEP 3
+============================================ -->
 
-        <div class="card" id="submissionCard">
+<div class="form-step"
+     id="step3">
 
-            <div class="card-header">
+    <div class="step-header">
 
-                <div class="header-icon">📝</div>
+        <div class="icon">👩‍💼</div>
 
-                <div>
-                    <h3>New Lesson Plan Submission</h3>
+        <h3>Assigned Master Teacher</h3>
 
-                    <p class="card-description">
-                        Complete the form below to submit your lesson plan
-                        for review.
-                    </p>
-                </div>
-
-            </div>
-
-
-            <form id="lessonPlanForm">
-
-                <!-- TEACHER INFORMATION -->
-
-                <div class="form-section">
-
-                    <div class="section-title">
-                        👩‍🏫 Teacher Information
-                    </div>
-
-                    <div class="form-grid">
-
-                        <div class="form-group">
-
-                            <label for="teacherName">
-                                Full Name *
-                            </label>
-
-                            <input type="text"
-                                   id="teacherName"
-                                   required
-                                   placeholder="Enter your full name">
-
-                        </div>
-
-
-                        <div class="form-group">
-
-                            <label for="teacherEmail">
-                                Email Address *
-                            </label>
-
-                            <input type="email"
-                                   id="teacherEmail"
-                                   required
-                                   placeholder="example@email.com">
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <!-- LESSON INFORMATION -->
-
-                <div class="form-section">
-
-                    <div class="section-title">
-                        📚 Lesson Information
-                    </div>
-
-                    <div class="form-grid">
-
-                        <div class="form-group">
-
-                            <label for="department">
-                                Department *
-                            </label>
-
-                            <select id="department" required>
-                                <option value="">
-                                    Select Department
-                                </option>
-                                <option value="TLE">
-                                    TLE
-                                </option>
-                                <option value="TechPro">
-                                    TechPro
-                                </option>
-                            </select>
-
-                        </div>
-
-
-                        <div class="form-group">
-
-                            <label for="gradeLevel">
-                                Grade Level *
-                            </label>
-
-                            <select id="gradeLevel" required>
-
-                                <option value="">
-                                    Select Grade Level
-                                </option>
-
-                                <option value="Grade 7">Grade 7</option>
-                                <option value="Grade 8">Grade 8</option>
-                                <option value="Grade 9">Grade 9</option>
-                                <option value="Grade 10">Grade 10</option>
-                                <option value="Grade 11">Grade 11</option>
-                                <option value="Grade 12">Grade 12</option>
-
-                            </select>
-
-                        </div>
-
-
-                        <div class="form-group">
-
-                            <label for="subject">
-                                Subject *
-                            </label>
-
-                            <input type="text"
-                                   id="subject"
-                                   required
-                                   placeholder="Example: ICT Fundamentals">
-
-                        </div>
-
-
-                        <div class="form-group">
-
-                            <label for="term">
-                                Term / Quarter *
-                            </label>
-
-                            <select id="term" required>
-
-                                <option value="">
-                                    Select Term
-                                </option>
-
-                                <option value="1st Quarter">
-                                    1st Quarter
-                                </option>
-
-                                <option value="2nd Quarter">
-                                    2nd Quarter
-                                </option>
-
-                                <option value="3rd Quarter">
-                                    3rd Quarter
-                                </option>
-
-                                <option value="4th Quarter">
-                                    4th Quarter
-                                </option>
-
-                            </select>
-
-                        </div>
-
-
-                        <div class="form-group full-width">
-
-                            <label for="lessonTitle">
-                                Lesson Title *
-                            </label>
-
-                            <input type="text"
-                                   id="lessonTitle"
-                                   required
-                                   placeholder="Enter the lesson plan title">
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <!-- MASTER TEACHER -->
-
-                <div class="form-section">
-
-                    <div class="section-title">
-                        👩‍💼 Assigned Master Teacher
-                    </div>
-
-                    <div class="form-group">
-
-                        <label for="assignedMasterTeacher">
-                            Select your assigned Master Teacher *
-                        </label>
-
-                        <select id="assignedMasterTeacher" required>
-
-                            <option value="">
-                                Select Master Teacher
-                            </option>
-
-                            <option value="VENUS V. AMONCIO">
-                                VENUS V. AMONCIO
-                            </option>
-
-                            <option value="IMELDA A. BRUTAS">
-                                IMELDA A. BRUTAS
-                            </option>
-
-                            <option value="RUTCHIL E. VISTAL">
-                                RUTCHIL E. VISTAL
-                            </option>
-
-                        </select>
-
-                    </div>
-
-                </div>
-
-
-                <!-- FILE -->
-
-                <div class="form-section">
-
-                    <div class="section-title">
-                        📄 Lesson Plan File
-                    </div>
-
-                    <div class="file-box">
-
-                        <div class="file-icon">📄</div>
-
-                        <strong>
-                            Upload Your Microsoft Word Lesson Plan
-                        </strong>
-
-                        <p>
-                            Accepted file format: .DOCX only
-                        </p>
-
-                        <input type="file"
-                               id="lessonFile"
-                               accept=".docx"
-                               required>
-
-                        <div id="fileName"
-                             class="file-name"></div>
-
-                    </div>
-
-                </div>
-
-
-                <!-- KEY -->
-
-                <div class="form-section">
-
-                    <div class="section-title">
-                        🔐 Submission Authorization
-                    </div>
-
-                    <div class="security-box">
-
-                        <div class="form-group">
-
-                            <label for="submissionKey">
-                                Submission Key *
-                            </label>
-
-                            <input type="password"
-                                   id="submissionKey"
-                                   required
-                                   placeholder="Enter authorized submission key">
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <button type="submit"
-                        class="submit-button"
-                        id="submitButton">
-
-                    📤 SUBMIT LESSON PLAN
-
-                </button>
-
-            </form>
-
-        </div>
-
-
-        <!-- LOADING -->
-
-        <div class="loading" id="loading">
-
-            <div class="loader"></div>
-
-            <h3>Uploading Your Lesson Plan</h3>
-
-            <br>
-
-            <p>
-                Please wait and do not close this page.
-            </p>
-
-        </div>
-
-
-        <!-- SUCCESS -->
-
-        <div class="card success-card"
-             id="successCard">
-
-            <div class="success-icon">✓</div>
-
-            <h2>Congratulations!</h2>
-
-            <p>
-                Your lesson plan has been successfully submitted
-                and is now waiting for review.
-            </p>
-
-
-            <div class="submission-id-box">
-
-                <small>YOUR SUBMISSION ID</small>
-
-                <div class="submission-id"
-                     id="successSubmissionId"></div>
-
-            </div>
-
-
-            <p id="successMT"></p>
-
-            <br>
-
-            <button class="new-submission"
-                    onclick="newSubmission()">
-
-                + SUBMIT ANOTHER LESSON PLAN
-
-            </button>
-
-        </div>
+        <p>
+            Select the Master Teacher assigned to review your plan.
+        </p>
 
     </div>
 
 
-    <!-- TRACK TAB -->
+    <div class="form-group">
 
-    <div id="track" class="tab-content">
+        <label>
+            Master Teacher *
+        </label>
 
-        <div class="card tracker-box">
+        <select id="assignedMasterTeacher"
+                required>
 
-            <div class="card-header">
+            <option value="">
+                Select Master Teacher
+            </option>
 
-                <div class="header-icon">🔎</div>
+            <option value="VENUS V. AMONCIO">
+                VENUS V. AMONCIO
+            </option>
 
-                <div>
+            <option value="IMELDA A. BRUTAS">
+                IMELDA A. BRUTAS
+            </option>
 
-                    <h3>Track My Submission</h3>
+            <option value="RUTCHIL E. VISTAL">
+                RUTCHIL E. VISTAL
+            </option>
 
-                    <p class="card-description">
-                        Enter your Submission ID to check your
-                        lesson plan status and review feedback.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label for="trackSubmissionId">
-                    Submission ID
-                </label>
-
-                <input type="text"
-                       id="trackSubmissionId"
-                       placeholder="Example: MCLLNHS-20261105-0001">
-
-            </div>
-
-            <br>
-
-
-            <button type="button"
-                    class="submit-button"
-                    onclick="trackSubmission()">
-
-                🔎 CHECK SUBMISSION STATUS
-
-            </button>
-
-
-            <div id="statusResult"
-                 class="status-result"></div>
-
-        </div>
+        </select>
 
     </div>
+
+
+    <div class="wizard-buttons">
+
+        <button type="button"
+                class="button button-back"
+                onclick="previousStep(3)">
+
+            ← BACK
+
+        </button>
+
+
+        <button type="button"
+                class="button button-next"
+                onclick="nextStep(3)">
+
+            NEXT →
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ============================================
+     STEP 4
+============================================ -->
+
+<div class="form-step"
+     id="step4">
+
+    <div class="step-header">
+
+        <div class="icon">📤</div>
+
+        <h3>Upload & Submit</h3>
+
+        <p>
+            Upload your Word lesson plan and enter the authorization key.
+        </p>
+
+    </div>
+
+
+    <div class="upload-box">
+
+        <div class="upload-icon">
+            📄
+        </div>
+
+        <h4>
+            Upload Lesson Plan
+        </h4>
+
+        <p>
+            Microsoft Word (.DOCX) only
+        </p>
+
+
+        <input type="file"
+               id="lessonFile"
+               accept=".docx"
+               required>
+
+
+        <div class="file-name"
+             id="fileName"></div>
+
+    </div>
+
+
+    <br>
+
+
+    <div class="form-group">
+
+        <label>
+            🔐 Submission Key *
+        </label>
+
+        <input type="password"
+               id="submissionKey"
+               placeholder="Enter authorized submission key"
+               required>
+
+    </div>
+
+
+    <div class="wizard-buttons">
+
+        <button type="button"
+                class="button button-back"
+                onclick="previousStep(4)">
+
+            ← BACK
+
+        </button>
+
+
+        <button type="submit"
+                class="button button-submit"
+                id="submitButton">
+
+            📤 SUBMIT LESSON PLAN
+
+        </button>
+
+    </div>
+
+</div>
+
+
+</form>
+
+</div>
+
+
+<!-- LOADING -->
+
+<div class="wizard-card loading"
+     id="loading">
+
+    <div class="loader"></div>
+
+    <h3>
+        Uploading Your Lesson Plan
+    </h3>
+
+    <br>
+
+    <p>
+        Please wait. Do not close this page.
+    </p>
+
+</div>
+
+
+<!-- SUCCESS -->
+
+<div class="wizard-card success-card"
+     id="successCard">
+
+    <div class="success-icon">
+        ✓
+    </div>
+
+    <h2>
+        Congratulations!
+    </h2>
+
+    <br>
+
+    <p>
+        Your lesson plan has been successfully submitted.
+    </p>
+
+
+    <div class="submission-id-box">
+
+        <small>
+            YOUR SUBMISSION ID
+        </small>
+
+        <div class="submission-id"
+             id="successSubmissionId"></div>
+
+    </div>
+
+
+    <p id="successMT"></p>
+
+    <br><br>
+
+
+    <button class="button button-next"
+            onclick="newSubmission()">
+
+        + NEW SUBMISSION
+
+    </button>
+
+</div>
+
+
+</section>
+
+
+<!-- ============================================
+     TRACKING PAGE
+============================================ -->
+
+<section id="tracking"
+         class="portal-page">
+
+
+<div class="track-card">
+
+    <h3>
+        🔎 Track My Submission
+    </h3>
+
+    <p>
+        Enter your Submission ID to check the current status
+        and feedback from your Master Teacher.
+    </p>
+
+    <br>
+
+
+    <div class="form-group">
+
+        <label>
+            Submission ID
+        </label>
+
+        <input type="text"
+               id="trackSubmissionId"
+               placeholder="Enter your Submission ID">
+
+    </div>
+
+
+    <button class="track-button"
+            onclick="trackSubmission()">
+
+        🔎 CHECK SUBMISSION STATUS
+
+    </button>
+
+
+    <div class="status-result"
+         id="statusResult"></div>
+
+</div>
+
+
+</section>
 
 </main>
 
 
+<!-- ============================================
+     FOOTER
+============================================ -->
+
 <footer>
 
-    <strong>
-        MCLLNHS TLE & TECHPRO DIGITAL LESSON PLAN BANK
-    </strong>
+<strong>
+    MCLLNHS TLE & TECHPRO
+    DIGITAL LESSON PLAN BANK
+</strong>
 
-    <br>
+<br>
 
-    Maria Clara L. Lobregat National High School
+Maria Clara L. Lobregat National High School
 
-    <br><br>
+<br><br>
 
-    Developed by
-    <span>Marjorie R. Cabana (Cher Marjoe)</span>
+Developed by
+<span>
+    Marjorie R. Cabana (Cher Marjoe)
+</span>
 
 </footer>
 
 
 <script>
 
-/* ==================================================
-   APPS SCRIPT WEB APP URL
-================================================== */
+/* ============================================
+   APPS SCRIPT URL
+============================================ */
 
 const API_URL =
 "https://script.google.com/macros/s/AKfycbz0iDUV6Ipxklzs7ctAERcpI-YOkdHe5T_DrwL1erKXYXNNU8ZxyKfqRpkknmHjr97Ulw/exec";
 
 
-/* ==================================================
-   TAB SWITCHING
-================================================== */
+/* ============================================
+   SOUND
+   Optional: Add your own MP3 later
+============================================ */
 
-function openTab(tabName, button){
+let soundEnabled = false;
 
-    document.querySelectorAll(".tab-content")
-        .forEach(tab => tab.classList.remove("active"));
+function toggleSound(){
 
-    document.querySelectorAll(".tab-button")
-        .forEach(btn => btn.classList.remove("active"));
+    soundEnabled = !soundEnabled;
 
-    document.getElementById(tabName)
-        .classList.add("active");
+    const button =
+        document.querySelector(
+            ".header-button"
+        );
 
-    button.classList.add("active");
+    if(soundEnabled){
+
+        button.textContent =
+            "🔊 SOUND ON";
+
+    }else{
+
+        button.textContent =
+            "🔇 SOUND OFF";
+
+    }
+
 }
 
 
-/* ==================================================
-   FILE VALIDATION
-================================================== */
+/* ============================================
+   PORTAL NAVIGATION
+============================================ */
 
-document.getElementById("lessonFile")
-.addEventListener("change", function(){
+function showPortal(page,button){
+
+    document
+        .querySelectorAll(".portal-page")
+        .forEach(function(item){
+
+            item.classList.remove("active");
+
+        });
+
+
+    document
+        .querySelectorAll(".nav-button")
+        .forEach(function(item){
+
+            item.classList.remove("active");
+
+        });
+
+
+    document
+        .getElementById(page)
+        .classList.add("active");
+
+
+    button.classList.add("active");
+
+}
+
+
+/* ============================================
+   WIZARD
+============================================ */
+
+let currentStep = 1;
+
+
+function nextStep(step){
+
+    if(!validateStep(step)){
+        return;
+    }
+
+    if(step < 4){
+
+        document
+            .getElementById("step" + step)
+            .classList.remove("active");
+
+
+        currentStep = step + 1;
+
+
+        document
+            .getElementById(
+                "step" + currentStep
+            )
+            .classList.add("active");
+
+
+        updateProgress();
+
+    }
+
+}
+
+
+function previousStep(step){
+
+    document
+        .getElementById("step" + step)
+        .classList.remove("active");
+
+
+    currentStep = step - 1;
+
+
+    document
+        .getElementById(
+            "step" + currentStep
+        )
+        .classList.add("active");
+
+
+    updateProgress();
+
+}
+
+
+function validateStep(step){
+
+    let fields = [];
+
+    if(step === 1){
+
+        fields = [
+            "teacherName",
+            "teacherEmail"
+        ];
+
+    }
+
+    if(step === 2){
+
+        fields = [
+            "department",
+            "gradeLevel",
+            "subject",
+            "term"
+        ];
+
+    }
+
+    if(step === 3){
+
+        fields = [
+            "assignedMasterTeacher"
+        ];
+
+    }
+
+
+    for(const id of fields){
+
+        const element =
+            document.getElementById(id);
+
+
+        if(!element.value.trim()){
+
+            alert(
+                "Please complete all required fields."
+            );
+
+            element.focus();
+
+            return false;
+
+        }
+
+    }
+
+    return true;
+
+}
+
+
+function updateProgress(){
+
+    const percentages = {
+
+        1:"0%",
+        2:"33%",
+        3:"66%",
+        4:"100%"
+
+    };
+
+
+    document
+        .getElementById("progressFill")
+        .style.width =
+        percentages[currentStep];
+
+
+    for(let i = 1;i <= 4;i++){
+
+        const indicator =
+            document.getElementById(
+                "indicator" + i
+            );
+
+
+        indicator.classList.remove(
+            "active",
+            "completed"
+        );
+
+
+        if(i === currentStep){
+
+            indicator.classList.add(
+                "active"
+            );
+
+        }
+
+        if(i < currentStep){
+
+            indicator.classList.add(
+                "completed"
+            );
+
+        }
+
+    }
+
+}
+
+
+/* ============================================
+   FILE
+============================================ */
+
+document
+.getElementById("lessonFile")
+.addEventListener("change",function(){
 
     const file = this.files[0];
 
     if(!file) return;
 
-    if(!file.name.toLowerCase().endsWith(".docx")){
+
+    if(
+        !file.name
+        .toLowerCase()
+        .endsWith(".docx")
+    ){
 
         alert(
-            "Only Microsoft Word (.docx) files are accepted."
+            "Only .DOCX files are accepted."
         );
 
         this.value = "";
 
-        document.getElementById("fileName")
-            .textContent = "";
-
         return;
+
     }
 
-    document.getElementById("fileName")
+
+    document
+        .getElementById("fileName")
         .textContent =
-        "✓ Selected: " + file.name;
+        "✓ Selected: " +
+        file.name;
 
 });
 
 
-/* ==================================================
-   FORM SUBMISSION
-================================================== */
+/* ============================================
+   FILE TO BASE64
+============================================ */
 
-document.getElementById("lessonPlanForm")
-.addEventListener("submit", async function(event){
+function fileToBase64(file){
+
+    return new Promise(
+        function(resolve,reject){
+
+            const reader =
+                new FileReader();
+
+
+            reader.onload =
+                function(){
+
+                    resolve(
+                        reader.result
+                        .split(",")[1]
+                    );
+
+                };
+
+
+            reader.onerror = reject;
+
+
+            reader.readAsDataURL(file);
+
+        }
+    );
+
+}
+
+
+/* ============================================
+   SUBMIT
+============================================ */
+
+document
+.getElementById("lessonPlanForm")
+.addEventListener(
+"submit",
+async function(event){
 
     event.preventDefault();
 
+
     const file =
-        document.getElementById("lessonFile").files[0];
+        document
+        .getElementById("lessonFile")
+        .files[0];
+
 
     if(!file){
 
-        alert("Please select your lesson plan file.");
+        alert(
+            "Please upload your lesson plan."
+        );
 
         return;
+
     }
 
 
     const submitButton =
-        document.getElementById("submitButton");
+        document
+        .getElementById("submitButton");
+
 
     submitButton.disabled = true;
 
     submitButton.textContent =
-        "⏳ PREPARING FILE...";
+        "⏳ UPLOADING...";
 
 
     try{
@@ -1120,95 +2241,120 @@ document.getElementById("lessonPlanForm")
             action:"submitLessonPlan",
 
             teacherName:
-                document.getElementById("teacherName")
+                document
+                .getElementById("teacherName")
                 .value.trim(),
 
             teacherEmail:
-                document.getElementById("teacherEmail")
+                document
+                .getElementById("teacherEmail")
                 .value.trim(),
 
             department:
-                document.getElementById("department")
+                document
+                .getElementById("department")
                 .value,
 
             gradeLevel:
-                document.getElementById("gradeLevel")
+                document
+                .getElementById("gradeLevel")
                 .value,
 
             subject:
-                document.getElementById("subject")
+                document
+                .getElementById("subject")
                 .value.trim(),
 
             term:
-                document.getElementById("term")
+                document
+                .getElementById("term")
                 .value,
 
-            lessonTitle:
-                document.getElementById("lessonTitle")
-                .value.trim(),
+            /* Kept empty for backend compatibility */
+
+            lessonTitle:"",
 
             assignedMasterTeacher:
-                document.getElementById(
+                document
+                .getElementById(
                     "assignedMasterTeacher"
-                ).value,
+                )
+                .value,
 
             submissionKey:
-                document.getElementById(
+                document
+                .getElementById(
                     "submissionKey"
-                ).value,
+                )
+                .value,
 
             fileName:
                 file.name,
 
             mimeType:
-                file.type ||
-                "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                file.type,
 
             fileBase64:
                 base64
+
         };
 
 
-        document.getElementById("submissionCard")
-            .style.display = "none";
+        document
+            .getElementById("wizardCard")
+            .style.display =
+            "none";
 
-        document.getElementById("loading")
-            .style.display = "block";
+
+        document
+            .getElementById("loading")
+            .style.display =
+            "block";
 
 
         const response =
-            await fetch(API_URL, {
+            await fetch(
+                API_URL,
+                {
+                    method:"POST",
 
-                method:"POST",
-
-                body:JSON.stringify(data)
-
-            });
+                    body:
+                        JSON.stringify(data)
+                }
+            );
 
 
         const result =
             await response.json();
 
 
-        document.getElementById("loading")
-            .style.display = "none";
+        document
+            .getElementById("loading")
+            .style.display =
+            "none";
 
 
         if(result.success){
 
-            document.getElementById("successSubmissionId")
+            document
+                .getElementById(
+                    "successSubmissionId"
+                )
                 .textContent =
                 result.submissionId;
 
 
-            document.getElementById("successMT")
+            document
+                .getElementById("successMT")
                 .textContent =
                 "Assigned Master Teacher: " +
                 result.assignedMasterTeacher;
 
 
-            document.getElementById("successCard")
-                .style.display = "block";
+            document
+                .getElementById("successCard")
+                .style.display =
+                "block";
 
         }else{
 
@@ -1217,12 +2363,16 @@ document.getElementById("lessonPlanForm")
                 result.message
             );
 
-            document.getElementById("submissionCard")
-                .style.display = "block";
+
+            document
+                .getElementById("wizardCard")
+                .style.display =
+                "block";
+
         }
 
-
-    }catch(error){
+    }
+    catch(error){
 
         console.error(error);
 
@@ -1231,11 +2381,18 @@ document.getElementById("lessonPlanForm")
             error.message
         );
 
-        document.getElementById("loading")
-            .style.display = "none";
 
-        document.getElementById("submissionCard")
-            .style.display = "block";
+        document
+            .getElementById("loading")
+            .style.display =
+            "none";
+
+
+        document
+            .getElementById("wizardCard")
+            .style.display =
+            "block";
+
     }
 
 
@@ -1247,70 +2404,76 @@ document.getElementById("lessonPlanForm")
 });
 
 
-/* ==================================================
-   FILE TO BASE64
-================================================== */
-
-function fileToBase64(file){
-
-    return new Promise((resolve,reject)=>{
-
-        const reader = new FileReader();
-
-        reader.onload = function(){
-
-            const base64 =
-                reader.result.split(",")[1];
-
-            resolve(base64);
-        };
-
-        reader.onerror = reject;
-
-        reader.readAsDataURL(file);
-
-    });
-
-}
-
-
-/* ==================================================
+/* ============================================
    NEW SUBMISSION
-================================================== */
+============================================ */
 
 function newSubmission(){
 
-    document.getElementById("lessonPlanForm")
+    document
+        .getElementById("lessonPlanForm")
         .reset();
 
-    document.getElementById("fileName")
-        .textContent = "";
 
-    document.getElementById("successCard")
-        .style.display = "none";
+    document
+        .getElementById("successCard")
+        .style.display =
+        "none";
 
-    document.getElementById("submissionCard")
-        .style.display = "block";
+
+    document
+        .getElementById("wizardCard")
+        .style.display =
+        "block";
+
+
+    document
+        .getElementById("fileName")
+        .textContent =
+        "";
+
+
+    document
+        .getElementById("step4")
+        .classList.remove("active");
+
+
+    document
+        .getElementById("step1")
+        .classList.add("active");
+
+
+    currentStep = 1;
+
+    updateProgress();
 
 }
 
 
-/* ==================================================
+/* ============================================
    TRACK SUBMISSION
-================================================== */
+============================================ */
 
 async function trackSubmission(){
 
     const submissionId =
-        document.getElementById("trackSubmissionId")
+        document
+        .getElementById(
+            "trackSubmissionId"
+        )
         .value
         .trim();
 
+
     const resultBox =
-        document.getElementById("statusResult");
+        document
+        .getElementById(
+            "statusResult"
+        );
 
 
-    resultBox.style.display = "block";
+    resultBox.style.display =
+        "block";
 
 
     if(!submissionId){
@@ -1319,6 +2482,7 @@ async function trackSubmission(){
             "⚠️ Please enter your Submission ID.";
 
         return;
+
     }
 
 
@@ -1329,20 +2493,25 @@ async function trackSubmission(){
     try{
 
         const response =
-            await fetch(API_URL, {
+            await fetch(
+                API_URL,
+                {
 
-                method:"POST",
+                    method:"POST",
 
-                body:JSON.stringify({
+                    body:
+                        JSON.stringify({
 
-                    action:"trackSubmission",
+                            action:
+                                "trackSubmission",
 
-                    submissionId:
-                        submissionId
+                            submissionId:
+                                submissionId
 
-                })
+                        })
 
-            });
+                }
+            );
 
 
         const result =
@@ -1352,235 +2521,118 @@ async function trackSubmission(){
         if(!result.success){
 
             resultBox.innerHTML =
-                "⚠️ " + result.message;
+                "⚠️ " +
+                result.message;
 
             return;
+
         }
 
 
-        const s = result.submission;
+        let status =
+            result.status ||
+            "PENDING REVIEW";
 
 
-        /* Support both backend response formats */
+        let icon = "🟡";
 
-        const status =
-            s
-            ? (s.currentStatus || "PENDING REVIEW")
-            : (result.status || "PENDING REVIEW");
-
-
-        const lessonTitle =
-            s
-            ? s.lessonTitle
-            : result.lessonTitle;
-
-
-        const teacherName =
-            s
-            ? s.teacherName
-            : result.teacherName;
-
-
-        const assignedMasterTeacher =
-            s
-            ? s.assignedMasterTeacher
-            : result.assignedMasterTeacher;
-
-
-        const dateSubmitted =
-            s
-            ? s.dateSubmitted
-            : result.dateSubmitted;
-
-
-        const lastUpdated =
-            s
-            ? s.lastUpdated
-            : result.lastUpdated;
-
-
-        const correctionRound =
-            s
-            ? s.correctionRound
-            : result.correctionRound;
-
-
-        const reviewNotes =
-            s
-            ? s.reviewNotes
-            : (result.reviewNotes || "");
-
-
-        const reviewer =
-            s
-            ? s.lastReviewer
-            : (result.lastReviewer || "");
-
-
-        const documentUrl =
-            s
-            ? s.documentUrl
-            : (result.documentUrl || "");
-
-
-        let statusIcon = "🟡";
 
         if(status === "APPROVED"){
-            statusIcon = "🟢";
+
+            icon = "🟢";
+
         }
+
 
         if(
-            status === "RETURN TO SENDER" ||
-            status === "RETURNED"
+            status ===
+            "RETURN TO SENDER"
         ){
-            statusIcon = "🔴";
-        }
 
+            icon = "🔴";
 
-        let statusColor = "#7b35c9";
-
-        if(status === "APPROVED"){
-            statusColor = "#25805a";
-        }
-
-        if(
-            status === "RETURN TO SENDER" ||
-            status === "RETURNED"
-        ){
-            statusColor = "#c44747";
         }
 
 
         resultBox.innerHTML = `
 
-            <div style="text-align:left;">
+            <div>
 
-                <div style="
-                    background:${statusColor};
-                    color:white;
-                    padding:14px 16px;
-                    border-radius:10px;
-                    font-size:16px;
-                    font-weight:800;
-                    margin-bottom:18px;
-                ">
+                <h3>
+                    ${icon} ${status}
+                </h3>
 
-                    ${statusIcon} ${status}
-
-                </div>
-
+                <br>
 
                 <p>
-                    <strong>📄 Submission ID:</strong><br>
-                    ${s ? s.submissionId : result.submissionId}
+                    <strong>
+                        📄 Submission ID:
+                    </strong>
+
+                    <br>
+
+                    ${result.submissionId || "-"}
                 </p>
 
                 <br>
 
-
                 <p>
-                    <strong>📚 Lesson Title:</strong><br>
-                    ${lessonTitle || "-"}
+                    <strong>
+                        👩‍🏫 Teacher:
+                    </strong>
+
+                    <br>
+
+                    ${result.teacherName || "-"}
                 </p>
 
                 <br>
 
-
                 <p>
-                    <strong>👩‍🏫 Teacher:</strong><br>
-                    ${teacherName || "-"}
+                    <strong>
+                        👩‍💼 Assigned Master Teacher:
+                    </strong>
+
+                    <br>
+
+                    ${result.assignedMasterTeacher || "-"}
                 </p>
 
                 <br>
 
-
                 <p>
-                    <strong>👩‍💼 Assigned Master Teacher:</strong><br>
-                    ${assignedMasterTeacher || "-"}
+                    <strong>
+                        📅 Date Submitted:
+                    </strong>
+
+                    <br>
+
+                    ${result.dateSubmitted || "-"}
                 </p>
 
                 <br>
 
-
                 <p>
-                    <strong>📅 Date Submitted:</strong><br>
-                    ${dateSubmitted || "-"}
+                    <strong>
+                        🔄 Correction Round:
+                    </strong>
+
+                    <br>
+
+                    ${result.correctionRound || "0"}
                 </p>
-
-                <br>
-
-
-                <p>
-                    <strong>🕒 Last Updated:</strong><br>
-                    ${lastUpdated || "No updates yet"}
-                </p>
-
-                <br>
-
-
-                <p>
-                    <strong>🔄 Correction Round:</strong><br>
-                    ${correctionRound || "0"}
-                </p>
-
-
-                <br>
-
-
-                <p>
-                    <strong>💬 Review Feedback:</strong><br>
-                    ${reviewNotes || "No review feedback yet."}
-                </p>
-
-
-                ${
-                    reviewer
-                    ? `
-                        <br>
-                        <p>
-                            <strong>👤 Reviewer:</strong><br>
-                            ${reviewer}
-                        </p>
-                      `
-                    : ""
-                }
-
-
-                ${
-                    documentUrl
-                    ? `
-                        <br>
-                        <a href="${documentUrl}"
-                           target="_blank"
-                           style="
-                               display:inline-block;
-                               padding:12px 16px;
-                               border-radius:9px;
-                               background:#6422a8;
-                               color:white;
-                               text-decoration:none;
-                               font-weight:800;
-                           ">
-
-                            📄 OPEN LESSON PLAN
-
-                        </a>
-                      `
-                    : ""
-                }
 
             </div>
 
         `;
 
-
-    }catch(error){
+    }
+    catch(error){
 
         console.error(error);
 
         resultBox.innerHTML =
-            "⚠️ Unable to connect to the Lesson Plan Bank. " +
-            "Please try again.";
+            "⚠️ Unable to connect to the system.";
 
     }
 
