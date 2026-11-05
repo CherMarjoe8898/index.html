@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -312,7 +313,7 @@ input:focus,select:focus{border-color:var(--purple-2);box-shadow:0 0 0 3px rgba(
             <div class="panel-heading"><h2>Quick Access</h2><span>Choose an action</span></div>
             <div class="quick-actions">
               <button class="quick-card" onclick="showPage('submission')"><span class="q-icon">📤</span><strong>New Submission</strong><small>Upload a Word lesson plan and assign its Master Teacher reviewer.</small></button>
-              <button class="quick-card" onclick="showPage('track')"><span class="q-icon">🔎</span><strong>Track Submission</strong><small>Check the current review status and feedback using your Submission ID.</small></button>
+              <button class="quick-card" onclick="showPage('track')"><span class="q-icon">🔎</span><strong>Track Submission</strong><small>Check the review status and feedback using your Submission ID and teacher email.</small></button>
               <button class="quick-card" onclick="showPage('history')"><span class="q-icon">📋</span><strong>My Submissions</strong><small>See submissions saved from this browser and open their tracking details.</small></button>
               <button class="quick-card" onclick="showPage('guidelines')"><span class="q-icon">📘</span><strong>Guidelines &amp; Help</strong><small>Review the submission requirements and workflow.</small></button>
             </div>
@@ -425,13 +426,14 @@ input:focus,select:focus{border-color:var(--purple-2);box-shadow:0 0 0 3px rgba(
 
       <!-- TRACK -->
       <section class="page" id="page-track">
-        <div class="page-heading"><div><div class="eyebrow">REVIEW PROCESS</div><h1>Track Submission</h1><p>Enter the Submission ID shown after a successful upload to check its latest status and reviewer feedback.</p></div></div>
+        <div class="page-heading"><div><div class="eyebrow">REVIEW PROCESS</div><h1>Track Submission</h1><p>Enter your Submission ID and the same teacher email address you used during upload to check the latest status and reviewer feedback.</p></div></div>
         <div class="panel track-layout">
           <div class="track-search">
-            <div class="form-group"><label for="track-id">Submission ID</label><input id="track-id" type="text" placeholder="Example: MCLLNHS-20261105-0001"></div>
+            <div class="form-group"><label for="track-id">Submission ID <span class="req">*</span></label><input id="track-id" type="text" placeholder="Example: MCLLNHS-20261105-FED106CD" autocomplete="off" required></div>
+            <div class="form-group"><label for="track-email">Teacher Email Address <span class="req">*</span></label><input id="track-email" type="email" placeholder="Enter the email used during submission" autocomplete="email" required></div>
             <button class="btn btn-primary" id="track-button" onclick="trackSubmission()">Check Status</button>
           </div>
-          <div class="helper">Tracking retrieves the record using the Submission ID. Keep your ID for future reference.</div>
+          <div class="helper">Both fields are required. For privacy, the system checks that the Submission ID and teacher email match the original submission record.</div>
           <div class="track-result" id="track-result" aria-live="polite"></div>
         </div>
       </section>
@@ -450,7 +452,7 @@ input:focus,select:focus{border-color:var(--purple-2);box-shadow:0 0 0 3px rgba(
         <div class="page-heading"><div><div class="eyebrow">RESOURCES</div><h1>Guidelines &amp; Help</h1><p>Quick reminders for submitting and tracking lesson plans.</p></div></div>
         <div class="help-grid">
           <div class="help-card"><strong>1. Complete your information</strong><p>Enter your full name and a valid email address. Select the correct department: TLE or TechPro.</p></div>
-          <div class="help-card"><strong>2. Select grade and term</strong><p>Choose the correct grade level and Term 1, Term 2, or Term 3 before continuing.</p></div>
+          <div class="help-card"><strong>2. Select grade and term</strong><p>Choose the correct grade level and Term 1, Term 2, or Term 3.</p></div>
           <div class="help-card"><strong>3. Select the assigned reviewer</strong><p>Choose the Master Teacher assigned to your lesson plan. Each reviewer should only access submissions assigned to their account.</p></div>
           <div class="help-card"><strong>4. Upload a DOCX file</strong><p>Only Microsoft Word .docx files are accepted by this Teacher Portal version. Check the file before submitting.</p></div>
           <div class="help-card"><strong>5. Keep your Submission ID</strong><p>After successful submission, copy or save the Submission ID. You will need it to check the status and feedback later.</p></div>
@@ -616,6 +618,7 @@ document.getElementById("lesson-form").addEventListener("submit", async function
     const record = {
       submissionId: result.submissionId || "",
       teacherName: payload.teacherName,
+      teacherEmail: payload.teacherEmail,
       department: payload.department,
       gradeLevel: payload.gradeLevel,
       term: payload.term,
@@ -674,20 +677,29 @@ function renderHistory(){
   if(!records.length){ body.innerHTML = '<tr><td colspan="6"><div class="empty-state"><div class="empty-icon">📋</div><strong>No local submission history</strong><p>Your successful submissions from this browser will appear here.</p></div></td></tr>'; return; }
   body.innerHTML = records.map(r => '<tr><td><strong>'+escapeHtml(r.submissionId)+'</strong></td><td>'+escapeHtml(r.gradeLevel)+'</td><td>'+escapeHtml(r.term)+'</td><td>'+escapeHtml(r.assignedMasterTeacher)+'</td><td>'+statusBadge(r.status)+'</td><td><button class="btn btn-light" onclick="trackSavedRecord(\''+escapeJs(r.submissionId)+'\')">Track</button></td></tr>').join('');
 }
-function trackSavedRecord(id){ document.getElementById("track-id").value = id; showPage("track"); trackSubmission(); }
+function trackSavedRecord(id){
+  document.getElementById("track-id").value = id;
+  const saved = getLocalRecords().find(r => r.submissionId === id);
+  if(saved && saved.teacherEmail) document.getElementById("track-email").value = saved.teacherEmail;
+  showPage("track");
+  if(saved && saved.teacherEmail) trackSubmission();
+}
 
 /* Tracking: accepts either {submission:{...}} or flat response formats. */
 async function trackSubmission(){
   const id = document.getElementById("track-id").value.trim();
+  const email = document.getElementById("track-email").value.trim();
   const resultBox = document.getElementById("track-result");
   const button = document.getElementById("track-button");
   resultBox.style.display = "block";
-  if(!id){ resultBox.innerHTML = '<div class="empty-state"><strong>Enter a Submission ID</strong><p>Please enter the ID shown after successful submission.</p></div>'; return; }
+  if(!id){ resultBox.innerHTML = '<div class="empty-state"><strong>Enter a Submission ID</strong><p>Please enter the ID shown after successful submission.</p></div>'; document.getElementById("track-id").focus(); return; }
+  if(!email){ resultBox.innerHTML = '<div class="empty-state"><strong>Enter your teacher email address</strong><p>Use the same email address you entered when you submitted this lesson plan.</p></div>'; document.getElementById("track-email").focus(); return; }
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ resultBox.innerHTML = '<div class="empty-state"><strong>Check your email address</strong><p>Please enter a valid email address.</p></div>'; document.getElementById("track-email").focus(); return; }
   button.disabled = true;
   button.textContent = "Checking…";
   resultBox.innerHTML = '<div class="empty-state"><strong>Checking the Lesson Plan Bank…</strong><p>Retrieving the latest submission information.</p></div>';
   try{
-    const response = await fetch(API_URL,{method:"POST",body:JSON.stringify({action:"trackSubmission",submissionId:id})});
+    const response = await fetch(API_URL,{method:"POST",body:JSON.stringify({action:"trackSubmission",submissionId:id,teacherEmail:email})});
     if(!response.ok) throw new Error("The server returned HTTP " + response.status + ".");
     const result = await response.json();
     if(!result || !result.success) throw new Error((result && result.message) || "Submission not found.");
@@ -695,6 +707,7 @@ async function trackSubmission(){
     const record = {
       submissionId: s.submissionId || result.submissionId || id,
       teacherName: s.teacherName || result.teacherName || "",
+      teacherEmail: s.teacherEmail || result.teacherEmail || email,
       department: s.department || result.department || "",
       gradeLevel: s.gradeLevel || result.gradeLevel || "",
       term: s.term || result.term || "",
@@ -710,7 +723,6 @@ async function trackSubmission(){
     saveLocalRecord(record);
     renderDashboard();
     renderHistory();
-    const safeStatus = escapeHtml(record.status);
     const date = record.dateSubmitted ? escapeHtml(record.dateSubmitted) : "—";
     const updated = record.lastUpdated ? escapeHtml(record.lastUpdated) : "—";
     resultBox.innerHTML = '<h3>Submission Status <span style="float:right">'+statusBadge(record.status)+'</span></h3>'+
@@ -762,11 +774,14 @@ function showToast(message){
 /* Success actions */
 function openTrackNewSubmission(){
   const id = document.getElementById("success-id").textContent;
+  const saved = getLocalRecords().find(r => r.submissionId === id);
+  const emailFromForm = document.getElementById("teacher-email").value.trim();
   document.getElementById("track-id").value = id;
+  document.getElementById("track-email").value = (saved && saved.teacherEmail) || emailFromForm || "";
   document.getElementById("upload-success").style.display = "none";
   document.getElementById("wizard-card").style.display = "block";
   showPage("track");
-  if(id) trackSubmission();
+  if(id && document.getElementById("track-email").value.trim()) trackSubmission();
 }
 function startAnotherSubmission(){
   document.getElementById("lesson-form").reset();
