@@ -29,7 +29,6 @@
     --red:#c44747;
 
     --shadow:0 12px 35px rgba(55,20,92,.10);
-    --shadow-hover:0 20px 45px rgba(55,20,92,.16);
 }
 
 *{
@@ -132,22 +131,6 @@ header{
     margin-bottom:25px;
 }
 
-.page-hero::after{
-    content:"";
-    position:absolute;
-    width:260px;
-    height:260px;
-    border-radius:50%;
-    border:1px solid rgba(255,255,255,.12);
-    right:-90px;
-    top:-110px;
-}
-
-.hero-content{
-    position:relative;
-    z-index:2;
-}
-
 .hero-label{
     display:inline-block;
     color:var(--gold-light);
@@ -191,24 +174,23 @@ header{
 }
 
 .tab-button{
-    border:none;
+    border:1px solid var(--border);
     background:white;
     color:var(--muted);
-    border:1px solid var(--border);
     padding:13px 20px;
     border-radius:10px;
     cursor:pointer;
     font-weight:800;
     font-size:13px;
-    transition:.2s;
 }
 
 .tab-button.active{
     background:linear-gradient(135deg,var(--purple-900),var(--purple-700));
     color:white;
     border-color:var(--purple-700);
-    box-shadow:0 7px 18px rgba(82,25,140,.18);
 }
+
+/* TAB CONTENT */
 
 .tab-content{
     display:none;
@@ -271,9 +253,6 @@ header{
 }
 
 .section-title{
-    display:flex;
-    align-items:center;
-    gap:9px;
     color:var(--purple-800);
     font-size:14px;
     font-weight:800;
@@ -299,7 +278,6 @@ label{
     font-size:12px;
     font-weight:800;
     margin-bottom:7px;
-    color:var(--text);
 }
 
 input,
@@ -312,7 +290,6 @@ select{
     color:var(--text);
     background:white;
     outline:none;
-    transition:.2s;
 }
 
 input:focus,
@@ -348,12 +325,6 @@ select:focus{
     margin-bottom:15px;
 }
 
-.file-box input{
-    max-width:450px;
-    margin:auto;
-    background:white;
-}
-
 .file-name{
     margin-top:14px;
     font-size:12px;
@@ -364,8 +335,8 @@ select:focus{
 /* SECURITY */
 
 .security-box{
-    background:#faf7ff;
-    border:1px solid #e8dff2;
+    background:var(--purple-50);
+    border:1px solid var(--border);
     border-radius:13px;
     padding:18px;
 }
@@ -380,22 +351,15 @@ select:focus{
     cursor:pointer;
     font-size:14px;
     font-weight:900;
-    letter-spacing:.2px;
     color:var(--purple-900);
     background:linear-gradient(135deg,#e5bf45,var(--gold));
     box-shadow:0 8px 20px rgba(215,169,40,.22);
-    transition:.2s;
-}
-
-.submit-button:hover{
-    transform:translateY(-2px);
 }
 
 .submit-button:disabled{
     background:#b7b1bc;
     color:white;
     cursor:not-allowed;
-    transform:none;
 }
 
 /* LOADING */
@@ -421,7 +385,9 @@ select:focus{
 }
 
 @keyframes spin{
-    to{transform:rotate(360deg);}
+    to{
+        transform:rotate(360deg);
+    }
 }
 
 /* SUCCESS */
@@ -449,11 +415,6 @@ select:focus{
     margin-bottom:10px;
 }
 
-.success-card p{
-    color:var(--muted);
-    line-height:1.6;
-}
-
 .submission-id-box{
     max-width:520px;
     margin:25px auto;
@@ -461,10 +422,6 @@ select:focus{
     border-radius:14px;
     background:var(--purple-50);
     border:1px dashed var(--purple-600);
-}
-
-.submission-id-box small{
-    color:var(--muted);
 }
 
 .submission-id{
@@ -485,7 +442,7 @@ select:focus{
     font-weight:800;
 }
 
-/* TRACK */
+/* TRACKING */
 
 .tracker-box{
     max-width:700px;
@@ -494,8 +451,8 @@ select:focus{
 .status-result{
     display:none;
     margin-top:20px;
-    padding:18px;
-    border-radius:12px;
+    padding:22px;
+    border-radius:14px;
     background:var(--purple-50);
     border:1px solid var(--border);
     line-height:1.7;
@@ -522,17 +479,14 @@ footer span{
     color:var(--gold-light);
 }
 
-/* RESPONSIVE */
+/* MOBILE */
 
 @media(max-width:700px){
 
-    .header-inner{
-        flex-direction:column;
-        text-align:center;
-    }
-
+    .header-inner,
     .brand{
         flex-direction:column;
+        text-align:center;
     }
 
     .form-grid{
@@ -543,24 +497,16 @@ footer span{
         grid-column:auto;
     }
 
-    .page-hero{
-        padding:28px 22px;
-    }
-
-    .page-hero h2{
-        font-size:26px;
-    }
-
-    .card{
-        padding:22px 17px;
-    }
-
     .tab-buttons{
         flex-direction:column;
     }
 
     .tab-button{
         width:100%;
+    }
+
+    .card{
+        padding:22px 17px;
     }
 }
 </style>
@@ -569,6 +515,7 @@ footer span{
 <body>
 
 <header>
+
     <div class="header-inner">
 
         <div class="brand">
@@ -590,32 +537,42 @@ footer span{
         </a>
 
     </div>
+
 </header>
+
 
 <main class="container">
 
     <section class="page-hero">
-        <div class="hero-content">
-            <div class="hero-label">DIGITAL LESSON PLAN MANAGEMENT</div>
 
-            <h2>Teacher Portal</h2>
-
-            <p>
-                Submit your lesson plan, monitor its review status,
-                receive feedback, and complete corrections through one
-                organized digital workflow.
-            </p>
+        <div class="hero-label">
+            DIGITAL LESSON PLAN MANAGEMENT
         </div>
+
+        <h2>Teacher Portal</h2>
+
+        <p>
+            Submit your lesson plan, monitor its review status,
+            receive feedback, and complete corrections through one
+            organized digital workflow.
+        </p>
+
     </section>
 
+
     <div class="notice">
+
         <strong>📌 Before submitting:</strong>
+
         Complete all required information, upload a valid
         <strong>.DOCX</strong> lesson plan, and select the correct
         assigned Master Teacher.
+
     </div>
 
+
     <div class="tab-buttons">
+
         <button class="tab-button active"
                 onclick="openTab('submit', this)">
             📝 Submit Lesson Plan
@@ -625,27 +582,35 @@ footer span{
                 onclick="openTab('track', this)">
             🔎 Track Submission
         </button>
+
     </div>
 
-    <!-- SUBMISSION TAB -->
+
+    <!-- SUBMIT TAB -->
 
     <div id="submit" class="tab-content active">
 
         <div class="card" id="submissionCard">
 
             <div class="card-header">
+
                 <div class="header-icon">📝</div>
 
                 <div>
                     <h3>New Lesson Plan Submission</h3>
+
                     <p class="card-description">
                         Complete the form below to submit your lesson plan
                         for review.
                     </p>
                 </div>
+
             </div>
 
+
             <form id="lessonPlanForm">
+
+                <!-- TEACHER INFORMATION -->
 
                 <div class="form-section">
 
@@ -656,23 +621,38 @@ footer span{
                     <div class="form-grid">
 
                         <div class="form-group">
-                            <label for="teacherName">Full Name *</label>
+
+                            <label for="teacherName">
+                                Full Name *
+                            </label>
+
                             <input type="text"
                                    id="teacherName"
                                    required
                                    placeholder="Enter your full name">
+
                         </div>
 
+
                         <div class="form-group">
-                            <label for="teacherEmail">Email Address *</label>
+
+                            <label for="teacherEmail">
+                                Email Address *
+                            </label>
+
                             <input type="email"
                                    id="teacherEmail"
                                    required
                                    placeholder="example@email.com">
+
                         </div>
 
                     </div>
+
                 </div>
+
+
+                <!-- LESSON INFORMATION -->
 
                 <div class="form-section">
 
@@ -683,56 +663,116 @@ footer span{
                     <div class="form-grid">
 
                         <div class="form-group">
-                            <label for="department">Department *</label>
+
+                            <label for="department">
+                                Department *
+                            </label>
+
                             <select id="department" required>
-                                <option value="">Select Department</option>
-                                <option value="TLE">TLE</option>
-                                <option value="TechPro">TechPro</option>
+                                <option value="">
+                                    Select Department
+                                </option>
+                                <option value="TLE">
+                                    TLE
+                                </option>
+                                <option value="TechPro">
+                                    TechPro
+                                </option>
                             </select>
+
                         </div>
 
+
                         <div class="form-group">
-                            <label for="gradeLevel">Grade Level *</label>
+
+                            <label for="gradeLevel">
+                                Grade Level *
+                            </label>
+
                             <select id="gradeLevel" required>
-                                <option value="">Select Grade Level</option>
+
+                                <option value="">
+                                    Select Grade Level
+                                </option>
+
                                 <option value="Grade 7">Grade 7</option>
                                 <option value="Grade 8">Grade 8</option>
                                 <option value="Grade 9">Grade 9</option>
                                 <option value="Grade 10">Grade 10</option>
                                 <option value="Grade 11">Grade 11</option>
                                 <option value="Grade 12">Grade 12</option>
+
                             </select>
+
                         </div>
 
+
                         <div class="form-group">
-                            <label for="subject">Subject *</label>
+
+                            <label for="subject">
+                                Subject *
+                            </label>
+
                             <input type="text"
                                    id="subject"
                                    required
                                    placeholder="Example: ICT Fundamentals">
+
                         </div>
+
 
                         <div class="form-group">
-                            <label for="term">Term / Quarter *</label>
+
+                            <label for="term">
+                                Term / Quarter *
+                            </label>
+
                             <select id="term" required>
-                                <option value="">Select Term</option>
-                                <option value="1st Quarter">1st Quarter</option>
-                                <option value="2nd Quarter">2nd Quarter</option>
-                                <option value="3rd Quarter">3rd Quarter</option>
-                                <option value="4th Quarter">4th Quarter</option>
+
+                                <option value="">
+                                    Select Term
+                                </option>
+
+                                <option value="1st Quarter">
+                                    1st Quarter
+                                </option>
+
+                                <option value="2nd Quarter">
+                                    2nd Quarter
+                                </option>
+
+                                <option value="3rd Quarter">
+                                    3rd Quarter
+                                </option>
+
+                                <option value="4th Quarter">
+                                    4th Quarter
+                                </option>
+
                             </select>
+
                         </div>
 
+
                         <div class="form-group full-width">
-                            <label for="lessonTitle">Lesson Title *</label>
+
+                            <label for="lessonTitle">
+                                Lesson Title *
+                            </label>
+
                             <input type="text"
                                    id="lessonTitle"
                                    required
                                    placeholder="Enter the lesson plan title">
+
                         </div>
 
                     </div>
+
                 </div>
+
+
+                <!-- MASTER TEACHER -->
 
                 <div class="form-section">
 
@@ -741,25 +781,37 @@ footer span{
                     </div>
 
                     <div class="form-group">
+
                         <label for="assignedMasterTeacher">
                             Select your assigned Master Teacher *
                         </label>
 
                         <select id="assignedMasterTeacher" required>
-                            <option value="">Select Master Teacher</option>
+
+                            <option value="">
+                                Select Master Teacher
+                            </option>
+
                             <option value="VENUS V. AMONCIO">
                                 VENUS V. AMONCIO
                             </option>
+
                             <option value="IMELDA A. BRUTAS">
                                 IMELDA A. BRUTAS
                             </option>
+
                             <option value="RUTCHIL E. VISTAL">
                                 RUTCHIL E. VISTAL
                             </option>
+
                         </select>
+
                     </div>
 
                 </div>
+
+
+                <!-- FILE -->
 
                 <div class="form-section">
 
@@ -791,6 +843,9 @@ footer span{
 
                 </div>
 
+
+                <!-- KEY -->
+
                 <div class="form-section">
 
                     <div class="section-title">
@@ -798,7 +853,9 @@ footer span{
                     </div>
 
                     <div class="security-box">
+
                         <div class="form-group">
+
                             <label for="submissionKey">
                                 Submission Key *
                             </label>
@@ -807,10 +864,13 @@ footer span{
                                    id="submissionKey"
                                    required
                                    placeholder="Enter authorized submission key">
+
                         </div>
+
                     </div>
 
                 </div>
+
 
                 <button type="submit"
                         class="submit-button"
@@ -821,7 +881,9 @@ footer span{
                 </button>
 
             </form>
+
         </div>
+
 
         <!-- LOADING -->
 
@@ -839,9 +901,11 @@ footer span{
 
         </div>
 
+
         <!-- SUCCESS -->
 
-        <div class="card success-card" id="successCard">
+        <div class="card success-card"
+             id="successCard">
 
             <div class="success-icon">✓</div>
 
@@ -852,6 +916,7 @@ footer span{
                 and is now waiting for review.
             </p>
 
+
             <div class="submission-id-box">
 
                 <small>YOUR SUBMISSION ID</small>
@@ -860,6 +925,7 @@ footer span{
                      id="successSubmissionId"></div>
 
             </div>
+
 
             <p id="successMT"></p>
 
@@ -876,6 +942,7 @@ footer span{
 
     </div>
 
+
     <!-- TRACK TAB -->
 
     <div id="track" class="tab-content">
@@ -887,15 +954,18 @@ footer span{
                 <div class="header-icon">🔎</div>
 
                 <div>
+
                     <h3>Track My Submission</h3>
 
                     <p class="card-description">
                         Enter your Submission ID to check your
-                        lesson plan status.
+                        lesson plan status and review feedback.
                     </p>
+
                 </div>
 
             </div>
+
 
             <div class="form-group">
 
@@ -905,18 +975,21 @@ footer span{
 
                 <input type="text"
                        id="trackSubmissionId"
-                       placeholder="Enter your Submission ID">
+                       placeholder="Example: MCLLNHS-20261105-0001">
 
             </div>
 
             <br>
 
-            <button class="submit-button"
+
+            <button type="button"
+                    class="submit-button"
                     onclick="trackSubmission()">
 
                 🔎 CHECK SUBMISSION STATUS
 
             </button>
+
 
             <div id="statusResult"
                  class="status-result"></div>
@@ -926,6 +999,7 @@ footer span{
     </div>
 
 </main>
+
 
 <footer>
 
@@ -939,9 +1013,11 @@ footer span{
 
     <br><br>
 
-    Developed by <span>Marjorie R. Cabana (Cher Marjoe)</span>
+    Developed by
+    <span>Marjorie R. Cabana (Cher Marjoe)</span>
 
 </footer>
+
 
 <script>
 
@@ -985,7 +1061,9 @@ document.getElementById("lessonFile")
 
     if(!file.name.toLowerCase().endsWith(".docx")){
 
-        alert("Only Microsoft Word (.docx) files are accepted.");
+        alert(
+            "Only Microsoft Word (.docx) files are accepted."
+        );
 
         this.value = "";
 
@@ -996,7 +1074,8 @@ document.getElementById("lessonFile")
     }
 
     document.getElementById("fileName")
-        .textContent = "✓ Selected: " + file.name;
+        .textContent =
+        "✓ Selected: " + file.name;
 
 });
 
@@ -1020,6 +1099,7 @@ document.getElementById("lessonPlanForm")
         return;
     }
 
+
     const submitButton =
         document.getElementById("submitButton");
 
@@ -1028,33 +1108,44 @@ document.getElementById("lessonPlanForm")
     submitButton.textContent =
         "⏳ PREPARING FILE...";
 
+
     try{
 
         const base64 =
             await fileToBase64(file);
 
+
         const data = {
 
+            action:"submitLessonPlan",
+
             teacherName:
-                document.getElementById("teacherName").value.trim(),
+                document.getElementById("teacherName")
+                .value.trim(),
 
             teacherEmail:
-                document.getElementById("teacherEmail").value.trim(),
+                document.getElementById("teacherEmail")
+                .value.trim(),
 
             department:
-                document.getElementById("department").value,
+                document.getElementById("department")
+                .value,
 
             gradeLevel:
-                document.getElementById("gradeLevel").value,
+                document.getElementById("gradeLevel")
+                .value,
 
             subject:
-                document.getElementById("subject").value.trim(),
+                document.getElementById("subject")
+                .value.trim(),
 
             term:
-                document.getElementById("term").value,
+                document.getElementById("term")
+                .value,
 
             lessonTitle:
-                document.getElementById("lessonTitle").value.trim(),
+                document.getElementById("lessonTitle")
+                .value.trim(),
 
             assignedMasterTeacher:
                 document.getElementById(
@@ -1077,23 +1168,31 @@ document.getElementById("lessonPlanForm")
                 base64
         };
 
+
         document.getElementById("submissionCard")
             .style.display = "none";
 
         document.getElementById("loading")
             .style.display = "block";
 
+
         const response =
-            await fetch(API_URL,{
+            await fetch(API_URL, {
+
                 method:"POST",
+
                 body:JSON.stringify(data)
+
             });
+
 
         const result =
             await response.json();
 
+
         document.getElementById("loading")
             .style.display = "none";
+
 
         if(result.success){
 
@@ -1101,10 +1200,12 @@ document.getElementById("lessonPlanForm")
                 .textContent =
                 result.submissionId;
 
+
             document.getElementById("successMT")
                 .textContent =
                 "Assigned Master Teacher: " +
                 result.assignedMasterTeacher;
+
 
             document.getElementById("successCard")
                 .style.display = "block";
@@ -1119,6 +1220,7 @@ document.getElementById("lessonPlanForm")
             document.getElementById("submissionCard")
                 .style.display = "block";
         }
+
 
     }catch(error){
 
@@ -1135,6 +1237,7 @@ document.getElementById("lessonPlanForm")
         document.getElementById("submissionCard")
             .style.display = "block";
     }
+
 
     submitButton.disabled = false;
 
@@ -1165,7 +1268,9 @@ function fileToBase64(file){
         reader.onerror = reject;
 
         reader.readAsDataURL(file);
+
     });
+
 }
 
 
@@ -1175,7 +1280,8 @@ function fileToBase64(file){
 
 function newSubmission(){
 
-    document.getElementById("lessonPlanForm").reset();
+    document.getElementById("lessonPlanForm")
+        .reset();
 
     document.getElementById("fileName")
         .textContent = "";
@@ -1185,24 +1291,27 @@ function newSubmission(){
 
     document.getElementById("submissionCard")
         .style.display = "block";
+
 }
 
 
 /* ==================================================
    TRACK SUBMISSION
-   BACKEND CONNECTION COMES NEXT
 ================================================== */
 
-function trackSubmission(){
+async function trackSubmission(){
 
     const submissionId =
         document.getElementById("trackSubmissionId")
-        .value.trim();
+        .value
+        .trim();
 
     const resultBox =
         document.getElementById("statusResult");
 
+
     resultBox.style.display = "block";
+
 
     if(!submissionId){
 
@@ -1212,9 +1321,269 @@ function trackSubmission(){
         return;
     }
 
+
     resultBox.innerHTML =
-        "🔎 Submission tracking will be connected to the " +
-        "Digital Lesson Plan Bank backend in the next step.";
+        "⏳ Checking your submission...";
+
+
+    try{
+
+        const response =
+            await fetch(API_URL, {
+
+                method:"POST",
+
+                body:JSON.stringify({
+
+                    action:"trackSubmission",
+
+                    submissionId:
+                        submissionId
+
+                })
+
+            });
+
+
+        const result =
+            await response.json();
+
+
+        if(!result.success){
+
+            resultBox.innerHTML =
+                "⚠️ " + result.message;
+
+            return;
+        }
+
+
+        const s = result.submission;
+
+
+        /* Support both backend response formats */
+
+        const status =
+            s
+            ? (s.currentStatus || "PENDING REVIEW")
+            : (result.status || "PENDING REVIEW");
+
+
+        const lessonTitle =
+            s
+            ? s.lessonTitle
+            : result.lessonTitle;
+
+
+        const teacherName =
+            s
+            ? s.teacherName
+            : result.teacherName;
+
+
+        const assignedMasterTeacher =
+            s
+            ? s.assignedMasterTeacher
+            : result.assignedMasterTeacher;
+
+
+        const dateSubmitted =
+            s
+            ? s.dateSubmitted
+            : result.dateSubmitted;
+
+
+        const lastUpdated =
+            s
+            ? s.lastUpdated
+            : result.lastUpdated;
+
+
+        const correctionRound =
+            s
+            ? s.correctionRound
+            : result.correctionRound;
+
+
+        const reviewNotes =
+            s
+            ? s.reviewNotes
+            : (result.reviewNotes || "");
+
+
+        const reviewer =
+            s
+            ? s.lastReviewer
+            : (result.lastReviewer || "");
+
+
+        const documentUrl =
+            s
+            ? s.documentUrl
+            : (result.documentUrl || "");
+
+
+        let statusIcon = "🟡";
+
+        if(status === "APPROVED"){
+            statusIcon = "🟢";
+        }
+
+        if(
+            status === "RETURN TO SENDER" ||
+            status === "RETURNED"
+        ){
+            statusIcon = "🔴";
+        }
+
+
+        let statusColor = "#7b35c9";
+
+        if(status === "APPROVED"){
+            statusColor = "#25805a";
+        }
+
+        if(
+            status === "RETURN TO SENDER" ||
+            status === "RETURNED"
+        ){
+            statusColor = "#c44747";
+        }
+
+
+        resultBox.innerHTML = `
+
+            <div style="text-align:left;">
+
+                <div style="
+                    background:${statusColor};
+                    color:white;
+                    padding:14px 16px;
+                    border-radius:10px;
+                    font-size:16px;
+                    font-weight:800;
+                    margin-bottom:18px;
+                ">
+
+                    ${statusIcon} ${status}
+
+                </div>
+
+
+                <p>
+                    <strong>📄 Submission ID:</strong><br>
+                    ${s ? s.submissionId : result.submissionId}
+                </p>
+
+                <br>
+
+
+                <p>
+                    <strong>📚 Lesson Title:</strong><br>
+                    ${lessonTitle || "-"}
+                </p>
+
+                <br>
+
+
+                <p>
+                    <strong>👩‍🏫 Teacher:</strong><br>
+                    ${teacherName || "-"}
+                </p>
+
+                <br>
+
+
+                <p>
+                    <strong>👩‍💼 Assigned Master Teacher:</strong><br>
+                    ${assignedMasterTeacher || "-"}
+                </p>
+
+                <br>
+
+
+                <p>
+                    <strong>📅 Date Submitted:</strong><br>
+                    ${dateSubmitted || "-"}
+                </p>
+
+                <br>
+
+
+                <p>
+                    <strong>🕒 Last Updated:</strong><br>
+                    ${lastUpdated || "No updates yet"}
+                </p>
+
+                <br>
+
+
+                <p>
+                    <strong>🔄 Correction Round:</strong><br>
+                    ${correctionRound || "0"}
+                </p>
+
+
+                <br>
+
+
+                <p>
+                    <strong>💬 Review Feedback:</strong><br>
+                    ${reviewNotes || "No review feedback yet."}
+                </p>
+
+
+                ${
+                    reviewer
+                    ? `
+                        <br>
+                        <p>
+                            <strong>👤 Reviewer:</strong><br>
+                            ${reviewer}
+                        </p>
+                      `
+                    : ""
+                }
+
+
+                ${
+                    documentUrl
+                    ? `
+                        <br>
+                        <a href="${documentUrl}"
+                           target="_blank"
+                           style="
+                               display:inline-block;
+                               padding:12px 16px;
+                               border-radius:9px;
+                               background:#6422a8;
+                               color:white;
+                               text-decoration:none;
+                               font-weight:800;
+                           ">
+
+                            📄 OPEN LESSON PLAN
+
+                        </a>
+                      `
+                    : ""
+                }
+
+            </div>
+
+        `;
+
+
+    }catch(error){
+
+        console.error(error);
+
+        resultBox.innerHTML =
+            "⚠️ Unable to connect to the Lesson Plan Bank. " +
+            "Please try again.";
+
+    }
+
 }
 
 </script>
