@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#32105f">
-<title>MCLLNHS TLE &amp; TechPro | Digital Lesson Plan Bank</title>
+<title>MCLLNHS TLE/TechPro CHECK | Paperless Lesson Plan System</title>
 <style>
 :root{
   --purple-900:#32105f;
@@ -117,28 +117,49 @@ footer strong{color:#fff}
   .credit{text-align:left;margin:16px 0 0;border-top:1px solid var(--border);padding-top:12px}
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+/* CHECK brand opening animation */
+.check-splash{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;padding:24px;background:radial-gradient(circle at 50% 35%,#1f5ca6 0%,#102f69 48%,#071a3d 100%);opacity:1;visibility:visible;transition:opacity .55s ease,visibility 0s linear .55s}
+.check-splash.is-hidden{opacity:0;visibility:hidden;pointer-events:none}
+.check-splash-card{width:min(940px,94vw);text-align:center;animation:checkLogoEnter .95s cubic-bezier(.2,.75,.2,1) both}
+.check-splash-logo{display:block;width:min(100%,860px);max-height:58vh;height:auto;object-fit:contain;margin:0 auto;border-radius:15px;box-shadow:0 22px 65px rgba(0,0,0,.34)}
+.check-splash-caption{color:#fff;font-size:13px;font-weight:800;letter-spacing:1.25px;margin:17px 0 13px;text-shadow:0 2px 8px rgba(0,0,0,.35)}
+.check-splash-enter{border:1px solid rgba(255,255,255,.55);background:#f8d34f;color:#092d68;border-radius:24px;padding:10px 23px;font-size:11px;font-weight:950;letter-spacing:1px;cursor:pointer;box-shadow:0 7px 20px rgba(0,0,0,.2)}
+.check-splash-enter:hover{filter:brightness(1.06);transform:translateY(-1px)}
+@keyframes checkLogoEnter{0%{opacity:0;transform:translateY(20px) scale(.96)}100%{opacity:1;transform:translateY(0) scale(1)}}
+@media(prefers-reduced-motion:reduce){.check-splash-card{animation:none}.check-splash{transition:none}.check-splash-enter:hover{transform:none}}
+
 </style>
 </head>
 <body>
+
+<div class="check-splash" id="check-splash" role="dialog" aria-label="CHECK opening screen" aria-modal="true">
+  <div class="check-splash-card">
+    <img class="check-splash-logo" src="check-logo.png" alt="MCLLNHS TLE/TechPro CHECK logo">
+    <div class="check-splash-caption">A PAPERLESS LESSON PLAN SUBMISSION, REVIEW, TRACKING, AND REPOSITORY SYSTEM</div>
+    <button class="check-splash-enter" id="check-splash-enter" type="button">ENTER CHECK</button>
+  </div>
+</div>
+
 <header class="site-header">
   <div class="header-inner">
     <div class="brand">
       <div class="seal"><img src="mcllnhs-seal.png" alt="MCLLNHS official school seal"></div>
       <div>
-        <h1>MCLLNHS TLE &amp; TECHPRO</h1>
-        <p>DIGITAL LESSON PLAN BANK</p>
+        <h1>MCLLNHS TLE/TECHPRO CHECK</h1>
+        <p>PAPERLESS LESSON PLAN SYSTEM</p>
       </div>
     </div>
-    <div class="header-tag">▣ &nbsp; DIGITAL SUBMISSION &amp; REVIEW SYSTEM</div>
+    <div class="header-tag">▣ &nbsp; CHECK · PAPERLESS WORKFLOW</div>
   </div>
 </header>
 
 <main>
   <section class="hero">
     <div class="hero-label">✦ &nbsp; MARIA CLARA L. LOBREGAT NATIONAL HIGH SCHOOL</div>
-    <h2>Digital <span>Lesson Plan</span> Bank</h2>
-    <p>A centralized digital workspace for TLE and TechPro teachers to submit lesson plans, for Master Teachers to review and provide feedback, and for the school to maintain organized records.</p>
-    <div class="hero-motto">SUBMIT &nbsp; • &nbsp; REVIEW &nbsp; • &nbsp; IMPROVE &nbsp; • &nbsp; RECORD</div>
+    <h2>CHECK: <span>Paperless Lesson Plan</span> System</h2>
+    <p><strong>Centralized Hub for Electronic Checking and Keeping of Lesson Plans.</strong> One digital workflow for teachers to submit, Master Teachers to review and return feedback, and Admin to monitor, manage, and preserve official lesson-plan records.</p>
+    <div class="hero-motto">SUBMIT &nbsp; • &nbsp; REVIEW &nbsp; • &nbsp; REVISE &nbsp; • &nbsp; TRACK &nbsp; • &nbsp; ARCHIVE</div>
   </section>
 
   <section class="workflow" aria-label="System workflow">
@@ -163,7 +184,7 @@ footer strong{color:#fff}
       <div class="card-body">
         <p class="card-description">A guided workspace for teachers to submit lesson plans and follow their review progress.</p>
         <ul class="feature-list">
-          <li><span class="check">✓</span><span>Submit Word (.docx) lesson plans</span></li>
+          <li><span class="check">✓</span><span>Submit DOC, DOCX, ODT, RTF, and PDF lesson plans</span></li>
           <li><span class="check">✓</span><span>Select the assigned Master Teacher</span></li>
           <li><span class="check">✓</span><span>Track submission status and feedback</span></li>
           <li><span class="check">✓</span><span>Review corrections and resubmission status</span></li>
@@ -212,21 +233,39 @@ footer strong{color:#fff}
   <section class="features-strip" aria-label="Key system features">
     <div class="feature-title">★ &nbsp; KEY FEATURES</div>
     <div class="feature-items">
-      <div class="feature-item"><span>📄</span><div><strong>.DOCX</strong>Word file submission</div></div>
+      <div class="feature-item"><span>📄</span><div><strong>MULTI-FORMAT</strong>DOC, DOCX, ODT, RTF, and PDF</div></div>
       <div class="feature-item"><span>📊</span><div><strong>TRACKING</strong>Submission status</div></div>
       <div class="feature-item"><span>👥</span><div><strong>ROLE-BASED</strong>Workspace access</div></div>
       <div class="feature-item"><span>🕘</span><div><strong>HISTORY</strong>Review records</div></div>
       <div class="feature-item"><span>🗂️</span><div><strong>RECORDS</strong>Drive and Sheets</div></div>
     </div>
-    <div class="credit">Developed by<strong>Marjorie R. Cabana (Cher Marjoe)</strong>MCLLNHS TLE &amp; TechPro</div>
+    <div class="credit">Developed by<strong>Marjorie R. Cabana (Cher Marjoe)</strong>MCLLNHS TLE/TechPro CHECK</div>
   </section>
 </main>
 
 <footer>
-  <strong>MCLLNHS TLE &amp; TECHPRO — DIGITAL LESSON PLAN BANK</strong><br>
+  <strong>MCLLNHS TLE/TECHPRO CHECK — PAPERLESS LESSON PLAN SYSTEM</strong><br>
   Maria Clara L. Lobregat National High School · Divisoria, Zamboanga City<br>
   Developed by Marjorie R. Cabana (Cher Marjoe)
 </footer>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  const splash=document.getElementById("check-splash");
+  const enter=document.getElementById("check-splash-enter");
+  if(!splash) return;
+  let closed=false;
+  function closeSplash(){
+    if(closed) return;
+    closed=true;
+    splash.classList.add("is-hidden");
+    window.setTimeout(function(){ if(splash.parentNode) splash.parentNode.removeChild(splash); },600);
+  }
+  if(enter) enter.addEventListener("click",closeSplash);
+  const reduced=window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  window.setTimeout(closeSplash,reduced?500:2600);
+})();
+</script>
 </body>
 </html>
