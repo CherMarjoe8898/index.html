@@ -42,6 +42,8 @@ main{max-width:1280px;margin:auto;padding:30px 28px 45px}
 .hero-label{display:inline-flex;align-items:center;gap:9px;background:var(--purple-100);color:var(--purple-800);border:1px solid #e4d5f5;border-radius:25px;padding:8px 15px;font-size:10px;font-weight:900;letter-spacing:1px}
 .hero h2{font-size:clamp(27px,4.6vw,47px);line-height:1.08;color:var(--purple-900);margin:17px auto 10px;font-weight:950;letter-spacing:-1px}
 .hero h2 span{color:var(--purple-600)}
+.hero-logo-heading{width:min(100%,820px);margin:19px auto 18px;display:flex;align-items:center;justify-content:center;}
+.hero-logo-heading img{display:block;width:100%;max-height:365px;height:auto;object-fit:contain;border-radius:13px;filter:drop-shadow(0 12px 20px rgba(39,21,73,.12));}
 .hero p{font-size:14px;line-height:1.65;color:var(--muted);max-width:720px;margin:0 auto}
 .hero-motto{display:inline-block;margin-top:17px;background:linear-gradient(90deg,var(--purple-900),var(--purple-600));color:white;border-radius:30px;padding:9px 18px;font-size:10px;font-weight:850;letter-spacing:1.15px}
 .workflow{background:#fff;border:1px solid var(--border);border-radius:17px;padding:17px 18px 19px;box-shadow:var(--shadow);margin:18px 0 27px}
@@ -104,6 +106,8 @@ footer strong{color:#fff}
   main{padding:20px 14px 30px}
   .hero{padding:25px 6px 18px}
   .hero h2{font-size:29px}
+  .hero-logo-heading{width:min(100%,560px);margin:14px auto 16px}
+  .hero-logo-heading img{max-height:290px;border-radius:10px}
   .workflow{padding:14px 12px}
   .workflow-steps{grid-template-columns:1fr 1fr}
   .workflow-step:last-child{grid-column:1/-1}
@@ -155,7 +159,7 @@ footer strong{color:#fff}
 <div class="creator-intro" id="creator-intro" role="dialog" aria-label="Welcome to CHECK" aria-modal="true">
   <div class="creator-intro-panel">
     <div class="creator-badge-wrap">
-      <img class="creator-badge" src="creator_badge.webp" alt="Cher Marjoe — Learn and Have Fun creator badge">
+      <img class="creator-badge" src="cher-marjoe-badge.webp" alt="Cher Marjoe — Learn and Have Fun creator badge">
     </div>
     <div class="creator-intro-copy">
       <div class="creator-eyebrow">✦ &nbsp; A CREATOR'S WELCOME</div>
@@ -186,7 +190,9 @@ footer strong{color:#fff}
 <main>
   <section class="hero">
     <div class="hero-label">✦ &nbsp; MARIA CLARA L. LOBREGAT NATIONAL HIGH SCHOOL</div>
-    <h2>CHECK: <span>Paperless Lesson Plan</span> System</h2>
+    <h2 class="hero-logo-heading" aria-label="MCLLNHS TLE/TechPro CHECK — Centralized Hub for Electronic Checking and Keeping of Lesson Plans">
+      <img src="check-logo.png" alt="MCLLNHS TLE/TechPro CHECK — Centralized Hub for Electronic Checking and Keeping of Lesson Plans">
+    </h2>
     <p><strong>Centralized Hub for Electronic Checking and Keeping of Lesson Plans.</strong> One digital workflow for teachers to submit, Master Teachers to review and return feedback, and Admin to monitor, manage, and preserve official lesson-plan records.</p>
     <div class="hero-motto">SUBMIT &nbsp; • &nbsp; REVIEW &nbsp; • &nbsp; REVISE &nbsp; • &nbsp; TRACK &nbsp; • &nbsp; ARCHIVE</div>
   </section>
