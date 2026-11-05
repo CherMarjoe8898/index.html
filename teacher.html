@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MCLLNHS TLE &amp; TechPro | Teacher Workspace</title>
+<title>MCLLNHS TLE &amp; TechPro | Digital Lesson Plan Bank</title>
 <style>
 :root{
   --navy:#0b2942;
@@ -782,8 +782,6 @@ document.getElementById("lesson-form").addEventListener("submit", async function
       fileName: file.name,
       mimeType: file.type || "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       fileBase64: base64,
-      /* Compatibility values for the existing Code.gs required fields.
-         No Subject or Lesson Title input is shown to the teacher. */
       subject: department,
       lessonTitle: file.name
     };
@@ -1361,7 +1359,19 @@ function mtLogout(){
   mtRenderCounts();
 }
 
-renderDashboard();
+// Open the requested workspace when arriving from the landing page.
+const requestedWorkspace = new URLSearchParams(window.location.search).get("workspace");
+if (requestedWorkspace === "reviewer") {
+  showPage("reviewer");
+  const subtitle = document.querySelector(".topbar-sub");
+  if (subtitle) subtitle.textContent = "TLE & TechPro · Master Teacher Workspace";
+  const profile = document.querySelector(".profile-meta strong");
+  if (profile) profile.textContent = "Master Teacher Access";
+  const profileSub = document.querySelector(".profile-meta span");
+  if (profileSub) profileSub.textContent = "Reviewer Workspace";
+} else {
+  showPage("dashboard");
+}
 </script>
 </body>
 </html>
