@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Teacher Portal | MCLLNHS Digital Lesson Plan Bank</title>
+
+<style>
+:root {
+    --navy: #12344D;
+    --blue: #1F5F8B;
+    --blue-light: #EAF3F8;
+    --green: #2E7D5B;
+    --gold: #D6A84D;
+    --red: #C94C4C;
+    --bg: #F4F7FA;
+    --card: #FFFFFF;
+    --text: #243746;
+    --muted: #6B7B88;
+    --border: #DCE3E8;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+/* HEADER */
+
+header {
+    background: var(--navy);
+    color: white;
+    border-bottom: 4px solid var(--gold);
+    padding: 18px 30px;
+}
+
+.header-content {
+    max-width: 1150px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.brand h1 {
+    font-size: 20px;
+}
+
+.brand p {
+    margin-top: 5px;
+    font-size: 12px;
+    opacity: .8;
+}
+
+.back-button {
+    color: white;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,.4);
+    padding: 9px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+}
+
+/* MAIN */
+
+.container {
+    max-width: 1050px;
+    margin: auto;
+    padding: 35px 20px 60px;
+}
+
+.page-title {
+    margin-bottom: 25px;
+}
+
+.page-title h2 {
+    color: var(--navy);
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+.page-title p {
+    color: var(--muted);
+}
+
+/* NOTICE */
+
+.notice {
+    background: #FFF8E8;
+    border-left: 5px solid var(--gold);
+    padding: 16px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+/* TABS */
+
+.tab-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.tab-button {
+    border: none;
+    padding: 12px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    background: #E5EBEF;
+    color: var(--text);
+}
+
+.tab-button.active {
+    background: var(--blue);
+    color: white;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* FORM CARD */
+
+.card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 30px;
+    margin-bottom: 25px;
+}
+
+.card h3 {
+    color: var(--navy);
+    margin-bottom: 8px;
+}
+
+.card-description {
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 25px;
+}
+
+/* SECTION */
+
+.form-section {
+    margin-bottom: 30px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid var(--border);
+}
+
+.form-section:last-child {
+    border-bottom: none;
+}
+
+.section-title {
+    color: var(--blue);
+    font-weight: bold;
+    margin-bottom: 18px;
+}
+
+/* FORM GRID */
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 7px;
+}
+
+input,
+select {
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    background: white;
+}
+
+input:focus,
+select:focus {
+    border-color: var(--blue);
+}
+
+/* FILE BOX */
+
+.file-box {
+    border: 2px dashed #B9C8D3;
+    padding: 25px;
+    text-align: center;
+    border-radius: 12px;
+    background: #FAFCFD;
+}
+
+.file-box p {
+    font-size: 13px;
+    color: var(--muted);
+    margin: 8px 0;
+}
+
+.file-name {
+    margin-top: 12px;
+    font-size: 13px;
+    font-weight: bold;
+    color: var(--green);
+}
+
+/* BUTTON */
+
+.submit-button {
+    width: 100%;
+    background: var(--blue);
+    color: white;
+    border: none;
+    padding: 16px;
+    border-radius: 9px;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.submit-button:hover {
+    opacity: .9;
+}
+
+.submit-button:disabled {
+    background: #9AA8B2;
+    cursor: not-allowed;
+}
+
+/* STATUS TRACKER */
+
+.tracker-box {
+    max-width: 600px;
+}
+
+.status-result {
+    display: none;
+    margin-top: 25px;
+    padding: 20px;
+    border-radius: 10px;
+    background: var(--bg);
+}
+
+/* LOADING */
+
+.loading {
+    display: none;
+    text-align: center;
+    padding: 20px;
+    color: var(--blue);
+    font-weight: bold;
+}
+
+/* SUCCESS */
+
+.success-card {
+    display: none;
+    text-align: center;
+    padding: 45px 25px;
+}
+
+.success-icon {
+    font-size: 70px;
+    margin-bottom: 15px;
+}
+
+.success-card h2 {
+    color: var(--green);
+    margin-bottom: 12px;
+}
+
+.submission-id-box {
+    background: var(--blue-light);
+    border: 1px dashed var(--blue);
+    padding: 18px;
+    border-radius: 10px;
+    margin: 25px auto;
+    max-width: 450px;
+}
+
+.submission-id {
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--navy);
+    word-break: break-all;
+}
+
+.new-submission {
+    background: var(--navy);
+    color: white;
+    border: none;
+    padding: 13px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* FOOTER */
+
+footer {
+    background: var(--navy);
+    color: rgba(255,255,255,.8);
+    text-align: center;
+    padding: 22px;
+    font-size: 12px;
+}
+
+@media (max-width: 700px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .full-width {
+        grid-column: auto;
+    }
+
+    .header-content {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    .tab-buttons {
+        flex-direction: column;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="header-content">
+
+        <div class="brand">
+            <h1>📝 MCLLNHS TLE & TECHPRO</h1>
+            <p>Digital Lesson Plan Bank • Teacher Portal</p>
+        </div>
+
+        <a href="index.html" class="back-button">
+            ← BACK TO HOME
+        </a>
+
+    </div>
+</header>
+
+
+<main class="container">
+
+    <div class="page-title">
+        <h2>Teacher Portal</h2>
+        <p>Submit your lesson plan or track an existing submission.</p>
+    </div>
+
+    <div class="notice">
+        <strong>📌 Before submitting:</strong>
+        Complete all required information, upload a valid Microsoft Word
+        <strong>.DOCX</strong> lesson plan, and select the correct assigned
+        Master Teacher.
+    </div>
+
+
+    <div class="tab-buttons">
+        <button class="tab-button active" onclick="openTab('submit')">
+            📝 Submit Lesson Plan
+        </button>
+
+        <button class="tab-button" onclick="openTab('track')">
+            🔎 Track Submission
+        </button>
+    </div>
+
+
+    <!-- SUBMIT TAB -->
+
+    <div id="submit" class="tab-content active">
+
+        <div class="card" id="submissionCard">
+
+            <h3>New Lesson Plan Submission</h3>
+
+            <p class="card-description">
+                Complete the form below. Your lesson plan will be assigned
+                to the selected Master Teacher for review.
+            </p>
+
+
+            <form id="lessonPlanForm">
+
+                <!-- TEACHER INFORMATION -->
+
+                <div class="form-section">
+
+                    <div class="section-title">
+                        👩‍🏫 Teacher Information
+                    </div>
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+                            <label for="teacherName">
+                                Full Name *
+                            </label>
+
+                            <input
+                                type="text"
+                                id="teacherName"
+                                required
+                                placeholder="Enter your full name"
+                            >
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="teacherEmail">
+                                Email Address *
+                            </label>
+
+                            <input
+                                type="email"
+                                id="teacherEmail"
+                                required
+                                placeholder="example@email.com"
+                            >
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- LESSON INFORMATION -->
+
+                <div class="form-section">
+
+                    <div class="section-title">
+                        📚 Lesson Information
+                    </div>
+
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+
+                            <label for="department">
+                                Department *
+                            </label>
+
+                            <select id="department" required>
+                                <option value="">
+                                    Select Department
+                                </option>
+                                <option value="TLE">
+                                    TLE
+                                </option>
+                                <option value="TechPro">
+                                    TechPro
+                                </option>
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="gradeLevel">
+                                Grade Level *
+                            </label>
+
+                            <select id="gradeLevel" required>
+                                <option value="">
+                                    Select Grade Level
+                                </option>
+                                <option value="Grade 7">
+                                    Grade 7
+                                </option>
+                                <option value="Grade 8">
+                                    Grade 8
+                                </option>
+                                <option value="Grade 9">
+                                    Grade 9
+                                </option>
+                                <option value="Grade 10">
+                                    Grade 10
+                                </option>
+                                <option value="Grade 11">
+                                    Grade 11
+                                </option>
+                                <option value="Grade 12">
+                                    Grade 12
+                                </option>
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="subject">
+                                Subject *
+                            </label>
+
+                            <input
+                                type="text"
+                                id="subject"
+                                required
+                                placeholder="Example: ICT Fundamentals"
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="term">
+                                Term / Quarter *
+                            </label>
+
+                            <select id="term" required>
+
+                                <option value="">
+                                    Select Term
+                                </option>
+
+                                <option value="1st Quarter">
+                                    1st Quarter
+                                </option>
+
+                                <option value="2nd Quarter">
+                                    2nd Quarter
+                                </option>
+
+                                <option value="3rd Quarter">
+                                    3rd Quarter
+                                </option>
+
+                                <option value="4th Quarter">
+                                    4th Quarter
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-group full-width">
+
+                            <label for="lessonTitle">
+                                Lesson Title *
+                            </label>
+
+                            <input
+                                type="text"
+                                id="lessonTitle"
+                                required
+                                placeholder="Enter the title of your lesson plan"
+                            >
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- MASTER TEACHER -->
+
+                <div class="form-section">
+
+                    <div class="section-title">
+                        👩‍💼 Assigned Master Teacher
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="assignedMasterTeacher">
+                            Select your assigned Master Teacher *
+                        </label>
+
+                        <select
+                            id="assignedMasterTeacher"
+                            required
+                        >
+
+                            <option value="">
+                                Select Master Teacher
+                            </option>
+
+                            <option value="VENUS V. AMONCIO">
+                                VENUS V. AMONCIO
+                            </option>
+
+                            <option value="IMELDA A. BRUTAS">
+                                IMELDA A. BRUTAS
+                            </option>
+
+                            <option value="RUTCHIL E. VISTAL">
+                                RUTCHIL E. VISTAL
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- FILE UPLOAD -->
+
+                <div class="form-section">
+
+                    <div class="section-title">
+                        📄 Lesson Plan File
+                    </div>
+
+                    <div class="file-box">
+
+                        <strong>
+                            Upload your Microsoft Word Lesson Plan
+                        </strong>
+
+                        <p>
+                            Accepted format: .DOCX only
+                        </p>
+
+                        <input
+                            type="file"
+                            id="lessonFile"
+                            accept=".docx"
+                            required
+                        >
+
+                        <div
+                            id="fileName"
+                            class="file-name"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SECURITY -->
+
+                <div class="form-section">
+
+                    <div class="section-title">
+                        🔐 Submission Authorization
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="submissionKey">
+                            Submission Key *
+                        </label>
+
+                        <input
+                            type="password"
+                            id="submissionKey"
+                            required
+                            placeholder="Enter authorized submission key"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="submit-button"
+                    id="submitButton"
+                >
+                    📤 SUBMIT LESSON PLAN
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- LOADING -->
+
+        <div class="loading" id="loading">
+
+            ⏳ Uploading your lesson plan...
+
+            <br><br>
+
+            Please do not close this page.
+
+        </div>
+
+
+        <!-- SUCCESS -->
+
+        <div class="card success-card" id="successCard">
+
+            <div class="success-icon">
+                🎉
+            </div>
+
+            <h2>
+                Congratulations!
+            </h2>
+
+            <p>
+                Your lesson plan has been submitted successfully
+                and is now waiting for review.
+            </p>
+
+            <div class="submission-id-box">
+
+                <small>Your Submission ID</small>
+
+                <div
+                    class="submission-id"
+                    id="successSubmissionId"
+                >
+                </div>
+
+            </div>
+
+            <p id="successMT"></p>
+
+            <br>
+
+            <button
+                class="new-submission"
+                onclick="newSubmission()"
+            >
+                + SUBMIT ANOTHER LESSON PLAN
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- TRACK TAB -->
+
+    <div id="track" class="tab-content">
+
+        <div class="card tracker-box">
+
+            <h3>🔎 Track My Submission</h3>
+
+            <p class="card-description">
+                Enter your Submission ID to check the current status.
+            </p>
+
+            <div class="form-group">
+
+                <label for="trackSubmissionId">
+                    Submission ID
+                </label>
+
+                <input
+                    type="text"
+                    id="trackSubmissionId"
+                    placeholder="Example: MCLLNHS-20261105-0001"
+                >
+
+            </div>
+
+            <br>
+
+            <button
+                class="submit-button"
+                onclick="trackSubmission()"
+            >
+                CHECK STATUS
+            </button>
+
+
+            <div
+                class="status-result"
+                id="statusResult"
+            ></div>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<footer>
+
+    <strong>
+        MCLLNHS TLE & TECHPRO DIGITAL LESSON PLAN BANK
+    </strong>
+
+    <br><br>
+
+    Developed by Marjorie R. Cabana (Cher Marjoe)
+
+</footer>
+
+
+<script>
+
+/* =============================================
+   APPS SCRIPT WEB APP URL
+============================================= */
+
+const API_URL =
+"https://script.google.com/macros/s/AKfycbz0iDUV6Ipxklzs7ctAERcpI-YOkdHe5T_DrwL1erKXYXNNU8ZxyKfqRpkknmHjr97Ulw/exec";
+
+
+/* =============================================
+   TAB SWITCHING
+============================================= */
+
+function openTab(tabName) {
+
+    document.querySelectorAll(".tab-content")
+        .forEach(tab => {
+            tab.classList.remove("active");
+        });
+
+    document.querySelectorAll(".tab-button")
+        .forEach(button => {
+            button.classList.remove("active");
+        });
+
+    document.getElementById(tabName)
+        .classList.add("active");
+
+    event.target.classList.add("active");
+}
+
+
+/* =============================================
+   FILE NAME DISPLAY
+============================================= */
+
+document.getElementById("lessonFile")
+.addEventListener("change", function() {
+
+    const file = this.files[0];
+
+    if (!file) return;
+
+    if (!file.name.toLowerCase().endsWith(".docx")) {
+
+        alert(
+            "Only Microsoft Word (.docx) files are accepted."
+        );
+
+        this.value = "";
+
+        document.getElementById("fileName")
+            .textContent = "";
+
+        return;
+    }
+
+    document.getElementById("fileName")
+        .textContent = "✓ Selected: " + file.name;
+
+});
+
+
+/* =============================================
+   FORM SUBMISSION
+============================================= */
+
+document.getElementById("lessonPlanForm")
+.addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    const file =
+        document.getElementById("lessonFile").files[0];
+
+
+    if (!file) {
+
+        alert("Please select your lesson plan file.");
+
+        return;
+    }
+
+
+    const submitButton =
+        document.getElementById("submitButton");
+
+
+    submitButton.disabled = true;
+
+    submitButton.textContent =
+        "⏳ PREPARING FILE...";
+
+
+    try {
+
+        /* Convert file to Base64 */
+
+        const base64 =
+            await fileToBase64(file);
+
+
+        /* Prepare data */
+
+        const data = {
+
+            teacherName:
+                document.getElementById("teacherName").value.trim(),
+
+            teacherEmail:
+                document.getElementById("teacherEmail").value.trim(),
+
+            department:
+                document.getElementById("department").value,
+
+            gradeLevel:
+                document.getElementById("gradeLevel").value,
+
+            subject:
+                document.getElementById("subject").value.trim(),
+
+            term:
+                document.getElementById("term").value,
+
+            lessonTitle:
+                document.getElementById("lessonTitle").value.trim(),
+
+            assignedMasterTeacher:
+                document.getElementById(
+                    "assignedMasterTeacher"
+                ).value,
+
+            submissionKey:
+                document.getElementById("submissionKey").value,
+
+            fileName:
+                file.name,
+
+            mimeType:
+                file.type ||
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+
+            fileBase64:
+                base64
+
+        };
+
+
+        /* Show loading */
+
+        document.getElementById("submissionCard")
+            .style.display = "none";
+
+        document.getElementById("loading")
+            .style.display = "block";
+
+
+        /* Send to Apps Script */
+
+        const response =
+            await fetch(API_URL, {
+
+                method: "POST",
+
+                body:
+                    JSON.stringify(data)
+
+            });
+
+
+        const result =
+            await response.json();
+
+
+        /* Hide loading */
+
+        document.getElementById("loading")
+            .style.display = "none";
+
+
+        if (result.success) {
+
+            document.getElementById("successSubmissionId")
+                .textContent =
+                result.submissionId;
+
+            document.getElementById("successMT")
+                .textContent =
+                "Assigned Master Teacher: " +
+                result.assignedMasterTeacher;
+
+            document.getElementById("successCard")
+                .style.display = "block";
+
+        } else {
+
+            alert(
+                "Submission Error:\n\n" +
+                result.message
+            );
+
+            document.getElementById("submissionCard")
+                .style.display = "block";
+
+        }
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Connection Error:\n\n" +
+            error.message
+        );
+
+        document.getElementById("submissionCard")
+            .style.display = "block";
+
+    }
+
+
+    submitButton.disabled = false;
+
+    submitButton.textContent =
+        "📤 SUBMIT LESSON PLAN";
+
+});
+
+
+/* =============================================
+   CONVERT FILE TO BASE64
+============================================= */
+
+function fileToBase64(file) {
+
+    return new Promise((resolve, reject) => {
+
+        const reader = new FileReader();
+
+        reader.onload = function() {
+
+            /* Remove data URL prefix */
+
+            const base64 =
+                reader.result.split(",")[1];
+
+            resolve(base64);
+
+        };
+
+        reader.onerror = reject;
+
+        reader.readAsDataURL(file);
+
+    });
+
+}
+
+
+/* =============================================
+   NEW SUBMISSION
+============================================= */
+
+function newSubmission() {
+
+    document.getElementById("lessonPlanForm").reset();
+
+    document.getElementById("fileName")
+        .textContent = "";
+
+    document.getElementById("successCard")
+        .style.display = "none";
+
+    document.getElementById("submissionCard")
+        .style.display = "block";
+
+}
+
+
+/* =============================================
+   TRACK SUBMISSION
+   Placeholder for next backend step
+============================================= */
+
+function trackSubmission() {
+
+    const submissionId =
+        document.getElementById(
+            "trackSubmissionId"
+        ).value.trim();
+
+
+    const resultBox =
+        document.getElementById(
+            "statusResult"
+        );
+
+
+    if (!submissionId) {
+
+        resultBox.style.display = "block";
+
+        resultBox.innerHTML =
+            "⚠️ Please enter your Submission ID.";
+
+        return;
+    }
+
+
+    resultBox.style.display = "block";
+
+    resultBox.innerHTML =
+        "🔎 Submission tracking will be connected " +
+        "to the Apps Script backend in the next step.";
+
+}
+
+</script>
+
+</body>
+</html>
