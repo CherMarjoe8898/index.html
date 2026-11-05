@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MCLLNHS TLE &amp; TechPro | Digital Lesson Plan Bank</title>
+<title>MCLLNHS TLE &amp; TechPro | Teacher Workspace</title>
 <style>
 :root{
   --navy:#0b2942;
@@ -372,7 +371,7 @@ input:focus,select:focus{border-color:var(--purple-2);box-shadow:0 0 0 3px rgba(
               <div class="workflow-item"><span class="workflow-number">1</span><div><strong>Enter teacher information</strong><small>Provide your name, email, and department.</small></div></div>
               <div class="workflow-item"><span class="workflow-number">2</span><div><strong>Set lesson details</strong><small>Select grade level and Term 1, 2, or 3.</small></div></div>
               <div class="workflow-item"><span class="workflow-number">3</span><div><strong>Choose your Master Teacher</strong><small>Select the reviewer assigned to your submission.</small></div></div>
-              <div class="workflow-item"><span class="workflow-number">4</span><div><strong>Upload and submit</strong><small>Attach your DOCX file and enter the submission key.</small></div></div>
+              <div class="workflow-item"><span class="workflow-number">4</span><div><strong>Upload and submit</strong><small>Attach your DOC, DOCX, ODT, RTF, or PDF file and enter the submission key.</small></div></div>
             </div>
           </div>
         </div>
@@ -386,7 +385,7 @@ input:focus,select:focus{border-color:var(--purple-2);box-shadow:0 0 0 3px rgba(
       <!-- NEW SUBMISSION -->
       <section class="page" id="page-submission">
         <div class="page-heading">
-          <div><div class="eyebrow">TEACHER WORKSPACE / NEW SUBMISSION</div><h1>New Lesson Plan Submission</h1><p>Complete each section, review your details, then submit your DOCX lesson plan.</p></div>
+          <div><div class="eyebrow">TEACHER WORKSPACE / NEW SUBMISSION</div><h1>New Lesson Plan Submission</h1><p>Complete each section, review your details, then submit your lesson plan file.</p></div>
         </div>
 
         <div class="wizard-card" id="wizard-card">
@@ -436,14 +435,14 @@ input:focus,select:focus{border-color:var(--purple-2);box-shadow:0 0 0 3px rgba(
 
             <!-- STEP 4 -->
             <div class="form-step" id="form-step-4">
-              <div class="form-step-heading"><div class="form-step-icon">📤</div><div><h3>Upload &amp; Review</h3><p>Attach the correct Word file, enter your submission key, and verify the details.</p></div></div>
-              <div class="notice-inline">Accepted file: Microsoft Word <strong>.DOCX</strong>. Please check that the uploaded file is the final lesson plan you intend to submit.</div>
+              <div class="form-step-heading"><div class="form-step-icon">📤</div><div><h3>Upload &amp; Review</h3><p>Attach your lesson plan, enter your submission key, and verify the details.</p></div></div>
+              <div class="notice-inline">Accepted files: <strong>.DOC, .DOCX, .ODT, .RTF, and .PDF</strong>. Word, ODT, and RTF files are converted to Google Docs for review. PDFs remain in their original format. Maximum file size: 15 MB. Please upload the final lesson plan.</div>
               <div class="upload-zone">
                 <div class="upload-symbol">↥</div>
                 <strong>Upload your lesson plan</strong>
-                <p>Choose a DOCX file from your device.</p>
-                <label class="btn btn-light" for="lesson-file" style="display:inline-block;cursor:pointer">Choose DOCX file</label>
-                <input class="file-input" id="lesson-file" type="file" accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document" required>
+                <p>Choose a DOC, DOCX, ODT, RTF, or PDF file from your device.</p>
+                <label class="btn btn-light" for="lesson-file" style="display:inline-block;cursor:pointer">Choose Lesson Plan File</label>
+                <input class="file-input" id="lesson-file" type="file" accept=".doc,.docx,.odt,.rtf,.pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.oasis.opendocument.text,application/rtf,text/rtf,application/pdf" required>
                 <div class="file-selected" id="file-selected">No file selected</div>
               </div>
               <div class="form-group" style="margin-top:18px">
@@ -460,13 +459,13 @@ input:focus,select:focus{border-color:var(--purple-2);box-shadow:0 0 0 3px rgba(
                 <div class="summary-row"><span>Term</span><strong id="summary-term">—</strong></div>
                 <div class="summary-row"><span>Assigned Master Teacher</span><strong id="summary-mt">—</strong></div>
               </div>
-              <label class="confirm-row"><input id="confirm-submission" type="checkbox"><span>I confirm that the information is correct and that the selected DOCX file is the lesson plan I am submitting.</span></label>
+              <label class="confirm-row"><input id="confirm-submission" type="checkbox"><span>I confirm that the information is correct and that the selected file is the lesson plan I am submitting.</span></label>
               <div class="wizard-actions"><button type="button" class="btn btn-muted" onclick="previousStep(3)">← Back</button><div class="right-actions"><button type="submit" class="btn btn-gold" id="submit-button">Submit Lesson Plan</button></div></div>
             </div>
           </form>
         </div>
 
-        <div class="state-card" id="upload-loading"><div class="spinner"></div><h2>Submitting your lesson plan</h2><p>Your DOCX file is being uploaded and recorded. Please keep this page open.</p></div>
+        <div class="state-card" id="upload-loading"><div class="spinner"></div><h2>Submitting your lesson plan</h2><p>Your lesson plan file is being uploaded and recorded. Please keep this page open.</p></div>
         <div class="state-card" id="upload-success"><div class="success-mark">✓</div><h2>Submission received</h2><p>Your lesson plan was submitted successfully and is marked as pending review.</p><div class="success-id" id="success-id"></div><p id="success-reviewer"></p><div style="display:flex;justify-content:center;gap:9px;flex-wrap:wrap;margin-top:18px"><button class="btn btn-primary" onclick="openTrackNewSubmission()">Track this submission</button><button class="btn btn-light" onclick="startAnotherSubmission()">Submit another plan</button></div></div>
       </section>
 
@@ -631,7 +630,7 @@ input:focus,select:focus{border-color:var(--purple-2);box-shadow:0 0 0 3px rgba(
           <div class="help-card"><strong>1. Complete your information</strong><p>Enter your full name and a valid email address. Select the correct department: TLE or TechPro.</p></div>
           <div class="help-card"><strong>2. Select grade and term</strong><p>Choose the correct grade level and Term 1, Term 2, or Term 3 before continuing.</p></div>
           <div class="help-card"><strong>3. Select the assigned reviewer</strong><p>Choose the Master Teacher assigned to your lesson plan. Each reviewer should only access submissions assigned to their account.</p></div>
-          <div class="help-card"><strong>4. Upload a DOCX file</strong><p>Only Microsoft Word .docx files are accepted by this Teacher Portal version. Check the file before submitting.</p></div>
+          <div class="help-card"><strong>4. Upload a supported lesson plan file</strong><p>Accepted formats are DOC, DOCX, ODT, RTF, and PDF. Word, ODT, and RTF files are converted to Google Docs. PDFs remain PDFs for preview.</p></div>
           <div class="help-card"><strong>5. Keep your Submission ID</strong><p>After successful submission, copy or save the Submission ID. You will need it to check the status and feedback later.</p></div>
           <div class="help-card"><strong>6. Understand the review status</strong><p>Pending Review means awaiting review. Return to Sender means corrections are required. Approved means the Master Teacher has approved the plan.</p></div>
         </div>
@@ -729,17 +728,41 @@ function updateSummary(){
 }
 
 /* File selection */
+const MAX_LESSON_FILE_SIZE = 15 * 1024 * 1024;
+const LESSON_FILE_TYPES = {
+  ".doc":  { label: "Word 97–2003", mime: "application/msword" },
+  ".docx":{ label: "Word Document", mime: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" },
+  ".odt":  { label: "OpenDocument Text", mime: "application/vnd.oasis.opendocument.text" },
+  ".rtf":  { label: "Rich Text Format", mime: "application/rtf" },
+  ".pdf":  { label: "PDF", mime: "application/pdf" }
+};
+function getLessonFileExtension(name){
+  const value = String(name || "").toLowerCase();
+  const dot = value.lastIndexOf(".");
+  return dot >= 0 ? value.slice(dot) : "";
+}
+function getLessonFileType(name){
+  return LESSON_FILE_TYPES[getLessonFileExtension(name)] || null;
+}
 document.getElementById("lesson-file").addEventListener("change", function(){
   const file = this.files && this.files[0];
   const label = document.getElementById("file-selected");
   if(!file){ label.textContent = "No file selected"; return; }
-  if(!file.name.toLowerCase().endsWith(".docx")){
-    showToast("Only Microsoft Word .docx files are accepted.");
+  const type = getLessonFileType(file.name);
+  if(!type){
+    showToast("Accepted formats are DOC, DOCX, ODT, RTF, and PDF.");
     this.value = "";
     label.textContent = "No file selected";
     return;
   }
-  label.textContent = "✓ Selected: " + file.name;
+  if(file.size > MAX_LESSON_FILE_SIZE){
+    showToast("The selected file is larger than 15 MB. Please reduce the file size and try again.");
+    this.value = "";
+    label.textContent = "No file selected";
+    return;
+  }
+  const sizeMb = (file.size / (1024 * 1024)).toFixed(2);
+  label.textContent = "✓ Selected: " + file.name + " · " + type.label + " · " + sizeMb + " MB";
 });
 function fileToBase64(file){
   return new Promise((resolve,reject) => {
@@ -757,7 +780,10 @@ document.getElementById("lesson-form").addEventListener("submit", async function
   const file = document.getElementById("lesson-file").files[0];
   const key = document.getElementById("submission-key").value.trim();
   const confirmed = document.getElementById("confirm-submission").checked;
-  if(!file){ showToast("Please choose a DOCX lesson plan file."); return; }
+  if(!file){ showToast("Please choose a DOC, DOCX, ODT, RTF, or PDF lesson plan file."); return; }
+  const selectedFileType = getLessonFileType(file.name);
+  if(!selectedFileType){ showToast("Accepted formats are DOC, DOCX, ODT, RTF, and PDF."); return; }
+  if(file.size > MAX_LESSON_FILE_SIZE){ showToast("The selected file is larger than 15 MB. Please reduce the file size and try again."); return; }
   if(!key){ showToast("Please enter the submission key."); document.getElementById("submission-key").focus(); return; }
   if(!confirmed){ showToast("Please confirm that your submission details are correct."); return; }
 
@@ -780,8 +806,10 @@ document.getElementById("lesson-form").addEventListener("submit", async function
       assignedMasterTeacher: document.getElementById("assigned-mt").value,
       submissionKey: key,
       fileName: file.name,
-      mimeType: file.type || "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      mimeType: selectedFileType.mime,
       fileBase64: base64,
+      /* Compatibility values for the existing Code.gs required fields.
+         No Subject or Lesson Title input is shown to the teacher. */
       subject: department,
       lessonTitle: file.name
     };
@@ -811,7 +839,11 @@ document.getElementById("lesson-form").addEventListener("submit", async function
     saveLocalRecord(record);
     document.getElementById("my-submissions-email").value = record.teacherEmail || "";
     document.getElementById("success-id").textContent = record.submissionId || "ID not returned";
-    document.getElementById("success-reviewer").textContent = "Assigned Master Teacher: " + record.assignedMasterTeacher;
+    const receiptEmailMessage = result.emailed
+      ? "Submission receipt email sent to " + record.teacherEmail + "."
+      : (result.emailNote || "Submission saved. Email delivery was not confirmed.");
+    document.getElementById("success-reviewer").textContent =
+      "Assigned Master Teacher: " + record.assignedMasterTeacher + " | " + receiptEmailMessage;
     document.getElementById("upload-success").style.display = "block";
     renderDashboard();
   }catch(error){
@@ -938,7 +970,9 @@ function trackMySubmission(id){
 
 function safeGoogleDocUrl(value){
   const url = String(value || "").trim();
-  return /^https:\/\/docs\.google\.com\/document\/d\/[A-Za-z0-9_-]+\/edit(?:[?#].*)?$/.test(url) ? url : "";
+  const googleDoc = /^https:\/\/docs\.google\.com\/document\/d\/[A-Za-z0-9_-]+\/edit(?:[?#].*)?$/;
+  const driveFile = /^https:\/\/drive\.google\.com\/file\/d\/[A-Za-z0-9_-]+\/view(?:[?#].*)?$/;
+  return (googleDoc.test(url) || driveFile.test(url)) ? url : "";
 }
 
 function trackSavedRecord(id){
@@ -1225,18 +1259,19 @@ function mtSelectSubmission(id){
   mtSelectedSubmissionId = item.id || item.submissionId;
 
   const docId = String(item.documentId || "").trim();
+  const previewUrl = String(item.previewUrl || (docId ? "https://docs.google.com/document/d/"+encodeURIComponent(docId)+"/preview" : "")).trim();
   const frame = document.getElementById("mt-doc-frame");
   const placeholder = document.getElementById("mt-doc-placeholder");
 
-  if(docId){
-    frame.src = "https://docs.google.com/document/d/"+encodeURIComponent(docId)+"/preview";
+  if(previewUrl){
+    frame.src = previewUrl;
     frame.style.display = "block";
     placeholder.style.display = "none";
   }else{
     frame.src = "about:blank";
     frame.style.display = "none";
     placeholder.style.display = "flex";
-    placeholder.textContent = "This submission does not have a Google Docs document ID, so it cannot be displayed in the embedded viewer.";
+    placeholder.textContent = "The submitted file preview is unavailable. Check the file's Drive permissions and its saved file ID.";
   }
 
   document.getElementById("mt-selected-file").textContent = item.filename || item.submissionId || "Selected submission";
@@ -1248,7 +1283,9 @@ function mtSelectSubmission(id){
     'Submission ID: '+escapeHtml(item.submissionId || item.id)+'<br>'+
     'Assigned reviewer: '+escapeHtml(mtAuthenticatedReviewer)+'<br>'+
     'Correction Round: '+escapeHtml(String(Number(item.correctionRound || 0)))+'<br>'+
-    'Current status: '+mtStatusBadge(item.status);
+    'File type: '+escapeHtml(item.documentType || (docId ? "GOOGLE DOC" : "DOCUMENT"))+'<br>'+
+    'Current status: '+mtStatusBadge(item.status)+
+    (item.documentUrl ? '<br><a href="'+escapeAttr(item.documentUrl)+'" target="_blank" rel="noopener">Open original submitted file</a>' : '');
 
   const status = String(item.status || "PENDING REVIEW").toUpperCase();
   let radioValue = "PENDING REVIEW";
