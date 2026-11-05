@@ -207,6 +207,27 @@ input:focus,select:focus{border-color:var(--purple-2);box-shadow:0 0 0 3px rgba(
 .state-card h2{font-size:19px;color:var(--navy);margin:0 0 8px}
 .state-card p{font-size:12px;color:var(--muted);line-height:1.6;margin:0}
 .success-id{display:inline-block;background:var(--lavender);color:var(--purple);font-weight:850;font-size:16px;padding:12px 17px;border-radius:9px;margin:16px 0;overflow-wrap:anywhere}
+/* teacher correction desk */
+.correction-layout{max-width:1050px}
+.correction-access-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;align-items:end}
+.correction-access-grid .form-group{margin:0}
+.correction-loaded{display:none;margin-top:18px}
+.correction-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:14px 0}
+.correction-summary .detail-item{background:#faf8ff;border:1px solid #e9e1f3;border-radius:9px;padding:11px}
+.correction-feedback{background:#fff8e8;border:1px solid #f0dfaa;border-left:4px solid var(--gold);border-radius:10px;padding:15px;margin:14px 0}
+.correction-feedback strong{display:block;color:#785a10;font-size:11px;margin-bottom:6px}
+.correction-feedback p{white-space:pre-wrap;font-size:12px;line-height:1.6;margin:0;color:#55451e}
+.correction-preview{width:100%;height:480px;border:1px solid var(--border);border-radius:10px;background:#fff;margin-top:12px}
+.correction-action-box{background:#fbf9ff;border:1px solid #e8e0f1;border-radius:11px;padding:15px;margin-top:15px}
+.correction-action-box h3{margin:0 0 7px;color:var(--navy);font-size:13px}
+.correction-action-box p{margin:0 0 12px;color:var(--muted);font-size:11px;line-height:1.5}
+.correction-check{display:flex;align-items:flex-start;gap:9px;font-size:11px;line-height:1.5;color:#4f4858;margin:10px 0}
+.correction-check input{margin-top:2px;accent-color:var(--purple)}
+.correction-token-panel{display:none;margin-top:13px;padding:14px;border:1px solid #f1c9a6;border-left:4px solid #d97706;background:#fff8f0;border-radius:10px}
+.correction-token-panel strong{display:block;font-size:12px;color:#8a4600}
+.correction-token-panel p{font-size:11px;color:#6c5948;line-height:1.5;margin:6px 0 10px}
+.correction-token-value{width:100%;min-height:58px;border:1px solid #e6c9ad;border-radius:8px;padding:9px;font:12px ui-monospace,Consolas,monospace;color:#603b17;overflow-wrap:anywhere;resize:vertical}
+@media(max-width:760px){.correction-access-grid,.correction-summary{grid-template-columns:1fr}.correction-preview{height:380px}}
 /* footer */
 .footer{margin-top:27px;padding:15px 2px;border-top:1px solid var(--border);font-size:10px;color:#8a8491;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .toast{position:fixed;right:22px;bottom:22px;background:var(--navy);color:#fff;padding:12px 16px;border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.18);font-size:12px;z-index:100;display:none;max-width:340px}
@@ -297,6 +318,7 @@ input:focus,select:focus{border-color:var(--purple-2);box-shadow:0 0 0 3px rgba(
       <button class="nav-link" data-page="submission" onclick="showPage('submission',this)"><span class="nav-icon">＋</span>New Submission</button>
       <button class="nav-link" data-page="track" onclick="showPage('track',this)"><span class="nav-icon">⌕</span>Track Submission</button>
       <button class="nav-link" data-page="history" onclick="showPage('history',this)"><span class="nav-icon">▤</span>My Submissions</button>
+      <button class="nav-link" data-page="corrections" onclick="showPage('corrections',this)"><span class="nav-icon">↻</span>Correction Desk</button>
     </nav>
 
     <nav class="nav-section" aria-label="Master Teacher workspace">
@@ -357,7 +379,7 @@ input:focus,select:focus{border-color:var(--purple-2);box-shadow:0 0 0 3px rgba(
           <div class="panel">
             <div class="panel-heading"><h2>Quick Access</h2><span>Choose an action</span></div>
             <div class="quick-actions">
-              <button class="quick-card" onclick="showPage('submission')"><span class="q-icon">📤</span><strong>New Submission</strong><small>Upload a Word lesson plan and assign its Master Teacher reviewer.</small></button>
+              <button class="quick-card" onclick="showPage('submission')"><span class="q-icon">📤</span><strong>New Submission</strong><small>Upload a DOC, DOCX, ODT, RTF, or PDF lesson plan and assign its Master Teacher reviewer.</small></button>
               <button class="quick-card" onclick="showPage('track')"><span class="q-icon">🔎</span><strong>Track Submission</strong><small>Check the review status and feedback using your Submission ID and teacher email.</small></button>
               <button class="quick-card" onclick="showPage('history')"><span class="q-icon">📋</span><strong>My Submissions</strong><small>See submissions saved from this browser and open their tracking details.</small></button>
               <button class="quick-card" onclick="showPage('guidelines')"><span class="q-icon">📘</span><strong>Guidelines &amp; Help</strong><small>Review the submission requirements and workflow.</small></button>
@@ -502,6 +524,64 @@ input:focus,select:focus{border-color:var(--purple-2);box-shadow:0 0 0 3px rgba(
         </div>
       </section>
 
+      <!-- TEACHER CORRECTION DESK -->
+      <section class="page" id="page-corrections">
+        <div class="page-heading">
+          <div><div class="eyebrow">TEACHER WORKSPACE / CORRECTIONS</div><h1>Correction Desk</h1><p>Open the returned lesson plan, apply the requested corrections, and resubmit it under the same Submission ID.</p></div>
+        </div>
+        <div class="panel correction-layout">
+          <div class="panel-heading"><h2>Verify Your Returned Submission</h2><span>Secure correction access</span></div>
+          <div class="notice-inline">Use the <strong>latest Correction Access Token</strong> sent to your email by the assigned Master Teacher. The token is private and works only while this submission is marked Return to Sender. It is invalidated after a successful resubmission or a new reviewer return.</div>
+          <div class="correction-access-grid">
+            <div class="form-group"><label for="correction-submission-id">Submission ID <span class="req">*</span></label><input id="correction-submission-id" type="text" placeholder="MCLLNHS-YYYYMMDD-XXXXXXXX"></div>
+            <div class="form-group"><label for="correction-teacher-email">Teacher Email <span class="req">*</span></label><input id="correction-teacher-email" type="email" placeholder="Same email used during submission"></div>
+            <div class="form-group"><label for="correction-access-token">Correction Access Token <span class="req">*</span></label><input id="correction-access-token" type="password" autocomplete="off" placeholder="Paste the token from your email"></div>
+          </div>
+          <div style="display:flex;justify-content:flex-end;margin-top:14px"><button class="btn btn-primary" id="correction-load-button" onclick="loadCorrectionDetails()">Load Correction Details</button></div>
+          <div class="mt-review-message" id="correction-load-message" aria-live="polite"></div>
+
+          <div class="correction-loaded" id="correction-loaded">
+            <div class="panel-heading" style="margin-top:18px"><h2>Returned Lesson Plan</h2><span id="correction-status-badge"></span></div>
+            <div class="correction-summary">
+              <div class="detail-item"><small>Submission ID</small><strong id="correction-show-id">—</strong></div>
+              <div class="detail-item"><small>Correction Round</small><strong id="correction-show-round">—</strong></div>
+              <div class="detail-item"><small>Assigned Master Teacher</small><strong id="correction-show-reviewer">—</strong></div>
+              <div class="detail-item"><small>Grade / Term</small><strong id="correction-show-grade-term">—</strong></div>
+              <div class="detail-item"><small>Document Type</small><strong id="correction-show-type">—</strong></div>
+              <div class="detail-item"><small>File Name</small><strong id="correction-show-file">—</strong></div>
+            </div>
+            <div class="correction-feedback"><strong>MASTER TEACHER'S REQUIRED CORRECTIONS</strong><p id="correction-show-feedback"></p></div>
+            <div class="panel" style="padding:15px;margin-top:13px">
+              <div class="panel-heading"><h2>Current Submitted Document</h2><span>Review before editing</span></div>
+              <a class="btn btn-light" id="correction-open-document" href="#" target="_blank" rel="noopener" style="display:inline-block;text-decoration:none">Open Submitted Document</a>
+              <div class="helper" id="correction-permission-message" style="margin-top:8px"></div>
+              <iframe class="correction-preview" id="correction-preview" title="Current submitted document preview" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+            </div>
+
+            <div class="correction-action-box" id="correction-google-doc-flow" style="display:none">
+              <h3>Edit the Same Google Doc</h3>
+              <p>Open the original Google Doc using the button above. Make the requested corrections in that document and save it. Do not upload a new Word file; this workflow keeps the same Google Doc ID and its Google Docs version history.</p>
+              <label class="correction-check"><input type="checkbox" id="correction-google-doc-confirm"><span>I opened the same Google Doc, applied the requested corrections, and saved my changes.</span></label>
+            </div>
+
+            <div class="correction-action-box" id="correction-pdf-flow" style="display:none">
+              <h3>Upload the Corrected PDF</h3>
+              <p>PDF files are preserved as PDFs. Select your corrected PDF; the previous PDF will remain in the Drive folder and be listed in the document-version history.</p>
+              <div class="form-group"><label for="correction-pdf-file">Corrected PDF <span class="req">*</span></label><input id="correction-pdf-file" type="file" accept=".pdf,application/pdf"><div class="helper" id="correction-pdf-selected">No corrected PDF selected. Maximum 15 MB.</div></div>
+            </div>
+
+            <div class="form-group" style="margin-top:15px">
+              <label for="correction-teacher-note">Note to Master Teacher (optional)</label>
+              <textarea class="mt-review-textarea" id="correction-teacher-note" placeholder="Optional: explain what you changed or point out where the corrections were applied..."></textarea>
+            </div>
+            <div style="display:flex;justify-content:flex-end;gap:9px;flex-wrap:wrap;margin-top:14px">
+              <button class="btn btn-muted" onclick="clearCorrectionDesk(true)">Clear</button>
+              <button class="btn btn-gold" id="correction-resubmit-button" onclick="resubmitTeacherCorrections()">Resubmit Corrected Lesson Plan</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- MASTER TEACHER WORKSPACE -->
       <section class="page" id="page-reviewer">
         <div class="page-heading">
@@ -582,11 +662,11 @@ input:focus,select:focus{border-color:var(--purple-2);box-shadow:0 0 0 3px rgba(
                   <span id="mt-selected-file">No selection</span>
                 </div>
                 <div class="mt-doc-placeholder" id="mt-doc-placeholder">
-                  Select a submission from the list on the left. Its Google Doc will appear here without opening another page.
+                  Select a submission from the list on the left. Its Google Docs or PDF preview will appear here without opening another page.
                 </div>
                 <iframe class="mt-doc-frame" id="mt-doc-frame" title="Live lesson plan viewer" style="display:none" loading="lazy" allow="clipboard-read; clipboard-write" referrerpolicy="strict-origin-when-cross-origin"></iframe>
                 <div class="mt-selected-info" id="mt-selected-info">No submission selected.</div>
-                <div class="helper">The viewer uses the submitted Google Doc preview. The reviewer must have at least Viewer permission to that document in Google Drive.</div>
+                <div class="helper">The viewer uses the current Google Docs or PDF preview. The reviewer must have at least Viewer permission to the file in Google Drive.</div>
               </div>
 
               <div class="panel mt-decision-panel">
@@ -607,6 +687,12 @@ input:focus,select:focus{border-color:var(--purple-2);box-shadow:0 0 0 3px rgba(
                 </div>
                 <button class="btn btn-primary" id="mt-save-review-button" style="width:100%;margin-top:10px" onclick="mtSaveReview()">Save Review &amp; Notify Teacher</button>
                 <div class="mt-review-message" id="mt-review-message" aria-live="polite"></div>
+                <div class="correction-token-panel" id="mt-correction-token-panel">
+                  <strong>Email delivery failed — secure manual token handoff</strong>
+                  <p>The review decision was saved, but the teacher's email could not be sent. Copy this one-time token and send it privately to the teacher. Do not post it in a public group or shared channel.</p>
+                  <textarea class="correction-token-value" id="mt-correction-token-value" readonly></textarea>
+                  <div style="display:flex;justify-content:flex-end;margin-top:8px"><button type="button" class="btn btn-light" onclick="mtCopyCorrectionToken()">Copy Correction Token</button></div>
+                </div>
               </div>
             </div>
           </div>
@@ -905,6 +991,10 @@ function renderHistory(){
     const feedbackShort = feedback ? (feedback.length > 75 ? feedback.slice(0,72) + "…" : feedback) : "No feedback yet";
     const docUrl = safeGoogleDocUrl(r.documentUrl);
     const openLink = docUrl ? '<a class="btn btn-light" style="display:inline-block;text-decoration:none;margin-bottom:5px" href="'+escapeAttr(docUrl)+'" target="_blank" rel="noopener">Open Lesson Plan</a>' : '';
+    const needsCorrection = String(r.currentStatus || "").toUpperCase() === "RETURN TO SENDER";
+    const correctionButton = needsCorrection
+      ? '<button class="btn btn-gold" style="margin:4px 0" onclick="openCorrectionDesk(&quot;'+escapeAttr(r.submissionId)+'&quot;,&quot;'+escapeAttr(liveMySubmissionsEmail)+'&quot;)">Correct &amp; Resubmit</button><br>'
+      : '';
     return '<tr>'+
       '<td><strong>'+escapeHtml(r.submissionId)+'</strong></td>'+
       '<td>'+escapeHtml(r.dateSubmitted || "—")+'</td>'+
@@ -913,7 +1003,7 @@ function renderHistory(){
       '<td>'+statusBadge(r.currentStatus || "PENDING REVIEW")+'</td>'+
       '<td><strong>'+escapeHtml(String(Number(r.correctionRound || 0)))+'</strong></td>'+
       '<td title="'+escapeAttr(feedback)+'">'+escapeHtml(feedbackShort)+'</td>'+
-      '<td>'+openLink+'<br><button class="btn btn-primary" onclick="trackMySubmission(&quot;'+escapeAttr(r.submissionId)+'&quot;)">Track</button></td>'+
+      '<td>'+openLink+correctionButton+'<button class="btn btn-primary" onclick="trackMySubmission(&quot;'+escapeAttr(r.submissionId)+'&quot;)">Track</button></td>'+
     '</tr>';
   }).join('');
 }
@@ -1037,7 +1127,8 @@ async function trackSubmission(){
       detailHtml("Correction Round",String((s.correctionRound ?? result.correctionRound ?? 0)))+
       '</div>'+
       '<div class="feedback-box"><strong>MASTER TEACHER FEEDBACK</strong><p>'+escapeHtml(record.reviewNotes || "No review feedback has been recorded yet.")+'</p>'+(record.reviewer ? '<p><strong>Reviewer:</strong> '+escapeHtml(record.reviewer)+'</p>' : '')+'</div>'+
-      (record.documentUrl ? '<p style="margin:14px 0 0"><a class="btn btn-primary" style="display:inline-block;text-decoration:none" href="'+escapeAttr(record.documentUrl)+'" target="_blank" rel="noopener">Open Lesson Plan</a></p>' : '');
+      (record.documentUrl ? '<p style="margin:14px 0 0"><a class="btn btn-primary" style="display:inline-block;text-decoration:none" href="'+escapeAttr(record.documentUrl)+'" target="_blank" rel="noopener">Open Lesson Plan</a></p>' : '')+
+      (/RETURN TO SENDER/i.test(record.status) ? '<p style="margin:10px 0 0"><button class="btn btn-gold" onclick="openCorrectionDesk(&quot;'+escapeAttr(record.submissionId)+'&quot;,&quot;'+escapeAttr(record.teacherEmail)+'&quot;)">Open Correction Desk</button></p>' : '');
     showToast("Submission status retrieved.");
   }catch(error){
     console.error(error);
@@ -1047,6 +1138,188 @@ async function trackSubmission(){
     button.textContent = "Check Status";
   }
 }
+let currentCorrection = null;
+
+function openCorrectionDesk(submissionId, teacherEmail){
+  document.getElementById("correction-submission-id").value = submissionId || "";
+  document.getElementById("correction-teacher-email").value = teacherEmail || liveMySubmissionsEmail || "";
+  document.getElementById("correction-access-token").value = "";
+  clearCorrectionDesk(false);
+  showPage("corrections");
+  document.getElementById("correction-access-token").focus();
+}
+
+function clearCorrectionDesk(clearCredentials){
+  currentCorrection = null;
+  document.getElementById("correction-loaded").style.display = "none";
+  document.getElementById("correction-load-message").textContent = "";
+  document.getElementById("correction-preview").src = "about:blank";
+  document.getElementById("correction-open-document").href = "#";
+  document.getElementById("correction-permission-message").textContent = "";
+  document.getElementById("correction-google-doc-confirm").checked = false;
+  document.getElementById("correction-pdf-file").value = "";
+  document.getElementById("correction-pdf-selected").textContent = "No corrected PDF selected. Maximum 15 MB.";
+  document.getElementById("correction-teacher-note").value = "";
+  if(clearCredentials){
+    document.getElementById("correction-submission-id").value = "";
+    document.getElementById("correction-teacher-email").value = "";
+    document.getElementById("correction-access-token").value = "";
+  }
+}
+
+async function loadCorrectionDetails(){
+  const submissionId = document.getElementById("correction-submission-id").value.trim();
+  const teacherEmail = document.getElementById("correction-teacher-email").value.trim().toLowerCase();
+  const correctionAccessToken = document.getElementById("correction-access-token").value.trim();
+  const button = document.getElementById("correction-load-button");
+  if(!submissionId || !teacherEmail || !correctionAccessToken){
+    mtSetMessage("correction-load-message","Enter the Submission ID, teacher email, and Correction Access Token from the latest return email.","error");
+    return;
+  }
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(teacherEmail)){
+    mtSetMessage("correction-load-message","Please enter a valid teacher email address.","error");
+    return;
+  }
+  button.disabled = true;
+  button.textContent = "Verifying…";
+  mtSetMessage("correction-load-message","Checking your correction access…","success");
+  try{
+    const response = await fetch(API_URL,{method:"POST",body:JSON.stringify({action:"getCorrectionDetails",submissionId,teacherEmail,correctionAccessToken})});
+    if(!response.ok) throw new Error("The server returned HTTP " + response.status + ".");
+    const result = await response.json();
+    if(!result || !result.success) throw new Error((result && result.message) || "Correction access could not be verified.");
+    const s = result.submission || {};
+    const type = String(s.documentType || "").toUpperCase();
+    if(type !== "GOOGLE DOC" && type !== "PDF") throw new Error("This submission has an unsupported correction format. Please contact the administrator.");
+    currentCorrection = {submissionId:s.submissionId,teacherEmail:s.teacherEmail,correctionAccessToken:correctionAccessToken,documentType:type,documentUrl:s.documentUrl || "",previewUrl:s.previewUrl || ""};
+    document.getElementById("correction-status-badge").innerHTML = statusBadge(s.currentStatus || "RETURN TO SENDER");
+    document.getElementById("correction-show-id").textContent = s.submissionId || "—";
+    document.getElementById("correction-show-round").textContent = String(Number(s.correctionRound || 0));
+    document.getElementById("correction-show-reviewer").textContent = s.assignedMasterTeacher || s.reviewer || "—";
+    document.getElementById("correction-show-grade-term").textContent = [s.gradeLevel || "",s.term || ""].filter(Boolean).join(" · ") || "—";
+    document.getElementById("correction-show-type").textContent = type;
+    document.getElementById("correction-show-file").textContent = s.fileName || "—";
+    document.getElementById("correction-show-feedback").textContent = s.reviewNotes || "No reviewer feedback was included in the latest history record. Please contact the assigned Master Teacher.";
+    const openUrl = safeGoogleDocUrl(s.documentUrl);
+    const previewUrl = String(s.previewUrl || "");
+    if(!openUrl) throw new Error("The document link is missing or invalid. Contact the administrator.");
+    document.getElementById("correction-open-document").href = openUrl;
+    document.getElementById("correction-permission-message").textContent = s.permissionNote || "Use the same document link above. If Google asks for access, contact the administrator before continuing.";
+    document.getElementById("correction-preview").src = previewUrl || "about:blank";
+    document.getElementById("correction-google-doc-flow").style.display = type === "GOOGLE DOC" ? "block" : "none";
+    document.getElementById("correction-pdf-flow").style.display = type === "PDF" ? "block" : "none";
+    document.getElementById("correction-loaded").style.display = "block";
+    mtSetMessage("correction-load-message","Access verified. Read the reviewer feedback, make the corrections, then resubmit below.","success");
+  }catch(error){
+    currentCorrection = null;
+    document.getElementById("correction-loaded").style.display = "none";
+    mtSetMessage("correction-load-message",error.message,"error");
+  }finally{
+    button.disabled = false;
+    button.textContent = "Load Correction Details";
+  }
+}
+
+document.getElementById("correction-pdf-file").addEventListener("change",function(){
+  const file = this.files && this.files[0];
+  const label = document.getElementById("correction-pdf-selected");
+  if(!file){ label.textContent = "No corrected PDF selected. Maximum 15 MB."; return; }
+  if(!/\.pdf$/i.test(file.name) || (file.type && file.type !== "application/pdf")){
+    this.value = "";
+    label.textContent = "Please select a PDF file.";
+    showToast("PDF corrections must be uploaded as a PDF file.");
+    return;
+  }
+  if(file.size > MAX_LESSON_FILE_SIZE){
+    this.value = "";
+    label.textContent = "The PDF is larger than 15 MB.";
+    showToast("The corrected PDF is larger than 15 MB.");
+    return;
+  }
+  label.textContent = "✓ Selected: " + file.name + " · " + (file.size/(1024*1024)).toFixed(2) + " MB";
+});
+
+async function resubmitTeacherCorrections(){
+  if(!currentCorrection){ showToast("Load and verify the returned submission first."); return; }
+  const button = document.getElementById("correction-resubmit-button");
+  const teacherNote = document.getElementById("correction-teacher-note").value.trim();
+  const payload = {
+    action:"resubmitCorrections",
+    submissionId:currentCorrection.submissionId,
+    teacherEmail:currentCorrection.teacherEmail,
+    correctionAccessToken:currentCorrection.correctionAccessToken,
+    teacherNote:teacherNote
+  };
+  let pdfFile = null;
+  if(currentCorrection.documentType === "GOOGLE DOC"){
+    if(!document.getElementById("correction-google-doc-confirm").checked){
+      showToast("Confirm that you edited and saved the same Google Doc before resubmitting.");
+      return;
+    }
+    payload.confirmGoogleDocEdited = true;
+  }else if(currentCorrection.documentType === "PDF"){
+    pdfFile = document.getElementById("correction-pdf-file").files[0];
+    if(!pdfFile){ showToast("Choose the corrected PDF file before resubmitting."); return; }
+    if(!/\.pdf$/i.test(pdfFile.name) || pdfFile.size > MAX_LESSON_FILE_SIZE){ showToast("Choose a PDF file no larger than 15 MB."); return; }
+    button.disabled = true;
+    button.textContent = "Preparing PDF…";
+    try{
+      payload.fileName = pdfFile.name;
+      payload.mimeType = "application/pdf";
+      payload.fileBase64 = await fileToBase64(pdfFile);
+    }catch(error){
+      button.disabled = false;
+      button.textContent = "Resubmit Corrected Lesson Plan";
+      showToast(error.message);
+      return;
+    }
+  }
+  button.disabled = true;
+  button.textContent = "Resubmitting…";
+  try{
+    const response = await fetch(API_URL,{method:"POST",body:JSON.stringify(payload)});
+    if(!response.ok) throw new Error("The server returned HTTP " + response.status + ".");
+    const result = await response.json();
+    if(!result || !result.success) throw new Error((result && result.message) || "The corrected lesson plan could not be resubmitted.");
+    const emailNotice = result.teacherEmailed ? " A confirmation email was sent." : (result.teacherEmailNote ? " " + result.teacherEmailNote : "");
+    const reviewerNotice = result.reviewerEmailed ? " The assigned Master Teacher was also notified." : "";
+    currentCorrection = null;
+    document.getElementById("correction-loaded").style.display = "none";
+    document.getElementById("correction-access-token").value = "";
+    mtSetMessage("correction-load-message","Corrections resubmitted successfully under " + result.submissionId + ". Status: PENDING REVIEW. Correction Round remains " + result.correctionRound + "." + emailNotice + reviewerNotice,"success");
+    showToast("Corrections resubmitted. Your original Submission ID has been retained.");
+    liveMySubmissions = null;
+  }catch(error){
+    mtSetMessage("correction-load-message",error.message,"error");
+  }finally{
+    button.disabled = false;
+    button.textContent = "Resubmit Corrected Lesson Plan";
+  }
+}
+
+function mtShowCorrectionToken(token){
+  const panel = document.getElementById("mt-correction-token-panel");
+  const field = document.getElementById("mt-correction-token-value");
+  if(!panel || !field) return;
+  field.value = token || "";
+  panel.style.display = token ? "block" : "none";
+}
+function mtHideCorrectionToken(){ mtShowCorrectionToken(""); }
+async function mtCopyCorrectionToken(){
+  const field = document.getElementById("mt-correction-token-value");
+  const value = field ? field.value : "";
+  if(!value){ showToast("No correction token is available to copy."); return; }
+  try{
+    await navigator.clipboard.writeText(value);
+    showToast("Correction token copied. Send it privately to the teacher.");
+  }catch(error){
+    field.focus();
+    field.select();
+    document.execCommand("copy");
+    showToast("Correction token selected/copied. Send it privately to the teacher.");
+  }
+}
+
 function detailHtml(label,value){ return '<div class="detail-item"><small>'+escapeHtml(label)+'</small><strong>'+escapeHtml(value || "—")+'</strong></div>'; }
 function statusBadge(status){
   const value = String(status || "PENDING REVIEW");
@@ -1370,6 +1643,8 @@ async function mtSaveReview(){
       : (result.emailNote ? " "+result.emailNote : " Email notification was not confirmed.");
     mtSetMessage("mt-review-message","Review saved. Status: "+result.status+". Correction Round: "+result.correctionRound+"."+emailMessage,"success");
     await mtLoadAssigned(true);
+    if(result.correctionAccessToken) mtShowCorrectionToken(result.correctionAccessToken);
+    else mtHideCorrectionToken();
 
   }catch(error){
     mtSetMessage("mt-review-message",error.message,"error");
@@ -1391,6 +1666,7 @@ function mtLogout(){
   document.getElementById("mt-submission-rows").innerHTML = '<tr><td colspan="5"><div class="empty-state"><strong>Sign in to load assigned lesson plans</strong></div></td></tr>';
   document.getElementById("mt-history-rows").innerHTML = '<tr><td colspan="6"><div class="empty-state"><strong>No review history loaded</strong></div></td></tr>';
   document.getElementById("mt-review-message").textContent = "";
+  mtHideCorrectionToken();
   mtSetMessage("mt-login-message","You have logged out of the Master Teacher workspace.","success");
   mtResetSelection();
   mtRenderCounts();
@@ -1406,6 +1682,14 @@ if (requestedWorkspace === "reviewer") {
   if (profile) profile.textContent = "Master Teacher Access";
   const profileSub = document.querySelector(".profile-meta span");
   if (profileSub) profileSub.textContent = "Reviewer Workspace";
+} else if (requestedWorkspace === "corrections") {
+  showPage("corrections");
+  const subtitle = document.querySelector(".topbar-sub");
+  if (subtitle) subtitle.textContent = "TLE & TechPro · Teacher Correction Desk";
+  const profile = document.querySelector(".profile-meta strong");
+  if (profile) profile.textContent = "Teacher Access";
+  const profileSub = document.querySelector(".profile-meta span");
+  if (profileSub) profileSub.textContent = "Correction Desk";
 } else {
   showPage("dashboard");
 }
