@@ -193,8 +193,17 @@ input:focus,select:focus{border-color:var(--purple-2);box-shadow:0 0 0 3px rgba(
 .feedback-box{background:#fbf9ff;border:1px solid #e9e1f3;border-radius:9px;padding:13px;margin-top:15px}
 .feedback-box strong{font-size:11px;color:var(--purple)}
 .feedback-box p{font-size:12px;line-height:1.6;margin:7px 0 0;white-space:pre-wrap}
-/* history */
+/* live submissions */
 .history-note{font-size:10px;color:#766e80;background:#fbf9ff;border:1px solid #e8e0f1;padding:10px 12px;border-radius:8px;margin-bottom:14px;line-height:1.5}
+.history-toolbar{display:flex;gap:10px;align-items:flex-end;max-width:780px}
+.history-toolbar .form-group{flex:1;margin:0}
+.history-table-panel{padding:0;overflow:hidden}
+.history-feedback{max-width:260px;white-space:normal;line-height:1.45;color:#625a6d;font-size:11px}
+.history-id{font-weight:850;color:var(--navy);white-space:nowrap}
+.history-actions{display:flex;gap:6px;flex-wrap:wrap}
+.round-pill{display:inline-block;min-width:25px;text-align:center;padding:4px 7px;border-radius:12px;background:var(--lavender);color:var(--purple);font-weight:850}
+.history-toolbar .btn{white-space:nowrap}
+@media(max-width:760px){.history-toolbar{flex-direction:column;align-items:stretch}.history-toolbar .btn{width:100%}}
 /* help */
 .help-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
 .help-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:17px}
@@ -314,10 +323,10 @@ input:focus,select:focus{border-color:var(--purple-2);box-shadow:0 0 0 3px rgba(
             <div class="quick-actions">
               <button class="quick-card" onclick="showPage('submission')"><span class="q-icon">📤</span><strong>New Submission</strong><small>Upload a Word lesson plan and assign its Master Teacher reviewer.</small></button>
               <button class="quick-card" onclick="showPage('track')"><span class="q-icon">🔎</span><strong>Track Submission</strong><small>Check the review status and feedback using your Submission ID and teacher email.</small></button>
-              <button class="quick-card" onclick="showPage('history')"><span class="q-icon">📋</span><strong>My Submissions</strong><small>See submissions saved from this browser and open their tracking details.</small></button>
+              <button class="quick-card" onclick="showPage('history')"><span class="q-icon">📋</span><strong>My Submissions</strong><small>Retrieve all lesson-plan records matching your teacher email from Google Sheets.</small></button>
               <button class="quick-card" onclick="showPage('guidelines')"><span class="q-icon">📘</span><strong>Guidelines &amp; Help</strong><small>Review the submission requirements and workflow.</small></button>
             </div>
-            <div class="panel-footnote">The summary above is a local convenience view of submissions made or tracked on this browser. The official records remain in the Lesson Plan Bank spreadsheet.</div>
+            <div class="panel-footnote">The dashboard summary is a local convenience view. My Submissions retrieves matching records directly from the official spreadsheet.</div>
           </div>
 
           <div class="panel">
@@ -355,7 +364,6 @@ input:focus,select:focus{border-color:var(--purple-2);box-shadow:0 0 0 3px rgba(
           </div>
 
           <form id="lesson-form" novalidate>
-            <!-- STEP 1 -->
             <div class="form-step active" id="form-step-1">
               <div class="form-step-heading"><div class="form-step-icon">👤</div><div><h3>Teacher Information</h3><p>Tell us who is submitting this lesson plan.</p></div></div>
               <div class="form-grid">
@@ -366,7 +374,6 @@ input:focus,select:focus{border-color:var(--purple-2);box-shadow:0 0 0 3px rgba(
               <div class="wizard-actions"><span></span><div class="right-actions"><button type="button" class="btn btn-primary" onclick="nextStep(1)">Continue to Lesson Details →</button></div></div>
             </div>
 
-            <!-- STEP 2 -->
             <div class="form-step" id="form-step-2">
               <div class="form-step-heading"><div class="form-step-icon">📚</div><div><h3>Lesson Information</h3><p>Select the grade level and term for this lesson plan. No separate subject field is required.</p></div></div>
               <div class="form-grid">
@@ -376,7 +383,6 @@ input:focus,select:focus{border-color:var(--purple-2);box-shadow:0 0 0 3px rgba(
               <div class="wizard-actions"><button type="button" class="btn btn-muted" onclick="previousStep(1)">← Back</button><div class="right-actions"><button type="button" class="btn btn-primary" onclick="nextStep(2)">Continue to Reviewer →</button></div></div>
             </div>
 
-            <!-- STEP 3 -->
             <div class="form-step" id="form-step-3">
               <div class="form-step-heading"><div class="form-step-icon">👩‍🏫</div><div><h3>Assign Master Teacher</h3><p>Select the Master Teacher assigned to review your submission.</p></div></div>
               <input type="hidden" id="assigned-mt" value="">
@@ -388,7 +394,6 @@ input:focus,select:focus{border-color:var(--purple-2);box-shadow:0 0 0 3px rgba(
               <div class="wizard-actions"><button type="button" class="btn btn-muted" onclick="previousStep(2)">← Back</button><div class="right-actions"><button type="button" class="btn btn-primary" onclick="nextStep(3)">Continue to Upload →</button></div></div>
             </div>
 
-            <!-- STEP 4 -->
             <div class="form-step" id="form-step-4">
               <div class="form-step-heading"><div class="form-step-icon">📤</div><div><h3>Upload &amp; Review</h3><p>Attach the correct Word file, enter your submission key, and verify the details.</p></div></div>
               <div class="notice-inline">Accepted file: Microsoft Word <strong>.DOCX</strong>. Please check that the uploaded file is the final lesson plan you intend to submit.</div>
@@ -424,7 +429,7 @@ input:focus,select:focus{border-color:var(--purple-2);box-shadow:0 0 0 3px rgba(
         <div class="state-card" id="upload-success"><div class="success-mark">✓</div><h2>Submission received</h2><p>Your lesson plan was submitted successfully and is marked as pending review.</p><div class="success-id" id="success-id"></div><p id="success-reviewer"></p><div style="display:flex;justify-content:center;gap:9px;flex-wrap:wrap;margin-top:18px"><button class="btn btn-primary" onclick="openTrackNewSubmission()">Track this submission</button><button class="btn btn-light" onclick="startAnotherSubmission()">Submit another plan</button></div></div>
       </section>
 
-      <!-- TRACK -->
+      <!-- TRACK SUBMISSION -->
       <section class="page" id="page-track">
         <div class="page-heading"><div><div class="eyebrow">REVIEW PROCESS</div><h1>Track Submission</h1><p>Enter your Submission ID and the same teacher email address you used during upload to check the latest status and reviewer feedback.</p></div></div>
         <div class="panel track-layout">
@@ -433,17 +438,53 @@ input:focus,select:focus{border-color:var(--purple-2);box-shadow:0 0 0 3px rgba(
             <div class="form-group"><label for="track-email">Teacher Email Address <span class="req">*</span></label><input id="track-email" type="email" placeholder="Enter the email used during submission" autocomplete="email" required></div>
             <button class="btn btn-primary" id="track-button" onclick="trackSubmission()">Check Status</button>
           </div>
-          <div class="helper">Both fields are required. For privacy, the system checks that the Submission ID and teacher email match the original submission record.</div>
+          <div class="helper">Both fields are required. The Submission ID and email are checked against the spreadsheet record.</div>
           <div class="track-result" id="track-result" aria-live="polite"></div>
         </div>
       </section>
 
-      <!-- HISTORY -->
+      <!-- LIVE MY SUBMISSIONS -->
       <section class="page" id="page-history">
-        <div class="page-heading"><div><div class="eyebrow">RECORDS</div><h1>My Submissions</h1><p>Quick access to submission IDs saved on this browser.</p></div><button class="btn btn-light" onclick="showPage('track')">Track by ID →</button></div>
-        <div class="history-note"><strong>Note:</strong> This list is a convenience history saved in this browser after a submission or status check. It is not the official full submission register. The Google Sheet remains the system-wide record.</div>
-        <div class="panel table-wrap" style="padding:0">
-          <table><thead><tr><th>SUBMISSION ID</th><th>GRADE</th><th>TERM</th><th>MASTER TEACHER</th><th>LAST KNOWN STATUS</th><th>ACTION</th></tr></thead><tbody id="history-body"></tbody></table>
+        <div class="page-heading">
+          <div><div class="eyebrow">OFFICIAL TEACHER RECORDS</div><h1>My Submissions</h1><p>Retrieve your lesson-plan records directly from the official Lesson Plan Bank spreadsheet.</p></div>
+          <button class="btn btn-light" onclick="showPage('track')">Track by ID →</button>
+        </div>
+
+        <div class="panel" style="margin-bottom:16px">
+          <div class="history-toolbar">
+            <div class="form-group">
+              <label for="my-submissions-email">Teacher Email Address <span class="req">*</span></label>
+              <input id="my-submissions-email" type="email" placeholder="Enter the email used during submission" autocomplete="email" required>
+            </div>
+            <button class="btn btn-primary" id="load-my-submissions-button" onclick="loadMySubmissions()">Load My Submissions</button>
+          </div>
+          <div class="helper">Enter the same email address recorded during your lesson plan submissions. Email-only lookup filters records but does not authenticate the person requesting them.</div>
+        </div>
+
+        <div class="panel history-table-panel">
+          <div class="panel-heading" style="padding:18px 18px 0">
+            <h2 id="my-submissions-heading">Your Official Submission Records</h2>
+            <span id="my-submissions-count">Not loaded</span>
+          </div>
+          <div class="table-wrap" style="border:0;border-radius:0">
+            <table style="min-width:980px">
+              <thead>
+                <tr>
+                  <th>SUBMISSION ID</th>
+                  <th>DATE SUBMITTED</th>
+                  <th>GRADE / TERM</th>
+                  <th>MASTER TEACHER</th>
+                  <th>STATUS</th>
+                  <th>ROUND</th>
+                  <th>LATEST FEEDBACK</th>
+                  <th>ACTION</th>
+                </tr>
+              </thead>
+              <tbody id="history-body">
+                <tr><td colspan="8"><div class="empty-state"><div class="empty-icon">📧</div><strong>Load your official records</strong><p>Enter the teacher email address used during submission, then select Load My Submissions.</p></div></td></tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </section>
 
@@ -469,71 +510,101 @@ input:focus,select:focus{border-color:var(--purple-2);box-shadow:0 0 0 3px rgba(
 <script>
 /* =========================================================
    APPS SCRIPT WEB APP URL
-   Keep this URL aligned with the current deployed Web App.
 ========================================================= */
 const API_URL = "https://script.google.com/macros/s/AKfycbz0iDUV6Ipxklzs7ctAERcpI-YOkdHe5T_DrwL1erKXYXNNU8ZxyKfqRpkknmHjr97Ulw/exec";
 const LOCAL_HISTORY_KEY = "mcllnhs_teacher_recent_submissions_v1";
-let currentStep = 1;
 
-/* Navigation */
+let currentStep = 1;
+let liveMySubmissions = null;
+let liveMySubmissionsEmail = "";
+
+/* NAVIGATION */
 function showPage(pageName, button){
   document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
   const page = document.getElementById("page-" + pageName);
   if(page) page.classList.add("active");
-  document.querySelectorAll(".nav-link[data-page]").forEach(b => b.classList.toggle("active", b.dataset.page === pageName));
+
+  document.querySelectorAll(".nav-link[data-page]").forEach(b => {
+    b.classList.toggle("active", b.dataset.page === pageName);
+  });
+
   document.getElementById("sidebar").classList.remove("open");
+
   if(pageName === "dashboard") renderDashboard();
   if(pageName === "history") renderHistory();
+
   window.scrollTo({top:0,behavior:"smooth"});
 }
-function toggleSidebar(){ document.getElementById("sidebar").classList.toggle("open"); }
 
-/* Wizard */
+function toggleSidebar(){
+  document.getElementById("sidebar").classList.toggle("open");
+}
+
+/* WIZARD */
 function validateStep(step){
   const ids = {
     1:["teacher-name","teacher-email","department"],
     2:["grade-level","term"],
     3:[]
   }[step] || [];
+
   for(const id of ids){
     const el = document.getElementById(id);
+
     if(!el.value.trim()){
       showToast("Please complete all required fields before continuing.");
       el.focus();
       return false;
     }
+
     if(id === "teacher-email" && !el.checkValidity()){
       showToast("Please enter a valid email address.");
       el.focus();
       return false;
     }
   }
+
   if(step === 3 && !document.getElementById("assigned-mt").value){
     showToast("Please select your assigned Master Teacher.");
     return false;
   }
+
   return true;
 }
+
 function goStep(step){
   document.querySelectorAll(".form-step").forEach(s => s.classList.remove("active"));
   document.getElementById("form-step-" + step).classList.add("active");
   currentStep = step;
+
   for(let i=1;i<=4;i++){
     const item = document.getElementById("progress-step-" + i);
     item.classList.toggle("active", i === step);
     item.classList.toggle("completed", i < step);
-    item.querySelector(".progress-circle").textContent = i < step ? "✓" : String(i);
+    item.querySelector(".progress-circle").textContent =
+      i < step ? "✓" : String(i);
   }
-  document.getElementById("progress-fill").style.width = ["0%","28%","55%","84%"][step-1];
+
+  document.getElementById("progress-fill").style.width =
+    ["0%","28%","55%","84%"][step-1];
+
   if(step === 4) updateSummary();
 }
-function nextStep(from){ if(validateStep(from)) goStep(from+1); }
-function previousStep(to){ goStep(to); }
+
+function nextStep(from){
+  if(validateStep(from)) goStep(from+1);
+}
+
+function previousStep(to){
+  goStep(to);
+}
+
 function selectMasterTeacher(button){
   document.querySelectorAll(".mt-card").forEach(c => c.classList.remove("selected"));
   button.classList.add("selected");
   document.getElementById("assigned-mt").value = button.dataset.mt;
 }
+
 function updateSummary(){
   const pairs = {
     "summary-name":"teacher-name",
@@ -542,23 +613,36 @@ function updateSummary(){
     "summary-grade":"grade-level",
     "summary-term":"term"
   };
-  Object.entries(pairs).forEach(([target,source]) => document.getElementById(target).textContent = document.getElementById(source).value || "—");
-  document.getElementById("summary-mt").textContent = document.getElementById("assigned-mt").value || "—";
+
+  Object.entries(pairs).forEach(([target,source]) => {
+    document.getElementById(target).textContent =
+      document.getElementById(source).value || "—";
+  });
+
+  document.getElementById("summary-mt").textContent =
+    document.getElementById("assigned-mt").value || "—";
 }
 
-/* File selection */
+/* FILE SELECTION */
 document.getElementById("lesson-file").addEventListener("change", function(){
   const file = this.files && this.files[0];
   const label = document.getElementById("file-selected");
-  if(!file){ label.textContent = "No file selected"; return; }
+
+  if(!file){
+    label.textContent = "No file selected";
+    return;
+  }
+
   if(!file.name.toLowerCase().endsWith(".docx")){
     showToast("Only Microsoft Word .docx files are accepted.");
     this.value = "";
     label.textContent = "No file selected";
     return;
   }
+
   label.textContent = "✓ Selected: " + file.name;
 });
+
 function fileToBase64(file){
   return new Promise((resolve,reject) => {
     const reader = new FileReader();
@@ -568,26 +652,43 @@ function fileToBase64(file){
   });
 }
 
-/* Submit */
+/* SUBMIT LESSON PLAN */
 document.getElementById("lesson-form").addEventListener("submit", async function(event){
   event.preventDefault();
+
   if(!validateStep(1) || !validateStep(2) || !validateStep(3)) return;
+
   const file = document.getElementById("lesson-file").files[0];
   const key = document.getElementById("submission-key").value.trim();
   const confirmed = document.getElementById("confirm-submission").checked;
-  if(!file){ showToast("Please choose a DOCX lesson plan file."); return; }
-  if(!key){ showToast("Please enter the submission key."); document.getElementById("submission-key").focus(); return; }
-  if(!confirmed){ showToast("Please confirm that your submission details are correct."); return; }
+
+  if(!file){
+    showToast("Please choose a DOCX lesson plan file.");
+    return;
+  }
+
+  if(!key){
+    showToast("Please enter the submission key.");
+    document.getElementById("submission-key").focus();
+    return;
+  }
+
+  if(!confirmed){
+    showToast("Please confirm that your submission details are correct.");
+    return;
+  }
 
   const submitButton = document.getElementById("submit-button");
   submitButton.disabled = true;
   submitButton.textContent = "Uploading…";
+
   document.getElementById("wizard-card").style.display = "none";
   document.getElementById("upload-loading").style.display = "block";
 
   try{
     const base64 = await fileToBase64(file);
     const department = document.getElementById("department").value;
+
     const payload = {
       action: "submitLessonPlan",
       teacherName: document.getElementById("teacher-name").value.trim(),
@@ -600,21 +701,32 @@ document.getElementById("lesson-form").addEventListener("submit", async function
       fileName: file.name,
       mimeType: file.type || "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       fileBase64: base64,
-      /* Compatibility values for the existing Code.gs required fields.
-         No Subject or Lesson Title input is shown to the teacher. */
+
+      /* Compatibility fields for the current spreadsheet columns.
+         The teacher does not see separate Subject or Lesson Title fields. */
       subject: department,
       lessonTitle: file.name
     };
-    const response = await fetch(API_URL,{method:"POST",body:JSON.stringify(payload)});
-    if(!response.ok) throw new Error("The server returned HTTP " + response.status + ".");
+
+    const response = await fetch(API_URL,{
+      method:"POST",
+      body:JSON.stringify(payload)
+    });
+
+    if(!response.ok){
+      throw new Error("The server returned HTTP " + response.status + ".");
+    }
+
     const result = await response.json();
+
     document.getElementById("upload-loading").style.display = "none";
+
     if(!result || !result.success){
       document.getElementById("wizard-card").style.display = "block";
       showToast((result && result.message) || "The submission was not accepted. Please check your details and try again.");
       return;
     }
-    const status = result.status || "PENDING REVIEW";
+
     const record = {
       submissionId: result.submissionId || "",
       teacherName: payload.teacherName,
@@ -624,86 +736,338 @@ document.getElementById("lesson-form").addEventListener("submit", async function
       term: payload.term,
       assignedMasterTeacher: payload.assignedMasterTeacher,
       fileName: payload.fileName,
-      status: status,
+      status: result.status || "PENDING REVIEW",
       dateSubmitted: new Date().toISOString(),
-      documentUrl: result.documentUrl || ""
+      documentUrl: result.documentUrl || "",
+      correctionRound: 0
     };
+
     saveLocalRecord(record);
-    document.getElementById("success-id").textContent = record.submissionId || "ID not returned";
-    document.getElementById("success-reviewer").textContent = "Assigned Master Teacher: " + record.assignedMasterTeacher;
+
+    document.getElementById("success-id").textContent =
+      record.submissionId || "ID not returned";
+
+    document.getElementById("success-reviewer").textContent =
+      "Assigned Master Teacher: " + record.assignedMasterTeacher;
+
     document.getElementById("upload-success").style.display = "block";
     renderDashboard();
+
   }catch(error){
     console.error(error);
     document.getElementById("upload-loading").style.display = "none";
     document.getElementById("wizard-card").style.display = "block";
     showToast("Could not complete the submission: " + error.message);
+
   }finally{
     submitButton.disabled = false;
     submitButton.textContent = "Submit Lesson Plan";
   }
 });
 
-/* Local convenience history. The Google Sheet is the official system record. */
+/* LOCAL CONVENIENCE HISTORY */
 function getLocalRecords(){
-  try{ const parsed = JSON.parse(localStorage.getItem(LOCAL_HISTORY_KEY) || "[]"); return Array.isArray(parsed) ? parsed : []; }
-  catch(e){ return []; }
+  try{
+    const parsed = JSON.parse(
+      localStorage.getItem(LOCAL_HISTORY_KEY) || "[]"
+    );
+    return Array.isArray(parsed) ? parsed : [];
+  }catch(e){
+    return [];
+  }
 }
+
 function saveLocalRecord(record){
   const records = getLocalRecords();
-  const index = records.findIndex(r => r.submissionId === record.submissionId);
-  if(index >= 0) records[index] = {...records[index],...record}; else records.unshift(record);
-  localStorage.setItem(LOCAL_HISTORY_KEY,JSON.stringify(records.slice(0,100)));
+  const index = records.findIndex(
+    r => r.submissionId === record.submissionId
+  );
+
+  if(index >= 0){
+    records[index] = {...records[index],...record};
+  }else{
+    records.unshift(record);
+  }
+
+  localStorage.setItem(
+    LOCAL_HISTORY_KEY,
+    JSON.stringify(records.slice(0,100))
+  );
 }
+
 function renderDashboard(){
   const records = getLocalRecords();
+
   const isPending = s => /PENDING|UNDER REVIEW/i.test(s || "");
   const isReturned = s => /RETURN|REVISION/i.test(s || "");
   const isApproved = s => /APPROVED/i.test(s || "");
+
   document.getElementById("stat-total").textContent = records.length;
-  document.getElementById("stat-pending").textContent = records.filter(r => isPending(r.status)).length;
-  document.getElementById("stat-returned").textContent = records.filter(r => isReturned(r.status)).length;
-  document.getElementById("stat-approved").textContent = records.filter(r => isApproved(r.status)).length;
+  document.getElementById("stat-pending").textContent =
+    records.filter(r => isPending(r.status)).length;
+  document.getElementById("stat-returned").textContent =
+    records.filter(r => isReturned(r.status)).length;
+  document.getElementById("stat-approved").textContent =
+    records.filter(r => isApproved(r.status)).length;
+
   const host = document.getElementById("dashboard-recent");
+
   if(!records.length){
-    host.innerHTML = '<div class="empty-state"><div class="empty-icon">📄</div><strong>No submissions saved on this browser yet</strong><p>After you submit a lesson plan, its Submission ID will appear here for quick access.</p></div>';
+    host.innerHTML =
+      '<div class="empty-state"><div class="empty-icon">📄</div><strong>No submissions saved on this browser yet</strong><p>After you submit a lesson plan, its Submission ID will appear here for quick access.</p></div>';
     return;
   }
-  host.innerHTML = '<div class="table-wrap"><table><thead><tr><th>SUBMISSION ID</th><th>GRADE / TERM</th><th>MASTER TEACHER</th><th>STATUS</th><th>ACTION</th></tr></thead><tbody>' + records.slice(0,5).map(r => '<tr><td><strong>'+escapeHtml(r.submissionId)+'</strong></td><td>'+escapeHtml(r.gradeLevel)+' · '+escapeHtml(r.term)+'</td><td>'+escapeHtml(r.assignedMasterTeacher)+'</td><td>'+statusBadge(r.status)+'</td><td><button class="btn btn-light" onclick="trackSavedRecord(\''+escapeJs(r.submissionId)+'\')">Track</button></td></tr>').join('') + '</tbody></table></div>';
-}
-function renderHistory(){
-  const records = getLocalRecords();
-  const body = document.getElementById("history-body");
-  if(!records.length){ body.innerHTML = '<tr><td colspan="6"><div class="empty-state"><div class="empty-icon">📋</div><strong>No local submission history</strong><p>Your successful submissions from this browser will appear here.</p></div></td></tr>'; return; }
-  body.innerHTML = records.map(r => '<tr><td><strong>'+escapeHtml(r.submissionId)+'</strong></td><td>'+escapeHtml(r.gradeLevel)+'</td><td>'+escapeHtml(r.term)+'</td><td>'+escapeHtml(r.assignedMasterTeacher)+'</td><td>'+statusBadge(r.status)+'</td><td><button class="btn btn-light" onclick="trackSavedRecord(\''+escapeJs(r.submissionId)+'\')">Track</button></td></tr>').join('');
-}
-function trackSavedRecord(id){
-  document.getElementById("track-id").value = id;
-  const saved = getLocalRecords().find(r => r.submissionId === id);
-  if(saved && saved.teacherEmail) document.getElementById("track-email").value = saved.teacherEmail;
-  showPage("track");
-  if(saved && saved.teacherEmail) trackSubmission();
+
+  host.innerHTML =
+    '<div class="table-wrap"><table><thead><tr><th>SUBMISSION ID</th><th>GRADE / TERM</th><th>MASTER TEACHER</th><th>STATUS</th><th>ACTION</th></tr></thead><tbody>' +
+    records.slice(0,5).map(r =>
+      '<tr><td><strong>' + escapeHtml(r.submissionId) + '</strong></td>' +
+      '<td>' + escapeHtml(r.gradeLevel) + ' · ' + escapeHtml(r.term) + '</td>' +
+      '<td>' + escapeHtml(r.assignedMasterTeacher) + '</td>' +
+      '<td>' + statusBadge(r.status) + '</td>' +
+      '<td><button class="btn btn-light" onclick="trackSavedRecord(\'' +
+      escapeJs(r.submissionId) + '\')">Track</button></td></tr>'
+    ).join('') +
+    '</tbody></table></div>';
 }
 
-/* Tracking: accepts either {submission:{...}} or flat response formats. */
+/* LIVE MY SUBMISSIONS */
+function renderHistory(){
+  const body = document.getElementById("history-body");
+  const count = document.getElementById("my-submissions-count");
+  const heading = document.getElementById("my-submissions-heading");
+
+  if(liveMySubmissions === null){
+    count.textContent = "Not loaded";
+    heading.textContent = "Your Official Submission Records";
+    body.innerHTML =
+      '<tr><td colspan="8"><div class="empty-state"><div class="empty-icon">📧</div><strong>Load your official records</strong><p>Enter the teacher email address used during submission, then select Load My Submissions.</p></div></td></tr>';
+    return;
+  }
+
+  const records = liveMySubmissions;
+
+  count.textContent = records.length + " record(s)";
+  heading.textContent = "Official Records for " + liveMySubmissionsEmail;
+
+  if(!records.length){
+    body.innerHTML =
+      '<tr><td colspan="8"><div class="empty-state"><div class="empty-icon">📭</div><strong>No submissions found</strong><p>No submission records were found for this email address.</p></div></td></tr>';
+    return;
+  }
+
+  body.innerHTML = records.map(r => {
+    const safeId = escapeHtml(r.submissionId || "");
+    const gradeTerm = [r.gradeLevel,r.term].filter(Boolean).join(" · ");
+    const round = Number(r.correctionRound || 0);
+    const feedback = r.reviewNotes
+      ? escapeHtml(r.reviewNotes)
+      : "No feedback yet";
+
+    const openUrl = safeGoogleDocUrl(r.documentUrl);
+    const openButton = openUrl
+      ? '<a class="btn btn-light" href="' + escapeAttr(openUrl) + '" target="_blank" rel="noopener">Open Lesson Plan</a>'
+      : '<span class="helper">No document link</span>';
+
+    return '<tr>' +
+      '<td><span class="history-id">' + safeId + '</span></td>' +
+      '<td>' + escapeHtml(r.dateSubmitted || "—") + '</td>' +
+      '<td>' + escapeHtml(gradeTerm || "—") + '</td>' +
+      '<td>' + escapeHtml(r.assignedMasterTeacher || "—") + '</td>' +
+      '<td>' + statusBadge(r.currentStatus || "PENDING REVIEW") + '</td>' +
+      '<td><span class="round-pill">' + escapeHtml(String(round)) + '</span></td>' +
+      '<td><div class="history-feedback">' + feedback +
+      (r.lastReviewer ? '<br><small>Reviewer: ' + escapeHtml(r.lastReviewer) + '</small>' : '') +
+      '</div></td>' +
+      '<td><div class="history-actions">' +
+      '<button class="btn btn-light" onclick="trackMySubmission(\'' + escapeJs(r.submissionId) + '\')">Track</button>' +
+      openButton +
+      '</div></td>' +
+      '</tr>';
+  }).join('');
+}
+
+async function loadMySubmissions(){
+  const emailInput = document.getElementById("my-submissions-email");
+  const button = document.getElementById("load-my-submissions-button");
+  const email = emailInput.value.trim().toLowerCase();
+
+  if(!email || !emailInput.checkValidity()){
+    showToast("Please enter a valid teacher email address.");
+    emailInput.focus();
+    return;
+  }
+
+  button.disabled = true;
+  button.textContent = "Loading…";
+  liveMySubmissions = null;
+
+  document.getElementById("my-submissions-count").textContent = "Loading";
+  document.getElementById("history-body").innerHTML =
+    '<tr><td colspan="8"><div class="empty-state"><div class="spinner"></div><strong>Loading your official records…</strong><p>Retrieving matching submissions from Google Sheets.</p></div></td></tr>';
+
+  try{
+    const response = await fetch(API_URL,{
+      method:"POST",
+      body:JSON.stringify({
+        action:"listMySubmissions",
+        teacherEmail:email
+      })
+    });
+
+    if(!response.ok){
+      throw new Error("The server returned HTTP " + response.status + ".");
+    }
+
+    const result = await response.json();
+
+    if(!result || !result.success){
+      throw new Error(
+        (result && result.message) ||
+        "Your submissions could not be loaded."
+      );
+    }
+
+    liveMySubmissions = Array.isArray(result.submissions)
+      ? result.submissions
+      : [];
+
+    liveMySubmissionsEmail = email;
+
+    document.getElementById("track-email").value = email;
+
+    const teacherEmailInput = document.getElementById("teacher-email");
+    if(teacherEmailInput && !teacherEmailInput.value){
+      teacherEmailInput.value = email;
+    }
+
+    renderHistory();
+
+    showToast(
+      "Loaded " + liveMySubmissions.length +
+      " official submission record(s)."
+    );
+
+  }catch(error){
+    console.error(error);
+    liveMySubmissions = null;
+
+    document.getElementById("my-submissions-count").textContent =
+      "Not loaded";
+
+    document.getElementById("history-body").innerHTML =
+      '<tr><td colspan="8"><div class="empty-state"><div class="empty-icon">⚠️</div><strong>Unable to load your submissions</strong><p>' +
+      escapeHtml(error.message) +
+      '</p></div></td></tr>';
+
+  }finally{
+    button.disabled = false;
+    button.textContent = "Load My Submissions";
+  }
+}
+
+function trackMySubmission(id){
+  document.getElementById("track-id").value = id;
+
+  document.getElementById("track-email").value =
+    liveMySubmissionsEmail ||
+    document.getElementById("my-submissions-email").value.trim();
+
+  showPage("track");
+  trackSubmission();
+}
+
+function safeGoogleDocUrl(value){
+  const url = String(value || "").trim();
+
+  return /^https:\/\/docs\.google\.com\/document\/d\/[A-Za-z0-9_-]+\/edit(?:[?#].*)?$/.test(url)
+    ? url
+    : "";
+}
+
+/* TRACK SAVED LOCAL RECORD */
+function trackSavedRecord(id){
+  document.getElementById("track-id").value = id;
+
+  const saved = getLocalRecords().find(
+    r => r.submissionId === id
+  );
+
+  if(saved && saved.teacherEmail){
+    document.getElementById("track-email").value =
+      saved.teacherEmail;
+  }
+
+  showPage("track");
+
+  if(saved && saved.teacherEmail){
+    trackSubmission();
+  }
+}
+
+/* TRACK ONE SUBMISSION */
 async function trackSubmission(){
   const id = document.getElementById("track-id").value.trim();
   const email = document.getElementById("track-email").value.trim();
   const resultBox = document.getElementById("track-result");
   const button = document.getElementById("track-button");
+
   resultBox.style.display = "block";
-  if(!id){ resultBox.innerHTML = '<div class="empty-state"><strong>Enter a Submission ID</strong><p>Please enter the ID shown after successful submission.</p></div>'; document.getElementById("track-id").focus(); return; }
-  if(!email){ resultBox.innerHTML = '<div class="empty-state"><strong>Enter your teacher email address</strong><p>Use the same email address you entered when you submitted this lesson plan.</p></div>'; document.getElementById("track-email").focus(); return; }
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ resultBox.innerHTML = '<div class="empty-state"><strong>Check your email address</strong><p>Please enter a valid email address.</p></div>'; document.getElementById("track-email").focus(); return; }
+
+  if(!id){
+    resultBox.innerHTML =
+      '<div class="empty-state"><strong>Enter a Submission ID</strong><p>Please enter the ID shown after successful submission.</p></div>';
+    document.getElementById("track-id").focus();
+    return;
+  }
+
+  if(!email){
+    resultBox.innerHTML =
+      '<div class="empty-state"><strong>Enter your teacher email address</strong><p>Use the same email address you entered when you submitted this lesson plan.</p></div>';
+    document.getElementById("track-email").focus();
+    return;
+  }
+
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+    resultBox.innerHTML =
+      '<div class="empty-state"><strong>Check your email address</strong><p>Please enter a valid email address.</p></div>';
+    document.getElementById("track-email").focus();
+    return;
+  }
+
   button.disabled = true;
   button.textContent = "Checking…";
-  resultBox.innerHTML = '<div class="empty-state"><strong>Checking the Lesson Plan Bank…</strong><p>Retrieving the latest submission information.</p></div>';
+
+  resultBox.innerHTML =
+    '<div class="empty-state"><strong>Checking the Lesson Plan Bank…</strong><p>Retrieving the latest submission information.</p></div>';
+
   try{
-    const response = await fetch(API_URL,{method:"POST",body:JSON.stringify({action:"trackSubmission",submissionId:id,teacherEmail:email})});
-    if(!response.ok) throw new Error("The server returned HTTP " + response.status + ".");
+    const response = await fetch(API_URL,{
+      method:"POST",
+      body:JSON.stringify({
+        action:"trackSubmission",
+        submissionId:id,
+        teacherEmail:email
+      })
+    });
+
+    if(!response.ok){
+      throw new Error(
+        "The server returned HTTP " + response.status + "."
+      );
+    }
+
     const result = await response.json();
-    if(!result || !result.success) throw new Error((result && result.message) || "Submission not found.");
+
+    if(!result || !result.success){
+      throw new Error(
+        (result && result.message) ||
+        "Submission not found."
+      );
+    }
+
     const s = result.submission || result;
+
     const record = {
       submissionId: s.submissionId || result.submissionId || id,
       teacherName: s.teacherName || result.teacherName || "",
@@ -711,89 +1075,190 @@ async function trackSubmission(){
       department: s.department || result.department || "",
       gradeLevel: s.gradeLevel || result.gradeLevel || "",
       term: s.term || result.term || "",
-      assignedMasterTeacher: s.assignedMasterTeacher || result.assignedMasterTeacher || "",
+      assignedMasterTeacher:
+        s.assignedMasterTeacher ||
+        result.assignedMasterTeacher ||
+        "",
       fileName: s.fileName || result.fileName || "",
-      status: s.currentStatus || s.status || result.currentStatus || result.status || "PENDING REVIEW",
+      status: s.currentStatus ||
+        s.status ||
+        result.currentStatus ||
+        result.status ||
+        "PENDING REVIEW",
       dateSubmitted: s.dateSubmitted || result.dateSubmitted || "",
       lastUpdated: s.lastUpdated || result.lastUpdated || "",
       reviewNotes: s.reviewNotes || result.reviewNotes || "",
-      reviewer: s.lastReviewer || s.reviewer || result.lastReviewer || result.reviewer || "",
+      reviewer: s.lastReviewer ||
+        s.reviewer ||
+        result.lastReviewer ||
+        result.reviewer ||
+        "",
       documentUrl: s.documentUrl || result.documentUrl || ""
     };
+
     saveLocalRecord(record);
     renderDashboard();
-    renderHistory();
-    const date = record.dateSubmitted ? escapeHtml(record.dateSubmitted) : "—";
-    const updated = record.lastUpdated ? escapeHtml(record.lastUpdated) : "—";
-    resultBox.innerHTML = '<h3>Submission Status <span style="float:right">'+statusBadge(record.status)+'</span></h3>'+
-      '<div class="track-detail-grid">'+
-      detailHtml("Submission ID",record.submissionId)+
-      detailHtml("Teacher",record.teacherName)+
-      detailHtml("Department",record.department)+
-      detailHtml("Grade Level",record.gradeLevel)+
-      detailHtml("Term",record.term)+
-      detailHtml("Assigned Master Teacher",record.assignedMasterTeacher)+
-      detailHtml("Date Submitted",date)+
-      detailHtml("Last Updated",updated)+
-      detailHtml("Correction Round",s.correctionRound ?? result.correctionRound ?? "0")+
-      '</div>'+
-      '<div class="feedback-box"><strong>MASTER TEACHER FEEDBACK</strong><p>'+escapeHtml(record.reviewNotes || "No review feedback has been recorded yet.")+'</p>'+(record.reviewer ? '<p><strong>Reviewer:</strong> '+escapeHtml(record.reviewer)+'</p>' : '')+'</div>'+
-      (record.documentUrl ? '<p style="margin:14px 0 0"><a class="btn btn-primary" style="display:inline-block;text-decoration:none" href="'+escapeAttr(record.documentUrl)+'" target="_blank" rel="noopener">Open Lesson Plan</a></p>' : '');
+
+    const date = record.dateSubmitted
+      ? escapeHtml(record.dateSubmitted)
+      : "—";
+
+    const updated = record.lastUpdated
+      ? escapeHtml(record.lastUpdated)
+      : "—";
+
+    const round = Number(
+      s.correctionRound ?? result.correctionRound ?? 0
+    );
+
+    resultBox.innerHTML =
+      '<h3>Submission Status <span style="float:right">' +
+      statusBadge(record.status) +
+      '</span></h3>' +
+      '<div class="track-detail-grid">' +
+      detailHtml("Submission ID",record.submissionId) +
+      detailHtml("Teacher",record.teacherName) +
+      detailHtml("Department",record.department) +
+      detailHtml("Grade Level",record.gradeLevel) +
+      detailHtml("Term",record.term) +
+      detailHtml("Assigned Master Teacher",record.assignedMasterTeacher) +
+      detailHtml("Date Submitted",date) +
+      detailHtml("Last Updated",updated) +
+      detailHtml("Correction Round",String(round)) +
+      '</div>' +
+      '<div class="feedback-box"><strong>MASTER TEACHER FEEDBACK</strong><p>' +
+      escapeHtml(record.reviewNotes || "No review feedback has been recorded yet.") +
+      '</p>' +
+      (record.reviewer
+        ? '<p><strong>Reviewer:</strong> ' + escapeHtml(record.reviewer) + '</p>'
+        : '') +
+      '</div>' +
+      (record.documentUrl
+        ? '<p style="margin:14px 0 0"><a class="btn btn-primary" style="display:inline-block;text-decoration:none" href="' +
+          escapeAttr(record.documentUrl) +
+          '" target="_blank" rel="noopener">Open Lesson Plan</a></p>'
+        : '');
+
     showToast("Submission status retrieved.");
+
   }catch(error){
     console.error(error);
-    resultBox.innerHTML = '<div class="empty-state"><div class="empty-icon">⚠️</div><strong>Unable to retrieve this submission</strong><p>'+escapeHtml(error.message)+'. Check the Submission ID and confirm that the Apps Script deployment supports the trackSubmission action.</p></div>';
+
+    resultBox.innerHTML =
+      '<div class="empty-state"><div class="empty-icon">⚠️</div><strong>Unable to retrieve this submission</strong><p>' +
+      escapeHtml(error.message) +
+      '. Check the Submission ID and confirm that the Apps Script deployment supports the trackSubmission action.</p></div>';
+
   }finally{
     button.disabled = false;
     button.textContent = "Check Status";
   }
 }
-function detailHtml(label,value){ return '<div class="detail-item"><small>'+escapeHtml(label)+'</small><strong>'+escapeHtml(value || "—")+'</strong></div>'; }
+
+/* HELPERS */
+function detailHtml(label,value){
+  return '<div class="detail-item"><small>' +
+    escapeHtml(label) +
+    '</small><strong>' +
+    escapeHtml(value || "—") +
+    '</strong></div>';
+}
+
 function statusBadge(status){
   const value = String(status || "PENDING REVIEW");
   let cls = "status-neutral";
+
   if(/APPROVED/i.test(value)) cls = "status-approved";
   else if(/RETURN|REVISION/i.test(value)) cls = "status-returned";
   else if(/UNDER REVIEW/i.test(value)) cls = "status-review";
   else if(/PENDING/i.test(value)) cls = "status-pending";
-  return '<span class="status-badge '+cls+'">'+escapeHtml(value)+'</span>';
+
+  return '<span class="status-badge ' + cls + '">' +
+    escapeHtml(value) +
+    '</span>';
 }
+
 function escapeHtml(value){
-  return String(value ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  return String(value ?? "").replace(/[&<>"']/g, c => ({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
+  }[c]));
 }
-function escapeAttr(value){ return escapeHtml(value); }
-function escapeJs(value){ return String(value ?? "").replace(/\\/g,"\\\\").replace(/'/g,"\\'").replace(/[\r\n]/g," "); }
+
+function escapeAttr(value){
+  return escapeHtml(value);
+}
+
+function escapeJs(value){
+  return String(value ?? "")
+    .replace(/\\/g,"\\\\")
+    .replace(/'/g,"\\'")
+    .replace(/[\r\n]/g," ");
+}
+
 function showToast(message){
   const toast = document.getElementById("toast");
   toast.textContent = message;
   toast.style.display = "block";
+
   clearTimeout(showToast.timer);
-  showToast.timer = setTimeout(() => toast.style.display = "none",3600);
+
+  showToast.timer = setTimeout(
+    () => toast.style.display = "none",
+    3600
+  );
 }
 
-/* Success actions */
+/* AFTER SUCCESSFUL SUBMISSION */
 function openTrackNewSubmission(){
   const id = document.getElementById("success-id").textContent;
-  const saved = getLocalRecords().find(r => r.submissionId === id);
-  const emailFromForm = document.getElementById("teacher-email").value.trim();
+
+  const saved = getLocalRecords().find(
+    r => r.submissionId === id
+  );
+
+  const emailFromForm =
+    document.getElementById("teacher-email").value.trim();
+
   document.getElementById("track-id").value = id;
-  document.getElementById("track-email").value = (saved && saved.teacherEmail) || emailFromForm || "";
+
+  document.getElementById("track-email").value =
+    (saved && saved.teacherEmail) ||
+    emailFromForm ||
+    "";
+
   document.getElementById("upload-success").style.display = "none";
   document.getElementById("wizard-card").style.display = "block";
+
   showPage("track");
-  if(id && document.getElementById("track-email").value.trim()) trackSubmission();
+
+  if(id && document.getElementById("track-email").value.trim()){
+    trackSubmission();
+  }
 }
+
 function startAnotherSubmission(){
   document.getElementById("lesson-form").reset();
-  document.getElementById("file-selected").textContent = "No file selected";
+  document.getElementById("file-selected").textContent =
+    "No file selected";
+
   document.getElementById("assigned-mt").value = "";
-  document.querySelectorAll(".mt-card").forEach(c => c.classList.remove("selected"));
+
+  document.querySelectorAll(".mt-card").forEach(c => {
+    c.classList.remove("selected");
+  });
+
   document.getElementById("upload-success").style.display = "none";
   document.getElementById("wizard-card").style.display = "block";
+
   goStep(1);
   showPage("submission");
 }
 
+/* INITIALIZE */
 renderDashboard();
 </script>
 </body>
