@@ -20,8 +20,8 @@
   --border:#e6dfea;
   --white:#fff;
   --bg:#f7f4fb;
-  --green:#237b56;
-  --green-soft:#e8f5ed;
+  --green:#6025a5;
+  --green-soft:#f0e8fb;
   --shadow:0 15px 40px rgba(55,20,92,.10);
 }
 *{box-sizing:border-box}
@@ -61,7 +61,7 @@ main{max-width:1280px;margin:auto;padding:30px 28px 45px}
 .card-top:after{content:"";position:absolute;width:160px;height:160px;border:1px solid rgba(255,255,255,.18);border-radius:50%;right:-45px;top:-80px;box-shadow:0 0 0 18px rgba(255,255,255,.05)}
 .teacher .card-top{background:linear-gradient(125deg,#175fa5,#318bd1)}
 .reviewer .card-top{background:linear-gradient(125deg,#4b1783,#8438c8)}
-.admin .card-top{background:linear-gradient(125deg,#176b4b,#29966e)}
+.admin .card-top{background:linear-gradient(125deg,#32105f,#6025a5)}
 .card-topline{display:flex;justify-content:space-between;align-items:center;gap:10px;position:relative;z-index:1}
 .card-icon{width:48px;height:48px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.26);border-radius:13px;display:grid;place-items:center;font-size:25px}
 .card-role{font-size:9px;font-weight:900;letter-spacing:1.2px;color:rgba(255,255,255,.84)}
@@ -76,7 +76,7 @@ main{max-width:1280px;margin:auto;padding:30px 28px 45px}
 .portal-button:hover{filter:brightness(1.08);transform:translateY(-1px)}
 .teacher .portal-button{background:linear-gradient(100deg,#164b82,#247bc0)}
 .reviewer .portal-button{background:linear-gradient(100deg,#4a1683,#7832bd)}
-.admin .portal-button{background:linear-gradient(100deg,#176344,#23875f)}
+.admin .portal-button{background:linear-gradient(100deg,#32105f,#7138c5)}
 .button-arrow{width:22px;height:22px;background:rgba(255,255,255,.18);border-radius:50%;display:grid;place-items:center;font-size:13px}
 .portal-button.disabled{background:#e7e3eb;color:#837a8b;box-shadow:none;cursor:not-allowed;pointer-events:none}
 .features-strip{margin-top:25px;background:#fff;border:1px solid var(--border);border-radius:14px;padding:16px 18px;display:flex;align-items:center;gap:19px;box-shadow:0 7px 20px rgba(55,20,92,.05)}
@@ -121,56 +121,48 @@ footer strong{color:#fff}
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 
-/* Creator welcome intro: Cher Marjoe badge before the CHECK landing page */
-.creator-intro{position:fixed;inset:0;z-index:99999;display:grid;place-items:center;overflow:hidden;padding:24px;background:radial-gradient(ellipse at 50% 42%,#0d5553 0%,#073b43 30%,#071f32 68%,#061522 100%);opacity:1;visibility:visible;transition:opacity .7s ease,visibility 0s linear .7s}
-.creator-intro::before,.creator-intro::after{content:"";position:absolute;left:50%;top:48%;width:min(88vw,760px);aspect-ratio:1;border:1px solid rgba(255,255,255,.13);border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 0 0 32px rgba(15,190,177,.035),0 0 0 72px rgba(255,196,43,.025),0 0 0 118px rgba(255,255,255,.018);pointer-events:none;animation:introHalo 9s ease-in-out infinite}
-.creator-intro::after{width:min(70vw,590px);border-color:rgba(255,200,60,.2);box-shadow:0 0 0 22px rgba(255,200,60,.025);animation-duration:12s;animation-direction:alternate}
+/* Creator-only intro: a brief animated signature before the CHECK landing page */
+.creator-intro{position:fixed;inset:0;z-index:99999;display:grid;place-items:center;overflow:hidden;padding:24px;background:radial-gradient(circle at 50% 43%,#ffffff 0%,#f8f3ff 36%,#eee4fb 72%,#e5d8f7 100%);opacity:1;visibility:visible;transition:opacity .62s ease,visibility 0s linear .62s}
+.creator-intro::before,.creator-intro::after{content:"";position:absolute;left:50%;top:50%;width:min(74vw,620px);aspect-ratio:1;border:1px solid rgba(113,56,197,.12);border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 0 0 28px rgba(113,56,197,.035),0 0 0 62px rgba(255,201,40,.04),0 0 0 104px rgba(113,56,197,.025);pointer-events:none;animation:introHalo 5s ease-in-out infinite}
+.creator-intro::after{width:min(56vw,470px);border-color:rgba(215,169,40,.30);box-shadow:0 0 0 20px rgba(255,201,40,.045);animation-duration:6s;animation-direction:alternate}
 .creator-intro.is-hidden{opacity:0;visibility:hidden;pointer-events:none}
-.creator-intro-panel{position:relative;z-index:1;width:min(100%,980px);display:grid;grid-template-columns:minmax(220px,430px) minmax(260px,1fr);align-items:center;gap:clamp(22px,4vw,58px);padding:clamp(20px,4vw,44px);border:1px solid rgba(255,255,255,.18);border-radius:30px;background:linear-gradient(145deg,rgba(255,255,255,.12),rgba(255,255,255,.045));box-shadow:0 28px 90px rgba(0,0,0,.35);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
-.creator-badge-wrap{position:relative;width:100%;max-width:430px;margin:auto;aspect-ratio:1;display:grid;place-items:center;animation:creatorBadgeReveal 1.15s cubic-bezier(.18,.78,.2,1) both,creatorBadgeFloat 6s ease-in-out 1.15s infinite}
-.creator-badge-wrap::before{content:"";position:absolute;inset:7%;border-radius:50%;background:radial-gradient(circle,rgba(14,210,183,.24),rgba(255,197,43,.09) 55%,transparent 72%);filter:blur(15px);animation:badgeGlow 3.5s ease-in-out infinite alternate}
-.creator-badge{position:relative;display:block;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 20px 30px rgba(0,0,0,.32))}
-.creator-intro-copy{color:#fff;text-align:left;animation:introCopyReveal .85s .35s ease both}
-.creator-eyebrow{display:inline-flex;align-items:center;gap:8px;color:#ffe07a;background:rgba(255,213,77,.12);border:1px solid rgba(255,213,77,.35);border-radius:30px;padding:8px 13px;font-size:10px;font-weight:900;letter-spacing:1.25px;text-transform:uppercase}
-.creator-intro-title{font-size:clamp(30px,4.8vw,54px);line-height:1.02;margin:18px 0 12px;font-weight:950;letter-spacing:-1.4px;color:#fff}
-.creator-intro-title span{color:#ffcf42}
-.creator-intro-subtitle{font-size:clamp(12px,1.7vw,15px);line-height:1.7;color:rgba(255,255,255,.82);max-width:440px;margin:0 0 12px}
-.creator-intro-credit{font-size:12px;line-height:1.5;color:#c8f4eb;margin:0 0 25px;font-weight:650}
-.creator-intro-credit strong{color:#fff}
-.creator-intro-actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
-.creator-intro-enter{border:0;border-radius:30px;padding:13px 23px;background:linear-gradient(110deg,#ffd84f,#f4a91d);color:#172b35;font-size:11px;font-weight:950;letter-spacing:1px;cursor:pointer;box-shadow:0 10px 25px rgba(0,0,0,.24);transition:transform .18s,filter .18s}
-.creator-intro-enter:hover{transform:translateY(-2px);filter:brightness(1.06)}
-.creator-intro-sound{border:1px solid rgba(255,255,255,.32);border-radius:30px;padding:12px 16px;background:rgba(255,255,255,.09);color:#fff;font-size:10px;font-weight:850;letter-spacing:.7px;cursor:pointer}
-.creator-intro-sound[aria-pressed="true"]{background:rgba(26,190,152,.2);border-color:rgba(119,255,218,.65);color:#d8fff4}
-.creator-intro-hint{margin:16px 0 0;color:rgba(255,255,255,.56);font-size:9px;letter-spacing:.7px}
-@keyframes creatorBadgeReveal{0%{opacity:0;transform:scale(.72) rotate(-8deg)}68%{opacity:1;transform:scale(1.035) rotate(1deg)}100%{opacity:1;transform:scale(1) rotate(0)}}
-@keyframes creatorBadgeFloat{0%,100%{translate:0 0}50%{translate:0 -9px}}
-@keyframes introCopyReveal{0%{opacity:0;transform:translateY(18px)}100%{opacity:1;transform:translateY(0)}}
-@keyframes introHalo{0%,100%{opacity:.55;scale:.96}50%{opacity:1;scale:1.04}}
-@keyframes badgeGlow{from{opacity:.55;transform:scale(.94)}to{opacity:1;transform:scale(1.06)}}
-@media(max-width:700px){.creator-intro{padding:14px}.creator-intro-panel{grid-template-columns:1fr;gap:10px;padding:20px 17px;border-radius:22px;max-height:calc(100vh - 28px);overflow:auto}.creator-badge-wrap{width:min(68vw,290px)}.creator-intro-copy{text-align:center}.creator-intro-title{font-size:clamp(27px,8vw,39px);margin:12px 0 8px}.creator-intro-subtitle{margin-left:auto;margin-right:auto;font-size:12px}.creator-intro-credit{margin-bottom:18px}.creator-intro-actions{justify-content:center}.creator-intro-hint{margin-top:12px}}
-@media(max-height:650px) and (min-width:701px){.creator-intro-panel{grid-template-columns:minmax(180px,330px) 1fr;padding:16px;gap:24px}.creator-badge-wrap{max-width:320px}.creator-intro-title{font-size:36px;margin:10px 0}.creator-intro-credit{margin-bottom:12px}.creator-intro-hint{margin-top:8px}}
-@media(prefers-reduced-motion:reduce){.creator-intro,.creator-intro::before,.creator-intro::after,.creator-badge-wrap,.creator-badge-wrap::before,.creator-intro-copy{animation:none!important;transition:none!important}.creator-intro-enter:hover{transform:none}}
+.creator-intro-skip{position:absolute;z-index:3;top:clamp(16px,3vh,28px);right:clamp(16px,3vw,32px);padding:9px 15px;border:1px solid rgba(71,23,125,.20);border-radius:24px;background:rgba(255,255,255,.74);color:#47177d;font-size:10px;font-weight:850;letter-spacing:.65px;cursor:pointer;box-shadow:0 4px 16px rgba(55,20,92,.07);transition:background .18s,transform .18s}
+.creator-intro-skip:hover{background:#fff;transform:translateY(-1px)}
+.creator-intro-panel{position:relative;z-index:1;width:min(100%,420px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;padding:18px 20px;background:transparent;border:0;box-shadow:none}
+.creator-badge-wrap{position:relative;width:clamp(160px,24vw,250px);aspect-ratio:1;display:grid;place-items:center;isolation:isolate;animation:creatorBadgeReveal 1.12s cubic-bezier(.16,.82,.22,1) both}
+.creator-badge-wrap::before{content:"";position:absolute;inset:5%;z-index:-2;border-radius:50%;background:radial-gradient(circle,rgba(167,139,250,.34),rgba(255,201,40,.13) 56%,transparent 74%);filter:blur(17px);animation:badgeGlow 2.8s ease-in-out infinite alternate}
+.creator-badge-wrap::after{content:"";position:absolute;inset:-11px;z-index:-1;border:2px solid transparent;border-top-color:#7138c5;border-right-color:rgba(255,201,40,.95);border-bottom-color:rgba(113,56,197,.30);border-left-color:rgba(113,56,197,.30);border-radius:50%;animation:loaderSpin 2.1s linear infinite}
+.creator-badge{position:relative;display:block;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 13px 22px rgba(49,16,95,.17))}
+.creator-loading{width:min(205px,56vw);display:grid;gap:8px;justify-items:center;animation:loaderFade .7s .45s ease both}
+.creator-progress-track{width:100%;height:4px;border-radius:9px;overflow:hidden;background:rgba(71,23,125,.14);box-shadow:inset 0 1px 2px rgba(49,16,95,.08)}
+.creator-progress-fill{height:100%;width:0;border-radius:9px;background:linear-gradient(90deg,#7138c5 0%,#a78bfa 55%,#ffc928 100%);box-shadow:0 0 10px rgba(113,56,197,.28);animation:creatorProgress 3.25s linear forwards}
+.creator-loading-dots{display:flex;gap:5px;align-items:center;height:5px}
+.creator-loading-dots span{width:4px;height:4px;border-radius:50%;background:#7138c5;opacity:.35;animation:dotPulse .9s ease-in-out infinite}
+.creator-loading-dots span:nth-child(2){animation-delay:.15s}.creator-loading-dots span:nth-child(3){animation-delay:.3s}
+@keyframes creatorBadgeReveal{0%{opacity:0;transform:scale(.42) rotate(-11deg);filter:blur(10px)}62%{opacity:1;transform:scale(1.075) rotate(1.5deg);filter:blur(0)}82%{transform:scale(.985) rotate(-.4deg)}100%{opacity:1;transform:scale(1) rotate(0);filter:blur(0)}}
+@keyframes introHalo{0%,100%{opacity:.48;scale:.96}50%{opacity:.95;scale:1.035}}
+@keyframes badgeGlow{from{opacity:.45;transform:scale(.92)}to{opacity:1;transform:scale(1.08)}}
+@keyframes loaderSpin{to{transform:rotate(360deg)}}
+@keyframes creatorProgress{0%{width:0}100%{width:100%}}
+@keyframes loaderFade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes dotPulse{0%,100%{opacity:.28;transform:scale(.8)}50%{opacity:1;transform:scale(1.35)}}
+@media(max-width:650px){.creator-intro{padding:14px}.creator-intro-panel{gap:20px}.creator-badge-wrap{width:clamp(165px,48vw,235px)}.creator-intro-skip{font-size:9px;padding:8px 12px}}
+@media(max-height:520px){.creator-intro-panel{gap:12px}.creator-badge-wrap{width:min(42vh,190px)}.creator-intro-skip{top:10px;right:12px}}
+@media(prefers-reduced-motion:reduce){.creator-intro,.creator-intro::before,.creator-intro::after,.creator-badge-wrap,.creator-badge-wrap::before,.creator-badge-wrap::after,.creator-loading,.creator-loading-dots span,.creator-progress-fill{animation:none!important;transition:none!important}.creator-progress-fill{width:100%}}
 
 </style>
 </head>
 <body>
 
-<div class="creator-intro" id="creator-intro" role="dialog" aria-label="Welcome to CHECK" aria-modal="true">
+<div class="creator-intro" id="creator-intro" role="dialog" aria-label="Creator introduction" aria-modal="true">
+  <button class="creator-intro-skip" id="creator-intro-skip" type="button" aria-label="Skip creator introduction">SKIP INTRO</button>
   <div class="creator-intro-panel">
     <div class="creator-badge-wrap">
-      <img class="creator-badge" src="cher-marjoe-badge.webp" alt="Cher Marjoe — Learn and Have Fun creator badge">
+      <img class="creator-badge" id="creator-badge" src="creator_badge.webp" alt="Cher Marjoe — Learn and Have Fun creator badge">
     </div>
-    <div class="creator-intro-copy">
-      <div class="creator-eyebrow">✦ &nbsp; A CREATOR'S WELCOME</div>
-      <h1 class="creator-intro-title">Welcome to <span>CHECK</span></h1>
-      <p class="creator-intro-subtitle">A paperless lesson plan system for submitting, reviewing, revising, tracking, and keeping lesson-plan records.</p>
-      <p class="creator-intro-credit">Created and developed by<br><strong>Marjorie R. Cabana (Cher Marjoe)</strong></p>
-      <div class="creator-intro-actions">
-        <button class="creator-intro-enter" id="creator-intro-enter" type="button">ENTER CHECK&nbsp; →</button>
-        <button class="creator-intro-sound" id="creator-intro-sound" type="button" aria-pressed="false">♫ SOUND OFF</button>
-      </div>
-      <p class="creator-intro-hint">LEARN • CREATE • CHECK • GROW</p>
+    <div class="creator-loading" aria-label="Loading CHECK" role="status">
+      <div class="creator-progress-track" aria-hidden="true"><div class="creator-progress-fill"></div></div>
+      <div class="creator-loading-dots" aria-hidden="true"><span></span><span></span><span></span></div>
     </div>
   </div>
 </div>
@@ -288,57 +280,37 @@ footer strong{color:#fff}
 <script>
 (function(){
   const intro=document.getElementById("creator-intro");
-  const enter=document.getElementById("creator-intro-enter");
-  const soundButton=document.getElementById("creator-intro-sound");
+  const skip=document.getElementById("creator-intro-skip");
+  const badge=document.getElementById("creator-badge");
   if(!intro) return;
   let closed=false;
-  let soundEnabled=false;
 
-  function playWelcomeChime(){
-    const AudioContextClass=window.AudioContext||window.webkitAudioContext;
-    if(!AudioContextClass) return;
-    let context;
-    try{ context=new AudioContextClass(); }catch(error){ return; }
-    const notes=[523.25,659.25,783.99];
-    notes.forEach(function(frequency,index){
-      const oscillator=context.createOscillator();
-      const gain=context.createGain();
-      const start=context.currentTime+(index*0.16);
-      oscillator.type="sine";
-      oscillator.frequency.setValueAtTime(frequency,start);
-      gain.gain.setValueAtTime(0.0001,start);
-      gain.gain.exponentialRampToValueAtTime(0.075,start+0.035);
-      gain.gain.exponentialRampToValueAtTime(0.0001,start+0.34);
-      oscillator.connect(gain);
-      gain.connect(context.destination);
-      oscillator.start(start);
-      oscillator.stop(start+0.36);
+  // The site has used both filenames in earlier deployments. Try the current
+  // filename first, then the legacy filename so an older upload still works.
+  if(badge){
+    badge.addEventListener("error",function(){
+      if(badge.dataset.legacyTried!=="true"){
+        badge.dataset.legacyTried="true";
+        badge.src="cher-marjoe-badge.webp?v=2";
+      }
     });
-    window.setTimeout(function(){try{context.close();}catch(error){}},1000);
   }
 
-  function closeIntro(playSound){
+  function closeIntro(){
     if(closed) return;
     closed=true;
-    if(playSound && soundEnabled) playWelcomeChime();
     intro.classList.add("is-hidden");
     document.body.classList.remove("creator-intro-active");
-    window.setTimeout(function(){if(intro.parentNode) intro.parentNode.removeChild(intro);},750);
+    window.setTimeout(function(){if(intro.parentNode) intro.parentNode.removeChild(intro);},680);
   }
 
   document.body.classList.add("creator-intro-active");
-  if(soundButton){
-    soundButton.addEventListener("click",function(){
-      soundEnabled=!soundEnabled;
-      soundButton.setAttribute("aria-pressed",String(soundEnabled));
-      soundButton.textContent=soundEnabled?"♫ SOUND ON":"♫ SOUND OFF";
-      if(soundEnabled) playWelcomeChime();
-    });
-  }
-  if(enter) enter.addEventListener("click",function(){closeIntro(true);});
-  document.addEventListener("keydown",function(event){if(event.key==="Escape") closeIntro(false);},{once:true});
+  if(skip) skip.addEventListener("click",closeIntro);
+  document.addEventListener("keydown",function(event){if(event.key==="Escape") closeIntro();},{once:true});
+
   const reduced=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  window.setTimeout(function(){closeIntro(false);},reduced?4500:8500);
+  // Keep the intro brief, similar to the supplied reference recording.
+  window.setTimeout(closeIntro,reduced?1200:3450);
 })();
 </script>
 </body>
