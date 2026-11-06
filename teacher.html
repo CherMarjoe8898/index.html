@@ -6,17 +6,17 @@
 <title>MCLLNHS TLE/TechPro CHECK | Digital Workspace</title>
 <style>
 :root{
-  --navy:#0b2942;
-  --navy-2:#123653;
-  --purple:#5b21b6;
-  --purple-2:#7438d1;
-  --purple-3:#8b5cf6;
-  --lavender:#f3edff;
-  --lavender-2:#faf8ff;
-  --gold:#f4c542;
-  --gold-soft:#fff7dc;
+  --navy:#102d49;
+  --navy-2:#263d5b;
+  --purple:#7546b8;
+  --purple-2:#9670d2;
+  --purple-3:#b99be8;
+  --lavender:#eee5f8;
+  --lavender-2:#f7f3fc;
+  --gold:#ffc928;
+  --gold-soft:#fff7df;
   --white:#fff;
-  --bg:#f6f4fa;
+  --bg:#f7f3fc;
   --text:#182536;
   --muted:#6c7482;
   --border:#e5e1ed;
@@ -32,37 +32,40 @@
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,"Segoe UI",Arial,sans-serif;font-size:14px}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,"Segoe UI",Arial,sans-serif;font-size:14px;--workspace-primary:#7546b8;--workspace-secondary:#9670d2;--workspace-highlight:#d9c7f2}
+body[data-workspace="reviewer"]{--workspace-primary:#68449c;--workspace-secondary:#8964bd;--workspace-highlight:#dfd1f3}
+body[data-workspace="admin"]{--workspace-primary:#51477d;--workspace-secondary:#7468a8;--workspace-highlight:#ddd8f0}
 button,input,select{font:inherit}
 button{cursor:pointer}
 .app-shell{min-height:100vh}
-.sidebar{position:fixed;inset:0 auto 0 0;width:272px;background:var(--navy);color:#eaf2fb;display:flex;flex-direction:column;padding:22px 15px 16px;z-index:30;overflow-y:auto;box-shadow:5px 0 22px rgba(7,27,45,.12)}
-.brand{display:flex;align-items:center;gap:0;padding:4px 9px 22px;border-bottom:1px solid rgba(255,255,255,.12)}
-.brand-name{font-weight:850;font-size:16px;line-height:1.15;letter-spacing:.2px}
-.brand-sub{font-size:10px;color:#c5d2df;line-height:1.45;margin-top:5px;letter-spacing:.35px}
+.sidebar{position:fixed;inset:0 auto 0 0;width:272px;background:linear-gradient(165deg,#102d49 0%,#173b5d 100%);color:#fff;display:flex;flex-direction:column;padding:16px 15px 16px;z-index:30;overflow-y:auto;box-shadow:5px 0 22px rgba(16,45,73,.20)}
+.brand{display:flex;align-items:center;justify-content:center;padding:5px 2px 17px;border-bottom:1px solid rgba(255,255,255,.18);min-height:158px;height:158px}
+.brand-logo{display:block;width:100%;height:100%;max-height:142px;object-fit:contain;object-position:center;filter:drop-shadow(0 5px 10px rgba(0,0,0,.20))}
 .nav-section{margin-top:22px}
-.nav-label{font-size:10px;font-weight:800;letter-spacing:1.1px;color:#8fa6ba;padding:0 12px;margin-bottom:9px}
-.nav-link{width:100%;display:flex;align-items:center;gap:12px;border:0;background:transparent;color:#cad8e6;text-align:left;padding:12px 13px;border-radius:11px;font-weight:650;margin:3px 0;transition:background .18s,color .18s}
+.nav-label{font-size:10px;font-weight:800;letter-spacing:1.1px;color:#f0e7fb;padding:0 12px;margin-bottom:9px}
+.nav-link{width:100%;display:flex;align-items:center;gap:12px;border:0;background:transparent;color:#fff;text-align:left;padding:12px 13px;border-radius:11px;font-weight:650;margin:3px 0;transition:background .18s,color .18s}
 .nav-link:hover{background:rgba(255,255,255,.09);color:#fff}
-.nav-link.active{background:linear-gradient(110deg,#6b2bd0,#8547e3);color:#fff;box-shadow:0 5px 15px rgba(99,47,186,.25);outline:2px solid rgba(244,197,66,.65);outline-offset:1px}
+.nav-link.active{background:linear-gradient(110deg,rgba(255,255,255,.24),rgba(255,255,255,.13));color:#fff;box-shadow:0 5px 15px rgba(49,26,82,.18);outline:2px solid rgba(255,201,40,.82);outline-offset:1px}
 .nav-icon{width:21px;text-align:center;font-size:17px;flex:0 0 21px}
 .sidebar-spacer{flex:1;min-height:22px}
 .sidebar-bottom{border-top:1px solid rgba(255,255,255,.12);padding-top:13px}
-.sidebar-note{padding:12px 12px 0;color:#9fb1c1;font-size:10px;line-height:1.55}
+.sidebar-note{padding:12px 12px 0;color:#eee5fa;font-size:10px;line-height:1.55}
 .main{margin-left:272px;min-height:100vh;min-width:0}
-.topbar{height:68px;background:#fff;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;padding:0 30px;position:sticky;top:0;z-index:20}
-.topbar-left{display:flex;align-items:center;gap:13px;min-width:0}
-.mobile-toggle{display:none;border:1px solid var(--border);background:#fff;border-radius:9px;padding:8px 10px;color:var(--navy);font-size:18px}
-.topbar-title{font-weight:950;font-size:18px;line-height:1.18;letter-spacing:-.25px;color:#174b91;background:linear-gradient(90deg,#174b91 0%,#6031a5 82%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;position:relative;padding-bottom:7px}
-.topbar-title::after{content:"";position:absolute;left:0;bottom:0;width:68px;height:3px;border-radius:99px;background:linear-gradient(90deg,#1768bd 0%,#6735ad 70%,#e0b432 100%)}
-.topbar-sub{font-size:11px;color:#69548d;margin-top:1px;font-weight:650;letter-spacing:.12px}
-.topbar-right{display:flex;align-items:center;gap:12px}
-.connection-pill{display:inline-flex;align-items:center;gap:7px;border:1px solid #e5e0ed;background:#fbfaff;color:#5c4a73;border-radius:20px;padding:8px 11px;font-size:11px;font-weight:700}
-.connection-dot{width:7px;height:7px;border-radius:50%;background:#8b7ca1}
-.profile-chip{display:flex;align-items:center;gap:9px;padding-left:12px;border-left:1px solid var(--border)}
-.profile-avatar{width:34px;height:34px;border-radius:50%;background:var(--lavender);color:var(--purple);display:grid;place-items:center;font-weight:850}
-.profile-meta strong{display:block;font-size:12px;color:var(--navy)}
-.profile-meta span{display:block;font-size:10px;color:var(--muted);margin-top:2px}
+.topbar{min-height:112px;height:auto;background:linear-gradient(105deg,#9670d2 0%,#7546b8 100%);border-bottom:3px solid var(--gold);display:flex;justify-content:space-between;align-items:center;gap:18px;padding:13px 28px;position:sticky;top:0;z-index:20;box-shadow:0 3px 12px rgba(83,48,133,.14)}
+.topbar-left{display:flex;align-items:center;gap:13px;min-width:0;flex:1}
+.mobile-toggle{display:none;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.16);border-radius:9px;padding:8px 10px;color:#fff;font-size:18px}
+.topbar-brand-stack{min-width:0;display:flex;flex-direction:column;gap:2px}
+.topbar-title{font-weight:950;font-size:22px;line-height:1.08;letter-spacing:-.35px;color:#fff;background:none;-webkit-text-fill-color:#fff;position:relative}
+.topbar-meaning{font-size:12px;line-height:1.35;color:#fbf8ff;font-weight:700;letter-spacing:.03px;max-width:900px}
+.topbar-role{font-size:15px;line-height:1.22;color:#fff;font-weight:900;margin-top:5px}
+.topbar-tagline{font-size:11px;line-height:1.3;color:#f7efff;font-weight:750;letter-spacing:.12px}
+.topbar-right{display:flex;align-items:center;gap:12px;flex:0 0 auto}
+.connection-pill{display:inline-flex;align-items:center;gap:7px;border:1px solid rgba(255,255,255,.38);background:rgba(255,255,255,.14);color:#fff;border-radius:20px;padding:8px 11px;font-size:11px;font-weight:750}
+.connection-dot{width:7px;height:7px;border-radius:50%;background:var(--gold)}
+.profile-chip{display:flex;align-items:center;gap:9px;padding-left:12px;border-left:1px solid rgba(255,255,255,.3)}
+.profile-avatar{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.2);color:#fff;display:grid;place-items:center;font-weight:850}
+.profile-meta strong{display:block;font-size:12px;color:#fff}
+.profile-meta span{display:block;font-size:10px;color:#f0e7fa;margin-top:2px}
 .content{max-width:1500px;padding:28px 30px 45px;margin:0 auto}
 .page{display:none;animation:pageIn .22s ease}
 .page.active{display:block}
@@ -301,9 +304,14 @@ input:focus,select:focus{border-color:var(--purple-2);box-shadow:0 0 0 3px rgba(
   .sidebar.open{transform:translateX(0)}
   .main{margin-left:0;width:100%}
   .mobile-toggle{display:inline-block}
-  .topbar{height:62px;padding:0 15px}
+  .topbar{min-height:68px;height:auto;padding:10px 15px;align-items:center}
   .content{padding:20px 14px 32px}
-  .topbar-sub,.connection-pill{display:none}
+  .connection-pill{display:none}
+  .topbar-left>div:last-child{min-width:0}
+  .topbar-title{font-size:17px;max-width:100%}
+  .topbar-meaning{font-size:10px;max-width:100%}
+  .topbar-role{font-size:13px;margin-top:3px}
+  .topbar-tagline{font-size:10px}
   .profile-meta{display:none}
   .page-heading{align-items:flex-start;flex-direction:column}
   .welcome-banner{padding:21px 19px}
@@ -321,6 +329,7 @@ input:focus,select:focus{border-color:var(--purple-2);box-shadow:0 0 0 3px rgba(
   .track-search{align-items:stretch;flex-direction:column}
   .track-search .btn{width:100%}
 }
+@media(max-width:600px){.brand{min-height:118px;height:118px}.brand-logo{max-height:106px}.topbar{padding:10px 12px;gap:8px}.topbar-title{font-size:15px}.topbar-meaning{font-size:9px}.topbar-role{font-size:12px}.topbar-tagline{font-size:9px}.profile-chip{padding-left:8px}.profile-avatar{width:30px;height:30px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
 
 /* CHECK brand opening animation */
@@ -348,11 +357,8 @@ input:focus,select:focus{border-color:var(--purple-2);box-shadow:0 0 0 3px rgba(
 
 <div class="app-shell">
   <aside class="sidebar" id="sidebar">
-    <div class="brand">
-      <div>
-        <div class="brand-name">MCLLNHS<br>TLE/TECHPRO CHECK</div>
-        <div class="brand-sub">PAPERLESS LESSON PLAN SYSTEM</div>
-      </div>
+    <div class="brand" aria-label="CHECK logo">
+      <img class="brand-logo" src="check-logo-3d.png" alt="MCLLNHS TLE/TechPro CHECK 3D logo">
     </div>
 
     <nav class="nav-section" aria-label="Teacher navigation">
@@ -390,9 +396,11 @@ input:focus,select:focus{border-color:var(--purple-2);box-shadow:0 0 0 3px rgba(
     <header class="topbar">
       <div class="topbar-left">
         <button class="mobile-toggle" onclick="toggleSidebar()" aria-label="Open navigation">☰</button>
-        <div>
-          <div class="topbar-title">CHECK — Paperless Lesson Plan System</div>
-          <div class="topbar-sub">CHECK · Teacher Workspace</div>
+        <div class="topbar-brand-stack">
+          <div class="topbar-title">CHECK</div>
+          <div class="topbar-meaning">Centralized Hub for Electronic Checking and Keeping of Lesson Plans</div>
+          <div class="topbar-role">Teacher Workspace</div>
+          <div class="topbar-tagline">Submit · Track · Revise</div>
         </div>
       </div>
       <div class="topbar-right">
@@ -881,6 +889,30 @@ let currentStep = 1;
 let liveMySubmissions = null;
 let liveMySubmissionsEmail = "";
 
+/* Workspace identity: the full CHECK meaning stays visible in every workspace. */
+function setWorkspaceHeader(kind){
+  const identity = {
+    teacher: {role:"Teacher Workspace", tagline:"Submit · Track · Revise", access:"Teacher Access", profile:"MCLLNHS TLE/TechPro CHECK", portal:"CHECK Workspace"},
+    reviewer: {role:"Master Teacher Workspace", tagline:"Review · Feedback · Approve", access:"Master Teacher Access", profile:"Assigned Lesson Plan Reviews", portal:"Reviewer Workspace"},
+    admin: {role:"Admin Center", tagline:"Monitor · Manage · Preserve Records", access:"Administrator Access", profile:"System-wide Management", portal:"Admin Workspace"},
+    corrections: {role:"Teacher Correction Desk", tagline:"Open Returned Plans · Correct · Resubmit", access:"Teacher Access", profile:"Correction and Resubmission", portal:"Correction Desk"}
+  };
+  const selected = identity[kind] || identity.teacher;
+  document.body.dataset.workspace = kind === "reviewer" || kind === "admin" ? kind : "teacher";
+  const role = document.querySelector(".topbar-role");
+  const tagline = document.querySelector(".topbar-tagline");
+  const access = document.querySelector(".profile-meta strong");
+  const profile = document.querySelector(".profile-meta span");
+  const connection = document.querySelector(".connection-pill");
+  const avatar = document.querySelector(".profile-avatar");
+  if(role) role.textContent = selected.role;
+  if(tagline) tagline.textContent = selected.tagline;
+  if(access) access.textContent = selected.access;
+  if(profile) profile.textContent = selected.profile;
+  if(connection) connection.innerHTML = '<span class="connection-dot"></span>' + selected.portal;
+  if(avatar) avatar.textContent = kind === "reviewer" ? "MT" : (kind === "admin" ? "A" : "T");
+}
+
 /* Navigation */
 function showPage(pageName, button){
   document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
@@ -894,15 +926,14 @@ function showPage(pageName, button){
     document.getElementById("mt-workspace").style.display = "block";
   }
   if(pageName === "admin") {
-    const subtitle = document.querySelector(".topbar-sub");
-    if(subtitle) subtitle.textContent = "CHECK · Administrator Workspace";
-    const profile = document.querySelector(".profile-meta strong");
-    if(profile) profile.textContent = "Administrator Access";
-    const profileSub = document.querySelector(".profile-meta span");
-    if(profileSub) profileSub.textContent = "Admin Workspace";
-    const connection = document.querySelector(".connection-pill");
-    if(connection) connection.innerHTML = '<span class="connection-dot"></span>Admin Portal';
+    setWorkspaceHeader("admin");
     if(adminAccessKey) adminLoadDashboard(true);
+  } else if(pageName === "reviewer") {
+    setWorkspaceHeader("reviewer");
+  } else if(pageName === "corrections") {
+    setWorkspaceHeader("corrections");
+  } else {
+    setWorkspaceHeader("teacher");
   }
   window.scrollTo({top:0,behavior:"smooth"});
 }
@@ -2087,30 +2118,10 @@ function adminLogout(){
 const requestedWorkspace = new URLSearchParams(window.location.search).get("workspace");
 if (requestedWorkspace === "reviewer") {
   showPage("reviewer");
-  const subtitle = document.querySelector(".topbar-sub");
-  if (subtitle) subtitle.textContent = "CHECK · Master Teacher Workspace";
-  const profile = document.querySelector(".profile-meta strong");
-  if (profile) profile.textContent = "Master Teacher Access";
-  const profileSub = document.querySelector(".profile-meta span");
-  if (profileSub) profileSub.textContent = "Reviewer Workspace";
 } else if (requestedWorkspace === "corrections") {
   showPage("corrections");
-  const subtitle = document.querySelector(".topbar-sub");
-  if (subtitle) subtitle.textContent = "CHECK · Teacher Correction Desk";
-  const profile = document.querySelector(".profile-meta strong");
-  if (profile) profile.textContent = "Teacher Access";
-  const profileSub = document.querySelector(".profile-meta span");
-  if (profileSub) profileSub.textContent = "Correction Desk";
 } else if (requestedWorkspace === "admin") {
   showPage("admin");
-  const subtitle = document.querySelector(".topbar-sub");
-  if (subtitle) subtitle.textContent = "CHECK · Administrator Workspace";
-  const profile = document.querySelector(".profile-meta strong");
-  if (profile) profile.textContent = "Administrator Access";
-  const profileSub = document.querySelector(".profile-meta span");
-  if (profileSub) profileSub.textContent = "Admin Workspace";
-  const connection = document.querySelector(".connection-pill");
-  if (connection) connection.innerHTML = '<span class="connection-dot"></span>Admin Portal';
 } else {
   showPage("dashboard");
 }
